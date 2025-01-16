@@ -2,6 +2,8 @@ server:
   port: ${SPRING_PORT}
   servlet:
     context-path: ${BASE_PATH}
+  error:
+    include-stacktrace: never
 
 spring:
   datasource:
@@ -12,7 +14,7 @@ spring:
   jpa:
     show-sql: true
     hibernate:
-      ddl-auto: update
+      ddl-auto: create
     properties:
       hibernate:
         dialect: org.hibernate.dialect.MySQLDialect
