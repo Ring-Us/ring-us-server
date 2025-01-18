@@ -1,16 +1,17 @@
-package es.princip.ringus.application.auth;
+package es.princip.ringus.application.auth.service;
 
-import es.princip.ringus.application.auth.dto.LoginRequest;
-import es.princip.ringus.application.auth.dto.LoginResponse;
-import es.princip.ringus.application.auth.dto.SignUpRequest;
-import es.princip.ringus.application.auth.dto.SignUpResponse;
-import es.princip.ringus.application.member.MemberService;
+import es.princip.ringus.application.auth.dto.request.LoginRequest;
+import es.princip.ringus.application.auth.dto.response.LoginResponse;
+import es.princip.ringus.application.auth.dto.request.SignUpRequest;
+import es.princip.ringus.application.auth.dto.response.SignUpResponse;
+import es.princip.ringus.application.member.service.MemberService;
 import es.princip.ringus.domain.member.Member;
 import jakarta.servlet.http.HttpSession;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import javax.naming.AuthenticationException;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -23,13 +24,11 @@ public class AuthService {
     private final MemberService memberService;
 
     @Transactional
-    public SignUpResponse signUp(SignUpRequest request, HttpSession session) {
-        Member member = memberService.createMember(request, session);
+    public SignUpResponse signUp(SignUpRequest request){
 
-        Map<String, Object> data = new HashMap<>();
-        data.put("memberId", member.getId());
+        Member member = memberService.createMember(request);
 
-        return new SignUpResponse(201, "성공적으로 회원가입이 완료되었습니다", data);
+        return new SignUpResponse(member.getId());
     }
 
     @Transactional
