@@ -5,8 +5,6 @@ import es.princip.ringus.domain.exception.SignUpErrorCode;
 import es.princip.ringus.domain.member.Member;
 import es.princip.ringus.domain.member.MemberRepository;
 import es.princip.ringus.global.exception.CustomRuntimeException;
-import jakarta.persistence.EntityNotFoundException;
-import jakarta.servlet.http.HttpSession;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
@@ -27,7 +25,7 @@ public class MemberService {
     public Member createMember(SignUpRequest request) {
 
         if(memberRepository.existsByEmail(request.email())){
-            throw new IllegalArgumentException("이미 이메일이 존재합니다");
+            throw new CustomRuntimeException(SignUpErrorCode.DUPLICATE_EMAIL);
         }
 
         Member member = Member.of(request.email(), request.password(), passwordEncoder);

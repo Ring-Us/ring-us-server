@@ -11,7 +11,6 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import javax.naming.AuthenticationException;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -42,5 +41,4 @@ public class AuthService {
 
         return new LoginResponse(201, "로그인 성공", data);
     }
-
 }
