@@ -1,8 +1,11 @@
-package es.princip.ringus.application.member;
+package es.princip.ringus.application.member.service;
 
-import es.princip.ringus.application.auth.dto.SignUpRequest;
+import es.princip.ringus.application.auth.dto.request.SignUpRequest;
+import es.princip.ringus.domain.exception.SignUpErrorCode;
 import es.princip.ringus.domain.member.Member;
 import es.princip.ringus.domain.member.MemberRepository;
+import es.princip.ringus.global.exception.CustomRuntimeException;
+import jakarta.persistence.EntityNotFoundException;
 import jakarta.servlet.http.HttpSession;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.crypto.password.PasswordEncoder;
@@ -19,10 +22,13 @@ public class MemberService {
     /**
      * 회원 저장 (이메일 인증 후 회원가입 진행)
      * @param request 회원가입 요청 DTO
-     * @param session HttpSession 객체
      */
     @Transactional
-    public Member createMember(SignUpRequest request, HttpSession session) {
+    public Member createMember(SignUpRequest request) {
+
+        if(memberRepository.existsByEmail(request.email())){
+            throw new IllegalArgumentException("이미 이메일이 존재합니다");
+        }
 
         Member member = Member.of(request.email(), request.password(), passwordEncoder);
         memberRepository.save(member);
