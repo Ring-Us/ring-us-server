@@ -20,10 +20,12 @@ public class AuthService {
 
     private final AuthenticationService authenticationService;
     private final AuthorizationService authorizationService;
+    private final EmailVerificationService verificationService;
     private final MemberService memberService;
 
     @Transactional
     public SignUpResponse signUp(SignUpRequest request){
+        verificationService.verifySession(request.email());
 
         Member member = memberService.createMember(request);
 
