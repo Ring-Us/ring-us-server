@@ -34,13 +34,10 @@ public class AuthService {
 
     @Transactional
     public LoginResponse authenticateAndAuthorize(LoginRequest request, HttpSession session) {
-        Member member = authenticationService.authenticate(request, session);
+        Member member = authenticationService.authenticate(request);
 
         authorizationService.createSession(member, session);
 
-        Map<String, Object> data = new HashMap<>();
-        data.put("memberId", member.getId());
-
-        return new LoginResponse(201, "로그인 성공", data);
+        return new LoginResponse(member.getId());
     }
 }

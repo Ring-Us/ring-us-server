@@ -29,16 +29,20 @@ public class AuthController {
     private final EmailVerificationService emailVerificationService;
 
     @PostMapping("/signup")
-    public ResponseEntity<Void> signUp(@Valid @RequestBody SignUpRequest request) {
+    public ResponseEntity<?> signUp(@Valid @RequestBody SignUpRequest request) {
         SignUpResponse response = authService.signUp(request);
-        return ResponseEntity.created(URI.create(String.format("/api/members/%s", response.id()))).build();
+        return ResponseEntity
+                .created(URI.create(String.format("/api/members/%s", response.id())))
+                .body(ApiResponse.success(HttpStatus.CREATED,"회원가입이 성공적으로 되었습니다"));
     }
 
     @PostMapping("/login")
     public ResponseEntity<ApiResponse<Void>> login(@Valid @RequestBody LoginRequest request, HttpSession session) {
         LoginResponse response = authService.authenticateAndAuthorize(request, session);
 
-        return ResponseEntity.ok(ApiResponse.success(HttpStatus.OK, "성공적으로 로그인되었습니다"));
+        return ResponseEntity
+                .created(URI.create(String.format("/api/members/%s", response.id())))
+                .body(ApiResponse.success(HttpStatus.OK,"로그인이 성공적으로 되었습니다"));
     }
 
     @PostMapping("/email/code")
