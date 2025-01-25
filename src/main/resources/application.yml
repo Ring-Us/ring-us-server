@@ -2,6 +2,8 @@ server:
   port: ${SPRING_PORT}
   servlet:
     context-path: ${BASE_PATH}
+  error:
+    include-stacktrace: never
 
 spring:
   datasource:
@@ -12,7 +14,21 @@ spring:
   jpa:
     show-sql: true
     hibernate:
-      ddl-auto: update
+      ddl-auto: create
     properties:
       hibernate:
         dialect: org.hibernate.dialect.MySQLDialect
+  data:
+    redis:
+      host: ${REDIS_HOST}
+      port: ${REDIS_PORT}
+      password: ${REDIS_PASSWORD}
+  mail:
+    host: ${SMTP_HOST}
+    port: ${SMTP_PORT}
+    username: ${SMTP_USERNAME}
+    password: ${SMTP_PASSWORD}
+    properties:
+      auth: true
+      starttls:
+        enable: true

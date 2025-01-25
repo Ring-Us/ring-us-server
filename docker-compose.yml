@@ -8,6 +8,7 @@ services:
       - ${ENV_FILE}
     depends_on:
       - database
+      - redis
     ports:
       - ${SPRING_PORT}:${SPRING_PORT}
     restart: always
@@ -30,5 +31,19 @@ services:
     volumes:
       - ring-us-database:/var/lib/mysql
 
+  redis:
+    image: redis:7.0
+    container_name: ring-us-redis
+    environment:
+      REDIS_PASSWORD : ${REDIS_PASSWORD}
+    command: redis-server --requirepass ${REDIS_PASSWORD}
+    expose:
+      - ${REDIS_PORT}
+    ports:
+      - ${REDIS_PORT}:${REDIS_PORT}
+    restart: always
+    volumes:
+      - ring-us-redis:/var/lib/redis
 volumes:
   ring-us-database:
+  ring-us-redis:
