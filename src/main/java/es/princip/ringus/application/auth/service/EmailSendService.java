@@ -29,19 +29,19 @@ public class EmailSendService {
             String content = String.format("""
                     <!DOCTYPE html>
                     <html xmlns:th="http://www.thymeleaf.org">
-                                        
+
                     <body>
                     <div style="margin:100px;">
                         <h1> 이메일 인증 코드 </h1>
                         <br>
-                                        
+
                         <div align="center" style="border:1px solid black;">
                             <h3> 인증 코드: <span style="color:blue;">%s</span> </h3>
                         </div>
                         <br/>
                         <p>이메일 인증 코드를 정확히 입력해주세요.</p>
                     </div>
-                                        
+
                     </body>
                     </html>
                     """, code);
