@@ -1,4 +1,4 @@
-package es.princip.ringus.application.auth.dto.request;
+package es.princip.ringus.presentation.auth.dto.request;
 
 import jakarta.validation.constraints.Email;
 import jakarta.validation.constraints.NotBlank;

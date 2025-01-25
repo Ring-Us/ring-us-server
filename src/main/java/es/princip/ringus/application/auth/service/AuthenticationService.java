@@ -1,6 +1,6 @@
 package es.princip.ringus.application.auth.service;
 
-import es.princip.ringus.application.auth.dto.request.LoginRequest;
+import es.princip.ringus.presentation.auth.dto.request.LoginRequest;
 import es.princip.ringus.domain.exception.SignUpErrorCode;
 import es.princip.ringus.domain.member.Member;
 import es.princip.ringus.domain.member.MemberRepository;

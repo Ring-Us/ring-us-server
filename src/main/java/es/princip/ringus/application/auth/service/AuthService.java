@@ -1,18 +1,15 @@
 package es.princip.ringus.application.auth.service;
 
-import es.princip.ringus.application.auth.dto.request.LoginRequest;
-import es.princip.ringus.application.auth.dto.response.LoginResponse;
-import es.princip.ringus.application.auth.dto.request.SignUpRequest;
-import es.princip.ringus.application.auth.dto.response.SignUpResponse;
+import es.princip.ringus.presentation.auth.dto.request.LoginRequest;
+import es.princip.ringus.presentation.auth.dto.response.LoginResponse;
+import es.princip.ringus.presentation.auth.dto.request.SignUpRequest;
+import es.princip.ringus.presentation.auth.dto.response.SignUpResponse;
 import es.princip.ringus.application.member.service.MemberService;
 import es.princip.ringus.domain.member.Member;
 import jakarta.servlet.http.HttpSession;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
-
-import java.util.HashMap;
-import java.util.Map;
 
 @RequiredArgsConstructor
 @Service
