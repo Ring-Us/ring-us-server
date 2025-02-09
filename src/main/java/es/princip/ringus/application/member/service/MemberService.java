@@ -28,7 +28,7 @@ public class MemberService {
             throw new CustomRuntimeException(SignUpErrorCode.DUPLICATE_EMAIL);
         }
 
-        Member member = Member.of(request.email(), request.password(), passwordEncoder);
+        Member member = Member.of(request.email(), request.password(), passwordEncoder, request.memberType());
         memberRepository.save(member);
 
         return member;

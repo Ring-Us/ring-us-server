@@ -5,6 +5,9 @@ import jakarta.validation.constraints.Pattern;
 import jakarta.validation.constraints.Size;
 
 public record SignUpRequest(
+        @NotBlank
+        String memberType,
+
         @NotBlank(message = "이메일을 입력해주세요.")
         String email,
 
