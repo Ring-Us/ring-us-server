@@ -1,6 +1,7 @@
 package es.princip.ringus.domain.member;
 
 import es.princip.ringus.domain.base.BaseTimeEntity;
+import es.princip.ringus.domain.user.User;
 import jakarta.persistence.*;
 import lombok.AccessLevel;
 import lombok.Builder;
@@ -26,6 +27,11 @@ public class Member extends BaseTimeEntity {
 
     @Enumerated(EnumType.STRING)
     private MemberType memberType;
+
+    //이용약관들
+
+    @OneToOne(mappedBy = "member", cascade = CascadeType.ALL, orphanRemoval = true)
+    private User user;
 
     public static Member of(
         final String email,

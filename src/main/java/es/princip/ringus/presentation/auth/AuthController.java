@@ -1,14 +1,14 @@
 package es.princip.ringus.presentation.auth;
 
+import es.princip.ringus.application.auth.service.AuthService;
+import es.princip.ringus.application.auth.service.EmailVerificationService;
+import es.princip.ringus.global.util.ApiResponse;
 import es.princip.ringus.presentation.auth.dto.request.GenerateCodeRequest;
 import es.princip.ringus.presentation.auth.dto.request.LoginRequest;
 import es.princip.ringus.presentation.auth.dto.request.SignUpRequest;
 import es.princip.ringus.presentation.auth.dto.request.VerifyRequest;
 import es.princip.ringus.presentation.auth.dto.response.LoginResponse;
 import es.princip.ringus.presentation.auth.dto.response.SignUpResponse;
-import es.princip.ringus.application.auth.service.AuthService;
-import es.princip.ringus.application.auth.service.EmailVerificationService;
-import es.princip.ringus.global.util.ApiResponse;
 import jakarta.servlet.http.HttpSession;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
@@ -27,6 +27,8 @@ import java.net.URI;
 public class AuthController {
     private final AuthService authService;
     private final EmailVerificationService emailVerificationService;
+
+
 
     @PostMapping("/signup")
     public ResponseEntity<?> signUp(@Valid @RequestBody SignUpRequest request) {
