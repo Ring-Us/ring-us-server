@@ -3,10 +3,10 @@ package es.princip.ringus.presentation.auth;
 import es.princip.ringus.application.auth.service.AuthService;
 import es.princip.ringus.application.auth.service.EmailVerificationService;
 import es.princip.ringus.global.util.ApiResponse;
+import es.princip.ringus.presentation.auth.dto.request.EmailVerifyRequest;
 import es.princip.ringus.presentation.auth.dto.request.GenerateCodeRequest;
 import es.princip.ringus.presentation.auth.dto.request.LoginRequest;
 import es.princip.ringus.presentation.auth.dto.request.SignUpRequest;
-import es.princip.ringus.presentation.auth.dto.request.VerifyRequest;
 import es.princip.ringus.presentation.auth.dto.response.LoginResponse;
 import es.princip.ringus.presentation.auth.dto.response.SignUpResponse;
 import jakarta.servlet.http.HttpSession;
@@ -55,7 +55,7 @@ public class AuthController {
     }
 
     @PostMapping("/email/code/verify")
-    public ResponseEntity<ApiResponse<Void>> verifyCode(@Valid @RequestBody VerifyRequest request){
+    public ResponseEntity<ApiResponse<Void>> verifyCode(@Valid @RequestBody EmailVerifyRequest request){
         emailVerificationService.verifyCode(request.email(), request.code());
 
         return ResponseEntity.ok(ApiResponse.success(HttpStatus.OK, "인증되었습니다"));
