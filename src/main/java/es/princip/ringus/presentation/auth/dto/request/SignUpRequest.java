@@ -1,8 +1,12 @@
 package es.princip.ringus.presentation.auth.dto.request;
 
+import es.princip.ringus.presentation.serviceTerm.dto.ServiceTermAgreementRequest;
 import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Pattern;
 import jakarta.validation.constraints.Size;
+
+import java.util.Set;
 
 public record SignUpRequest(
         @NotBlank
@@ -19,12 +23,5 @@ public record SignUpRequest(
         )
         String password,
 
-        @NotBlank(message = "비밀번호 확인을 입력해주세요.")
-        String confirmPassword
-) {
-    public SignUpRequest {
-        if(!password.equals(confirmPassword)){
-            throw new IllegalArgumentException("비밀번호와 비밀번호 확인이 일치하지 않습니다.");
-        }
-    }
-}
+        @NotNull Set<ServiceTermAgreementRequest> serviceTerms
+) { }

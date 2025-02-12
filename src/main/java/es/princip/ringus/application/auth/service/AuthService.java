@@ -1,5 +1,7 @@
 package es.princip.ringus.application.auth.service;
 
+import es.princip.ringus.application.serviceTerm.ServiceTermAgreementService;
+import es.princip.ringus.domain.serviceTerm.ServiceTermAgreement;
 import es.princip.ringus.presentation.auth.dto.request.LoginRequest;
 import es.princip.ringus.presentation.auth.dto.response.LoginResponse;
 import es.princip.ringus.presentation.auth.dto.request.SignUpRequest;
@@ -11,6 +13,8 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.Set;
+
 @RequiredArgsConstructor
 @Service
 public class AuthService {
@@ -19,12 +23,15 @@ public class AuthService {
     private final AuthorizationService authorizationService;
     private final EmailVerificationService verificationService;
     private final MemberService memberService;
+    private final ServiceTermAgreementService serviceTermAgreementService;
 
     @Transactional
     public SignUpResponse signUp(SignUpRequest request){
         verificationService.verifySession(request.email());
 
-        Member member = memberService.createMember(request);
+        Set<ServiceTermAgreement> serviceTerm = serviceTermAgreementService.validateAndCreateAgreements(request.serviceTerms());
+
+        Member member = memberService.createMember(request, serviceTerm);
 
         return new SignUpResponse(member.getId());
     }

@@ -1,15 +1,24 @@
 package es.princip.ringus.domain.serviceTerm;
 
 import es.princip.ringus.domain.base.BaseTimeEntity;
-import lombok.AllArgsConstructor;
+import jakarta.persistence.Embeddable;
 import lombok.Getter;
+import lombok.NoArgsConstructor;
 
 import java.time.LocalDateTime;
 
+@Embeddable
 @Getter
-@AllArgsConstructor
+@NoArgsConstructor
 public class ServiceTermAgreement extends BaseTimeEntity {
-    private final ServiceTerm tag;
-    private final boolean agreed;
-    private final LocalDateTime agreedAt;
+
+    private String tag;
+    private boolean agreed;
+    private LocalDateTime agreedAt;
+
+    public ServiceTermAgreement(String tag, boolean agreed) {
+        this.tag = tag;
+        this.agreed = agreed;
+        this.agreedAt = LocalDateTime.now();
+    }
 }

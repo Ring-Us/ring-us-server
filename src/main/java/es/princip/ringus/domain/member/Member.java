@@ -1,12 +1,16 @@
 package es.princip.ringus.domain.member;
 
 import es.princip.ringus.domain.base.BaseTimeEntity;
+import es.princip.ringus.domain.serviceTerm.ServiceTermAgreement;
+import es.princip.ringus.domain.user.User;
 import jakarta.persistence.*;
 import lombok.AccessLevel;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import org.springframework.security.crypto.password.PasswordEncoder;
+
+import java.util.Set;
 
 @Getter
 @Entity
@@ -27,16 +31,25 @@ public class Member extends BaseTimeEntity {
     @Enumerated(EnumType.STRING)
     private MemberType memberType;
 
+    @ElementCollection(fetch = FetchType.EAGER)
+    @CollectionTable(name = "service_term_agreement", joinColumns = @JoinColumn(name = "member_id"))
+    private Set<ServiceTermAgreement> serviceTerms;
+
+    @OneToOne(mappedBy = "member", cascade = CascadeType.ALL, orphanRemoval = true)
+    private User user;
+
     public static Member of(
         final String email,
         final String password,
         final PasswordEncoder passwordEncoder,
-        final String memberType
+        final String memberType,
+        final Set<ServiceTermAgreement> serviceTerms
     ) {
         return new Member(
             MemberType.valueOf(memberType),
             passwordEncoder.encode(password),
-            email
+            email,
+            serviceTerms
         );
     }
 
@@ -44,10 +57,13 @@ public class Member extends BaseTimeEntity {
     public Member(
         final MemberType memberType,
         final String password,
-        final String email
+        final String email,
+        final Set<ServiceTermAgreement> serviceTerms
+
     ) {
         this.memberType = memberType;
         this.password = password;
         this.email = email;
+        this.serviceTerms = serviceTerms;
     }
 }
