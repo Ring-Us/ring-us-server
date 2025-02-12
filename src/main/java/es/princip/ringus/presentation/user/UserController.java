@@ -2,7 +2,7 @@ package es.princip.ringus.presentation.user;
 
 import es.princip.ringus.application.mentee.service.MenteeService;
 import es.princip.ringus.application.mentor.service.MentorService;
-import es.princip.ringus.global.util.ApiResponse;
+import es.princip.ringus.global.util.ApiResponseWrapper;
 import es.princip.ringus.presentation.user.dto.MenteeRequest;
 import es.princip.ringus.presentation.user.dto.MentorRequest;
 import jakarta.validation.Valid;
@@ -24,16 +24,16 @@ public class UserController {
     private final MenteeService menteeService;
 
     @PostMapping("/register/mentor")
-    public ResponseEntity<ApiResponse<Void>> registerMentorProfile(@Valid @RequestBody MentorRequest request ){
+    public ResponseEntity<ApiResponseWrapper<Void>> registerMentorProfile(@Valid @RequestBody MentorRequest request ){
         mentorService.createMentor(request);
 
-        return ResponseEntity.ok(ApiResponse.success(HttpStatus.OK, "성공"));
+        return ResponseEntity.ok(ApiResponseWrapper.success(HttpStatus.OK, "성공"));
     }
 
     @PostMapping("/register/mentee")
-    public ResponseEntity<ApiResponse<Void>> registerMenteeProfile(@Valid @RequestBody MenteeRequest request ){
+    public ResponseEntity<ApiResponseWrapper<Void>> registerMenteeProfile(@Valid @RequestBody MenteeRequest request ){
         menteeService.createMentee(request);
 
-        return ResponseEntity.ok(ApiResponse.success(HttpStatus.OK, "성공"));
+        return ResponseEntity.ok(ApiResponseWrapper.success(HttpStatus.OK, "성공"));
     }
 }
