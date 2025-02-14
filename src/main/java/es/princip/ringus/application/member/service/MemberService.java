@@ -1,5 +1,6 @@
 package es.princip.ringus.application.member.service;
 
+import es.princip.ringus.domain.serviceTerm.ServiceTermAgreement;
 import es.princip.ringus.presentation.auth.dto.request.SignUpRequest;
 import es.princip.ringus.domain.exception.SignUpErrorCode;
 import es.princip.ringus.domain.member.Member;
@@ -9,6 +10,8 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+
+import java.util.Set;
 
 @Service
 @RequiredArgsConstructor
@@ -22,17 +25,20 @@ public class MemberService {
      * @param request 회원가입 요청 DTO
      */
     @Transactional
-    public Member createMember(SignUpRequest request) {
+    public Member createMember(SignUpRequest request, Set<ServiceTermAgreement> serviceTerm) {
 
         if(memberRepository.existsByEmail(request.email())){
             throw new CustomRuntimeException(SignUpErrorCode.DUPLICATE_EMAIL);
         }
 
-        Member member = Member.of(request.email(), request.password(), passwordEncoder, request.memberType());
+        Member member = Member.of(request.email(), request.password(), passwordEncoder, request.memberType(), serviceTerm);
         memberRepository.save(member);
 
         return member;
     }
 
+    public Member getByMemberId(Long memberId) {
+        return memberRepository.findById(memberId).orElseThrow();
+    }
 
 }
