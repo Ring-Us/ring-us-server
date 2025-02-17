@@ -8,9 +8,12 @@ import es.princip.ringus.domain.exception.EmailErrorCode;
 import es.princip.ringus.domain.exception.SignUpErrorCode;
 import es.princip.ringus.domain.member.MemberRepository;
 import es.princip.ringus.global.exception.CustomRuntimeException;
+import jakarta.servlet.http.HttpSession;
 import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
+
+import java.util.Objects;
 
 @Service
 @RequiredArgsConstructor
@@ -42,7 +45,7 @@ public class EmailVerificationService {
      * @throws CustomRuntimeException
      */
     @Transactional
-    public void verifyCode(String email, String inputCode){
+    public void verifyCode(String email, String inputCode, HttpSession session){
         EmailVerification verification = verificationRepository.findById(email)
                 .orElseThrow(() -> new CustomRuntimeException(EmailErrorCode.TTL_EXPIRED));
 
@@ -57,7 +60,11 @@ public class EmailVerificationService {
         }
 
         verificationRepository.delete(verification);
-        sessionRepository.save(EmailSession.of(email));
+
+        String sessionId = session.getId();
+
+        sessionRepository.save(EmailSession.of(email, sessionId));
+
     }
 
     /**
@@ -66,8 +73,14 @@ public class EmailVerificationService {
      * @throws CustomRuntimeException
      */
     @Transactional
-    public void verifySession(String email){
-        EmailSession emailSession = sessionRepository.findByEmail(email)
+    public void verifySession(String email, HttpSession session){
+        EmailSession emailSession = sessionRepository.findById(email)
                 .orElseThrow(() -> new CustomRuntimeException(EmailErrorCode.TTL_EXPIRED));
+
+        if(!Objects.equals(emailSession.getSessionId(), session.getId())){
+            throw new CustomRuntimeException(EmailErrorCode.SESSION_EMAIL_MISMATCH);
+        }
+
+        sessionRepository.delete(emailSession);
     }
 }

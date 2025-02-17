@@ -3,15 +3,19 @@ package es.princip.ringus.presentation.auth;
 import es.princip.ringus.application.auth.service.AuthService;
 import es.princip.ringus.application.auth.service.EmailVerificationService;
 import es.princip.ringus.global.util.ApiResponseWrapper;
+import es.princip.ringus.global.util.CookieUtil;
 import es.princip.ringus.presentation.auth.dto.request.EmailVerifyRequest;
 import es.princip.ringus.presentation.auth.dto.request.GenerateCodeRequest;
 import es.princip.ringus.presentation.auth.dto.request.LoginRequest;
 import es.princip.ringus.presentation.auth.dto.request.SignUpRequest;
 import es.princip.ringus.presentation.auth.dto.response.LoginResponse;
 import es.princip.ringus.presentation.auth.dto.response.SignUpResponse;
+import jakarta.servlet.http.HttpServletRequest;
+import jakarta.servlet.http.HttpServletResponse;
 import jakarta.servlet.http.HttpSession;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -21,6 +25,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import java.net.URI;
 
+@Slf4j
 @RestController
 @RequiredArgsConstructor
 @RequestMapping("/auth")
@@ -55,8 +60,10 @@ public class AuthController implements AuthControllerDocs{
     }
 
     @PostMapping("/email/code/verify")
-    public ResponseEntity<ApiResponseWrapper<Void>> verifyCode(@Valid @RequestBody EmailVerifyRequest request){
-        emailVerificationService.verifyCode(request.email(), request.code());
+    public ResponseEntity<ApiResponseWrapper<Void>> verifyCode(@Valid @RequestBody EmailVerifyRequest request, HttpSession session, HttpServletResponse httpResponse){
+        emailVerificationService.verifyCode(request.email(), request.code(), session);
+
+        CookieUtil.addSessionCookie(httpResponse, session.getId());
 
         return ResponseEntity.ok(ApiResponseWrapper.success(HttpStatus.OK, "인증되었습니다"));
     }

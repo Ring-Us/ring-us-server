@@ -45,7 +45,7 @@ public class EmailVerification implements Serializable {
     }
 
     public boolean hasVerificationAttemptsLeft() {
-        return failedAttempts < 5;
+        return failedAttempts < 4;
     }
 
     public boolean isValid(String inputCode) {

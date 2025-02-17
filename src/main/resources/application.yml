@@ -2,6 +2,10 @@ server:
   port: ${SPRING_PORT}
   servlet:
     context-path: ${BASE_PATH}
+    session:
+      cookie:
+        same-site : none
+        secure: false
   error:
     include-stacktrace: never
 
