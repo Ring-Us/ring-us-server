@@ -1,19 +1,17 @@
 package es.princip.ringus.application.auth.service;
 
-import es.princip.ringus.application.serviceTerm.ServiceTermAgreementService;
-import es.princip.ringus.domain.serviceTerm.ServiceTermAgreement;
-import es.princip.ringus.presentation.auth.dto.request.LoginRequest;
-import es.princip.ringus.presentation.auth.dto.response.LoginResponse;
-import es.princip.ringus.presentation.auth.dto.request.SignUpRequest;
-import es.princip.ringus.presentation.auth.dto.response.SignUpResponse;
 import es.princip.ringus.application.member.service.MemberService;
+import es.princip.ringus.application.serviceTerm.ServiceTermAgreementService;
+import es.princip.ringus.domain.email.EmailSessionRepository;
 import es.princip.ringus.domain.member.Member;
+import es.princip.ringus.presentation.auth.dto.request.LoginRequest;
+import es.princip.ringus.presentation.auth.dto.request.SignUpRequest;
+import es.princip.ringus.presentation.auth.dto.response.LoginResponse;
+import es.princip.ringus.presentation.auth.dto.response.SignUpResponse;
 import jakarta.servlet.http.HttpSession;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
-
-import java.util.Set;
 
 @RequiredArgsConstructor
 @Service
@@ -24,14 +22,17 @@ public class AuthService {
     private final EmailVerificationService verificationService;
     private final MemberService memberService;
     private final ServiceTermAgreementService serviceTermAgreementService;
+    private final EmailSessionRepository emailSessionRepository;
 
     @Transactional
-    public SignUpResponse signUp(SignUpRequest request){
-        verificationService.verifySession(request.email());
+    public SignUpResponse signUp(SignUpRequest request, HttpSession session){
+        String sessionId = session.getId();
 
-        Set<ServiceTermAgreement> serviceTerm = serviceTermAgreementService.validateAndCreateAgreements(request.serviceTerms());
+        verificationService.verifySession(request.email(), session);
 
-        Member member = memberService.createMember(request, serviceTerm);
+        Member member = memberService.createMember(request, serviceTermAgreementService.validateAndCreateAgreements(request.serviceTerms()));
+
+        emailSessionRepository.deleteById(sessionId);
 
         return new SignUpResponse(member.getId());
     }
