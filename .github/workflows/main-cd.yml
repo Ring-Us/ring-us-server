@@ -1,0 +1,41 @@
+name: CI/CD Workflow for EC2 Deployment
+
+on:
+  push:
+    branches:
+      - main  # main 브랜치에 푸시될 때 실행
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+
+    steps:
+      # 1.코드 체크아웃
+      - name: Checkout code
+        uses: actions/checkout@v3
+
+      # 2. EC2로 코드 복사 및 스크립트 실행
+      - name: Deploy to EC2
+        uses: appleboy/ssh-action@v0.1.6
+        with:
+          host: ${{ secrets.EC2_HOST }}
+          username: ${{ secrets.EC2_USER }}
+          key: ${{ secrets.EC2_SSH_KEY }}
+          script: |
+            echo "[GitHub Actions] Starting deployment on EC2"
+
+            # 레포지토리 클론 또는 Pull
+            if [ -d "/home/ubuntu/ring-us-server" ]; then
+              echo "[GitHub Actions] Pulling latest code"
+              cd /home/ubuntu/ring-us-server && git pull origin main
+            else
+              echo "[GitHub Actions] Cloning repository"
+              git clone git@github.com:Ring-Us/ring-us-server.git /home/ubuntu/ring-us-server
+              cd /home/ubuntu/ring-us-server
+            fi
+
+            # 권한 설정 (dev.sh 실행 가능하도록, 추후에 deploy.sh와 분리)
+            chmod +x dev.sh
+
+            # 스크립트 실행 (환경 변수 로드, 빌드, 배포 포함)
+            ./dev.sh

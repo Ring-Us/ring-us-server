@@ -1,5 +1,6 @@
 package es.princip.ringus.application.auth.service;
 
+
 import es.princip.ringus.application.member.service.MemberService;
 import es.princip.ringus.application.serviceTerm.ServiceTermAgreementService;
 import es.princip.ringus.domain.email.EmailSessionRepository;
@@ -12,6 +13,8 @@ import jakarta.servlet.http.HttpSession;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+
+import java.util.Set;
 
 @RequiredArgsConstructor
 @Service

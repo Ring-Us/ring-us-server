@@ -37,6 +37,7 @@ public class MemberService {
         boolean isUniversityVerified = UniversityDomainUtil.isUniversityVerified(request.email());
 
         Member member = Member.of(request.email(), request.password(), passwordEncoder, request.memberType(), serviceTerm, isUniversityVerified);
+
         memberRepository.save(member);
 
         return member;
