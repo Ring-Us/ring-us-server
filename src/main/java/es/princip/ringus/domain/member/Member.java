@@ -39,7 +39,7 @@ public class Member extends BaseTimeEntity {
 
     private boolean isProfileRegistered;
 
-    private boolean isUniversityEmail;
+    private boolean isUniversityVerified;
 
     @OneToOne(mappedBy = "member", cascade = CascadeType.ALL, orphanRemoval = true)
     private User user;
@@ -50,14 +50,14 @@ public class Member extends BaseTimeEntity {
         final PasswordEncoder passwordEncoder,
         final String memberType,
         final Set<ServiceTermAgreement> serviceTerms,
-        final boolean isUniversityEmail
+        final boolean isUniversityVerified
     ) {
         return new Member(
             MemberType.valueOf(memberType),
             passwordEncoder.encode(password),
             email,
             serviceTerms,
-            isUniversityEmail
+            isUniversityVerified
         );
     }
 
@@ -67,7 +67,7 @@ public class Member extends BaseTimeEntity {
         final String password,
         final String email,
         final Set<ServiceTermAgreement> serviceTerms,
-        final Boolean isUniversityEmail
+        final Boolean isUniversityVerified
     ) {
         this.memberType = memberType;
         this.password = password;
@@ -75,7 +75,7 @@ public class Member extends BaseTimeEntity {
         this.serviceTerms = serviceTerms;
         this.isFileVerified = false;
         this.isProfileRegistered = false;
-        this.isUniversityEmail = isUniversityEmail;
+        this.isUniversityVerified = isUniversityVerified;
     }
 
     public void verifyFile() {
@@ -86,7 +86,7 @@ public class Member extends BaseTimeEntity {
         this.isProfileRegistered = true;
     }
 
-    public void confirmUniversityEmail() {
-        this.isUniversityEmail = true;
+    public void confirmUniversity() {
+        this.isUniversityVerified = true;
     }
 }

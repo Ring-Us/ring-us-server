@@ -52,7 +52,7 @@ public class UniversityDomainUtil {
      * @param email 검사할 이메일 주소
      * @return 대학 도메인에 해당하면 true, 아니면 false
      */
-    public static boolean isUniversityEmail(String email) {
+    public static boolean isUniversityVerified(String email) {
         String domain = email.substring(email.indexOf("@") + 1);
         return universityDomains.contains(domain);
     }

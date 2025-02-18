@@ -66,6 +66,14 @@ public class AuthController implements AuthControllerDocs{
                 .body(ApiResponseWrapper.success(HttpStatus.OK,"로그인이 성공적으로 되었습니다"));
     }
 
+    @PostMapping("logout")
+    public ResponseEntity<ApiResponseWrapper<Void>> logout(HttpSession session, HttpServletResponse httpResponse) {
+        CookieUtil.deleteCookie(httpResponse, "JSESSIONID");
+
+        session.invalidate();
+        return ResponseEntity.ok(ApiResponseWrapper.success(HttpStatus.OK, "로그아웃이 성공적으로 되었습니다"));
+    }
+
     @PostMapping("/email/code")
     public ResponseEntity<ApiResponseWrapper<Void>> requestCode(@Valid @RequestBody GenerateCodeRequest request) {
         emailVerificationService.generateVerificationCode(request.email());

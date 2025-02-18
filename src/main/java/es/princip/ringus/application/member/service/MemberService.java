@@ -1,12 +1,14 @@
 package es.princip.ringus.application.member.service;
 
-import es.princip.ringus.domain.serviceTerm.ServiceTermAgreement;
-import es.princip.ringus.global.util.UniversityDomainUtil;
-import es.princip.ringus.presentation.auth.dto.request.SignUpRequest;
+import es.princip.ringus.domain.exception.MemberErrorCode;
 import es.princip.ringus.domain.exception.SignUpErrorCode;
 import es.princip.ringus.domain.member.Member;
 import es.princip.ringus.domain.member.MemberRepository;
+import es.princip.ringus.domain.serviceTerm.ServiceTermAgreement;
 import es.princip.ringus.global.exception.CustomRuntimeException;
+import es.princip.ringus.global.util.UniversityDomainUtil;
+import es.princip.ringus.presentation.auth.dto.request.SignUpRequest;
+import es.princip.ringus.presentation.member.dto.MemberResponse;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
@@ -32,16 +34,18 @@ public class MemberService {
             throw new CustomRuntimeException(SignUpErrorCode.DUPLICATE_EMAIL);
         }
 
-        boolean isUniversityEmail = UniversityDomainUtil.isUniversityEmail(request.email());
+        boolean isUniversityVerified = UniversityDomainUtil.isUniversityVerified(request.email());
 
-        Member member = Member.of(request.email(), request.password(), passwordEncoder, request.memberType(), serviceTerm, isUniversityEmail);
+        Member member = Member.of(request.email(), request.password(), passwordEncoder, request.memberType(), serviceTerm, isUniversityVerified);
         memberRepository.save(member);
 
         return member;
     }
 
-    public Member getByMemberId(Long memberId) {
-        return memberRepository.findById(memberId).orElseThrow();
-    }
+    public MemberResponse getMemberById(Long memberId){
+        Member member = memberRepository.findById(memberId)
+                .orElseThrow(() -> new CustomRuntimeException(MemberErrorCode.MEMBER_NOT_FOUND));
 
+        return MemberResponse.from(member);
+    }
 }
