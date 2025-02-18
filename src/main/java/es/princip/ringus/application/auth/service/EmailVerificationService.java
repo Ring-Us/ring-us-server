@@ -2,8 +2,8 @@ package es.princip.ringus.application.auth.service;
 
 import es.princip.ringus.domain.email.EmailSession;
 import es.princip.ringus.domain.email.EmailSessionRepository;
-import es.princip.ringus.domain.email.EmailVerificationRepository;
 import es.princip.ringus.domain.email.EmailVerification;
+import es.princip.ringus.domain.email.EmailVerificationRepository;
 import es.princip.ringus.domain.exception.EmailErrorCode;
 import es.princip.ringus.domain.exception.SignUpErrorCode;
 import es.princip.ringus.domain.member.MemberRepository;

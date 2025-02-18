@@ -31,9 +31,15 @@ public class Member extends BaseTimeEntity {
     @Enumerated(EnumType.STRING)
     private MemberType memberType;
 
-    @ElementCollection(fetch = FetchType.EAGER)
+    @ElementCollection(fetch = FetchType.LAZY)
     @CollectionTable(name = "service_term_agreement", joinColumns = @JoinColumn(name = "member_id"))
     private Set<ServiceTermAgreement> serviceTerms;
+
+    private boolean isFileVerified;
+
+    private boolean isProfileRegistered;
+
+    private boolean isUniversityEmail;
 
     @OneToOne(mappedBy = "member", cascade = CascadeType.ALL, orphanRemoval = true)
     private User user;
@@ -43,13 +49,15 @@ public class Member extends BaseTimeEntity {
         final String password,
         final PasswordEncoder passwordEncoder,
         final String memberType,
-        final Set<ServiceTermAgreement> serviceTerms
+        final Set<ServiceTermAgreement> serviceTerms,
+        final boolean isUniversityEmail
     ) {
         return new Member(
             MemberType.valueOf(memberType),
             passwordEncoder.encode(password),
             email,
-            serviceTerms
+            serviceTerms,
+            isUniversityEmail
         );
     }
 
@@ -58,12 +66,27 @@ public class Member extends BaseTimeEntity {
         final MemberType memberType,
         final String password,
         final String email,
-        final Set<ServiceTermAgreement> serviceTerms
-
+        final Set<ServiceTermAgreement> serviceTerms,
+        final Boolean isUniversityEmail
     ) {
         this.memberType = memberType;
         this.password = password;
         this.email = email;
         this.serviceTerms = serviceTerms;
+        this.isFileVerified = false;
+        this.isProfileRegistered = false;
+        this.isUniversityEmail = isUniversityEmail;
+    }
+
+    public void verifyFile() {
+        this.isFileVerified = true;
+    }
+
+    public void registerProfile() {
+        this.isProfileRegistered = true;
+    }
+
+    public void confirmUniversityEmail() {
+        this.isUniversityEmail = true;
     }
 }

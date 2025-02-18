@@ -36,3 +36,7 @@ spring:
       auth: true
       starttls:
         enable: true
+
+university:
+  file:
+    path: ${UNIVERSITY_FILE_PATH}

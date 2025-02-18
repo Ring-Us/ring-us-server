@@ -1,6 +1,7 @@
 package es.princip.ringus.application.member.service;
 
 import es.princip.ringus.domain.serviceTerm.ServiceTermAgreement;
+import es.princip.ringus.global.util.UniversityDomainUtil;
 import es.princip.ringus.presentation.auth.dto.request.SignUpRequest;
 import es.princip.ringus.domain.exception.SignUpErrorCode;
 import es.princip.ringus.domain.member.Member;
@@ -31,7 +32,9 @@ public class MemberService {
             throw new CustomRuntimeException(SignUpErrorCode.DUPLICATE_EMAIL);
         }
 
-        Member member = Member.of(request.email(), request.password(), passwordEncoder, request.memberType(), serviceTerm);
+        boolean isUniversityEmail = UniversityDomainUtil.isUniversityEmail(request.email());
+
+        Member member = Member.of(request.email(), request.password(), passwordEncoder, request.memberType(), serviceTerm, isUniversityEmail);
         memberRepository.save(member);
 
         return member;
