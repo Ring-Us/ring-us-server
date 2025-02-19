@@ -5,6 +5,6 @@ import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 
 @Repository
-public interface MenteeRepository extends JpaRepository<Mentee, String> {
+public interface MenteeRepository extends JpaRepository<Mentee, Long> {
     boolean existsByMember(Member member);
 }

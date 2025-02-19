@@ -4,12 +4,15 @@ import es.princip.ringus.domain.member.Member;
 import es.princip.ringus.domain.mentor.Mentor;
 import es.princip.ringus.domain.user.User;
 import es.princip.ringus.domain.user.UserType;
-import jakarta.persistence.Entity;
-import jakarta.persistence.EnumType;
-import jakarta.persistence.Enumerated;
+import es.princip.ringus.infra.storage.domain.Certificate;
+import es.princip.ringus.infra.storage.domain.ProfileImage;
+import jakarta.persistence.*;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
+
+import java.util.ArrayList;
+import java.util.List;
 
 @Entity
 @NoArgsConstructor
@@ -20,6 +23,14 @@ public class Mentee extends User {
 
     @Enumerated(EnumType.STRING)
     private EducationLevelType levelType;
+
+    @OneToOne(cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+    @JoinColumn(name = "certificate_id")
+    private Certificate certificate;
+
+    @OneToOne(cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+    @JoinColumn(name = "profile_image_id")
+    private ProfileImage profileImage;
 
     @Builder
     public Mentee(Member member, String nickname, String introduction, String major, EducationLevelType levelType) {
@@ -38,4 +49,15 @@ public class Mentee extends User {
                 .build();
     }
 
+    public void updateCertificate(Certificate certificate) {
+        this.certificate = certificate;
+    }
+
+
+    /**
+     * 프로필 이미지 업데이트
+     */
+    public void updateProfileImage(ProfileImage profileImage) {
+        this.profileImage = profileImage;
+    }
 }
