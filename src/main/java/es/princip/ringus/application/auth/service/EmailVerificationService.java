@@ -8,9 +8,11 @@ import es.princip.ringus.domain.exception.EmailErrorCode;
 import es.princip.ringus.domain.exception.SignUpErrorCode;
 import es.princip.ringus.domain.member.MemberRepository;
 import es.princip.ringus.global.exception.CustomRuntimeException;
+import jakarta.annotation.PostConstruct;
 import jakarta.servlet.http.HttpSession;
 import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 
 import java.util.Objects;
@@ -23,6 +25,14 @@ public class EmailVerificationService {
     private final EmailSessionRepository sessionRepository;
     private final MemberRepository memberRepository;
     private final EmailSendService emailSendService;
+
+    @Value("${verification.max-failed-attempts}")
+    private int maxFailedAttempts;
+
+    @PostConstruct
+    public void init(){
+        EmailVerification.setMaxFailedAttempts(maxFailedAttempts);
+    }
 
     @Transactional
     public void generateVerificationCode(String email) {

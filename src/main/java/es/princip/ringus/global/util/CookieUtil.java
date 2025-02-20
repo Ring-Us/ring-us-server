@@ -2,16 +2,24 @@ package es.princip.ringus.global.util;
 
 import jakarta.servlet.http.Cookie;
 import jakarta.servlet.http.HttpServletResponse;
+import org.springframework.beans.factory.annotation.Value;
+import org.springframework.stereotype.Component;
 
 /**
  * 쿠키 관련 유틸리티 클래스
  * - 쿠키 생성 및 삭제 기능 제공
  * - 보안 설정 적용 (HttpOnly, Secure)
  */
+
+@Component
 public class CookieUtil {
 
     /** 기본 쿠키 만료 시간 (30분) */
-    private static final int DEFAULT_EXPIRY = 60 * 30; // 30 minutes
+    private static int DEFAULT_EXPIRY;
+
+    public CookieUtil(@Value("${verification.default_expiry}") int DEFAULT_EXPIRY) {
+        CookieUtil.DEFAULT_EXPIRY = DEFAULT_EXPIRY;
+    }
 
     /**
      * 쿠키를 생성하여 응답(Response)에 추가하는 메서드
