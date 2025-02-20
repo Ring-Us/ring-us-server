@@ -31,4 +31,14 @@ public class MemberController {
 
         return ResponseEntity.ok(ApiResponseWrapper.success(HttpStatus.OK, "성공", response));
     }
+
+    @GetMapping("/check-session")
+    public ResponseEntity<ApiResponseWrapper<Void>> checkSession(HttpSession session){
+        Long memberId = (Long)session.getAttribute("memberId");
+        if(memberId == null){
+            throw new CustomRuntimeException(MemberErrorCode.SESSION_EXPIRED);
+        }
+
+        return ResponseEntity.ok(ApiResponseWrapper.success(HttpStatus.OK, "성공"));
+    }
 }
