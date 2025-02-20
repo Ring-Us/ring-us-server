@@ -21,11 +21,10 @@ public class StorageController {
     /**
      * 멘티 증명서 업로드
      */
-    @PostMapping("/mentee/certificate")
+    @PostMapping("/certificate/mentee")
     public ResponseEntity<ApiResponseWrapper<Void>> uploadMenteeCertificate(
             @ModelAttribute CertificateUploadRequest certificateUploadRequest
             ) {
-
         String filePath = storageService.uploadMenteeCertificate(certificateUploadRequest);
         return ResponseEntity.ok(ApiResponseWrapper.success(HttpStatus.OK, filePath));
     }
@@ -33,7 +32,7 @@ public class StorageController {
     /**
      * 멘토 증명서 업로드
      */
-    @PostMapping("/mentor/certificate")
+    @PostMapping("/certificate/mentor")
     public ResponseEntity<ApiResponseWrapper<Void>> uploadMentorCertificate(
             @ModelAttribute CertificateUploadRequest certificateUploadRequest
     ) {
@@ -44,7 +43,7 @@ public class StorageController {
     /**
      * 프로필 이미지 업로드
      */
-    @PostMapping("/profile-image")
+    @PostMapping("/profile/image")
     public ResponseEntity<ApiResponseWrapper<Void>> uploadProfileImage(
             @ModelAttribute ProfileUploadRequest request
             ) {
