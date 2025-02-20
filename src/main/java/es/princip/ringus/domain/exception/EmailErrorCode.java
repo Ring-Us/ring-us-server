@@ -8,7 +8,9 @@ public enum EmailErrorCode implements ErrorCode {
     SUCESSS_VALILDATION(HttpStatus.OK, "성공적으로 인증되었습니다"),
     TTL_EXPIRED(HttpStatus.FORBIDDEN, "TTL 만료"),
     ERROR_EXCEEDED_ATTEMPTS(HttpStatus.FORBIDDEN, "인증번호 틀림 횟수 5회 이상, 새로운 인증번호를 발급 받아주세요"),
-    ERROR_INVALID_CODE(HttpStatus.BAD_REQUEST, "인증번호가 틀립니다");
+    ERROR_INVALID_CODE(HttpStatus.BAD_REQUEST, "인증번호가 틀립니다"),
+    SESSION_NOT_FOUND(HttpStatus.NOT_FOUND, "세션을 찾을 수 없음"),
+    SESSION_EMAIL_MISMATCH(HttpStatus.BAD_REQUEST, "요청된 이메일과 인증된 이메일이 다름");
 
     EmailErrorCode(HttpStatus status, String message) {
         this.status = status;
