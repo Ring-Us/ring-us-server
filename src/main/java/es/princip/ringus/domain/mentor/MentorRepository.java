@@ -6,5 +6,4 @@ import org.springframework.stereotype.Repository;
 
 @Repository
 public interface MentorRepository extends JpaRepository<Mentor, Long> {
-    boolean existsByMember(Member member);
 }

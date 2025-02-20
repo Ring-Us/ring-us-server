@@ -2,7 +2,6 @@ package es.princip.ringus.domain.member;
 
 import es.princip.ringus.domain.base.BaseTimeEntity;
 import es.princip.ringus.domain.serviceTerm.ServiceTermAgreement;
-import es.princip.ringus.domain.user.User;
 import jakarta.persistence.*;
 import lombok.AccessLevel;
 import lombok.Builder;
@@ -34,9 +33,6 @@ public class Member extends BaseTimeEntity {
     @ElementCollection(fetch = FetchType.EAGER)
     @CollectionTable(name = "service_term_agreement", joinColumns = @JoinColumn(name = "member_id"))
     private Set<ServiceTermAgreement> serviceTerms;
-
-    @OneToOne(mappedBy = "member", cascade = CascadeType.ALL, orphanRemoval = true)
-    private User user;
 
     public static Member of(
         final String email,
