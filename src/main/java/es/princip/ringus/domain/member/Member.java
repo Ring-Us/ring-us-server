@@ -40,9 +40,6 @@ public class Member extends BaseTimeEntity {
 
     private boolean isUniversityVerified;
 
-    @OneToOne(mappedBy = "member", cascade = CascadeType.ALL, orphanRemoval = true)
-    private User user;
-
     public static Member of(
         final String email,
         final String password,
