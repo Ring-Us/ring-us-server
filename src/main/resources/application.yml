@@ -2,6 +2,10 @@ server:
   port: ${SPRING_PORT}
   servlet:
     context-path: ${BASE_PATH}
+    session:
+      cookie:
+        same-site : none
+        secure: false
   error:
     include-stacktrace: never
 
@@ -32,3 +36,11 @@ spring:
       auth: true
       starttls:
         enable: true
+
+university:
+  file:
+    path: ${UNIVERSITY_FILE_PATH}
+
+verification:
+  max_failed_attempts: ${MAX_FAILED_ATTEMPTS}
+  default_expiry: ${DEFAULT_EXPIRY}

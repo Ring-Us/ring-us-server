@@ -15,12 +15,14 @@ public class EmailSession implements Serializable {
 
     @Id
     private String email;
+    private String sessionId;
 
-    public static EmailSession of(String email) {
-        return new EmailSession(email);
+    public static EmailSession of(String email, String sessionId) {
+        return new EmailSession(email, sessionId);
     }
 
-    private EmailSession(String email) {
+    private EmailSession(String email, String sessionId) {
         this.email = email;
+        this.sessionId = sessionId;
     }
 }
