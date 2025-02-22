@@ -2,7 +2,6 @@ package es.princip.ringus.domain.member;
 
 import es.princip.ringus.domain.base.BaseTimeEntity;
 import es.princip.ringus.domain.serviceTerm.ServiceTermAgreement;
-import es.princip.ringus.domain.user.User;
 import jakarta.persistence.*;
 import lombok.AccessLevel;
 import lombok.Builder;
