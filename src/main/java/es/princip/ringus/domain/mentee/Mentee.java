@@ -1,41 +1,48 @@
 package es.princip.ringus.domain.mentee;
 
-import es.princip.ringus.domain.member.Member;
-import es.princip.ringus.domain.mentor.Mentor;
-import es.princip.ringus.domain.user.User;
-import es.princip.ringus.domain.user.UserType;
-import jakarta.persistence.Entity;
-import jakarta.persistence.EnumType;
-import jakarta.persistence.Enumerated;
+import es.princip.ringus.domain.common.Education;
+import jakarta.persistence.*;
+import lombok.AccessLevel;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 
-@Entity
-@NoArgsConstructor
 @Getter
-public class Mentee extends User {
+@Entity
+@Table(name = "mentee")
+@NoArgsConstructor(access = AccessLevel.PROTECTED)
+public class Mentee {
 
-    private String major;
+    @Id
+    @Column(name = "mentee_id")
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Long id;
 
-    @Enumerated(EnumType.STRING)
-    private EducationLevelType levelType;
+    // 닉네임
+    @Column(name = "nickname", unique = true)
+    private String nickname;
+
+    // 학력
+    @Embedded
+    private Education education;
+
+    // 자기소개
+    @Column(name = "introduction", length = 500)
+    private String introduction;
+
+    @Column(name = "member_id")
+    private Long memberId;
 
     @Builder
-    public Mentee(Member member, String nickname, String introduction, String major, EducationLevelType levelType) {
-        super(nickname, introduction, UserType.MENTEE, member);
-        this.major = major;
-        this.levelType = levelType;
+    public Mentee(
+        final String nickname,
+        final Education education,
+        final String introduction,
+        final Long memberId
+    ) {
+        this.nickname = nickname;
+        this.education = education;
+        this.introduction = introduction;
+        this.memberId = memberId;
     }
-
-    public static Mentee of(Member member, String nickname, String introduction, String major, EducationLevelType levelType) {
-        return Mentee.builder()
-                .member(member)
-                .nickname(nickname)
-                .introduction(introduction)
-                .major(major)
-                .levelType(levelType)
-                .build();
-    }
-
 }
