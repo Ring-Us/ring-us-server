@@ -1,6 +1,6 @@
 #!/bin/bash
 
-ENV_FILE=".env"
+ENV_FILE=".env.dev"
 
 echo "[dev.sh] environment variable file: $ENV_FILE"
 
@@ -34,6 +34,6 @@ else
     exit 1
 fi
 
-sudo docker compose --env-file .env up -d --build
+sudo docker compose --env-file .env.dev up -d --build
 
 echo "[dev.sh] deploy complete"

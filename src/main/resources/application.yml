@@ -36,11 +36,6 @@ spring:
       auth: true
       starttls:
         enable: true
-
-university:
-  file:
-    path: ${UNIVERSITY_FILE_PATH}
-
 verification:
   max_failed_attempts: ${MAX_FAILED_ATTEMPTS}
   default_expiry: ${DEFAULT_EXPIRY}
