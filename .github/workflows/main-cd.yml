@@ -43,7 +43,7 @@ jobs:
             sudo chmod -R 777 ~/.gradle
 
             # 권한 설정 (dev.sh 실행 가능하도록, 추후에 deploy.sh와 분리)
-            chmod +x dev.sh
+            sudo chmod +x dev.sh
 
             # 스크립트 실행 (환경 변수 로드, 빌드, 배포 포함)
-            ./dev.sh
+            sudo ./dev.sh
