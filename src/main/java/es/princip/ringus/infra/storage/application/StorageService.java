@@ -2,6 +2,7 @@ package es.princip.ringus.infra.storage.application;
 
 import es.princip.ringus.domain.member.MemberType;
 import es.princip.ringus.infra.storage.domain.CertificateType;
+import es.princip.ringus.infra.storage.domain.FileMemberRepository;
 import es.princip.ringus.infra.storage.dto.CertificateUploadRequest;
 import es.princip.ringus.infra.storage.dto.ProfileUploadRequest;
 import lombok.RequiredArgsConstructor;
@@ -14,24 +15,33 @@ import org.springframework.transaction.annotation.Transactional;
 public class StorageService {
 
     private final S3Service s3Service;
+    private final FileMemberRepository fileMemberRepository;
 
     @Transactional
-    public String uploadMenteeCertificate(CertificateUploadRequest request) {
+    public String uploadMenteeCertificate(CertificateUploadRequest request, Long memberId) {
 
         String folderPath = buildCertificateFolderPath(request.certificateType(), false);
 
-        return s3Service.uploadFile(request.file(), folderPath);
+        String filePath = s3Service.uploadFile(request.file(), folderPath);
+
+        fileMemberRepository.save(request.toFileMemberEntity(filePath, memberId));
+
+        return filePath;
     }
 
     /**
      * 멘토 증명서 업로드
      */
     @Transactional
-    public String uploadMentorCertificate(CertificateUploadRequest request) {
+    public String uploadMentorCertificate(CertificateUploadRequest request, Long memberId) {
 
         String folderPath = buildCertificateFolderPath(request.certificateType(), true);
 
-        return s3Service.uploadFile(request.file(), folderPath);
+        String filePath = s3Service.uploadFile(request.file(), folderPath);
+
+        fileMemberRepository.save(request.toFileMemberEntity(filePath, memberId));
+
+        return filePath;
     }
 
     /**
