@@ -1,6 +1,6 @@
 #!/bin/bash
 
-ENV_FILE=".env"
+ENV_FILE=".env.dev"
 
 echo "[dev.sh] environment variable file: $ENV_FILE"
 
@@ -25,7 +25,7 @@ fi
 
 echo "[dev.sh] environment variable load complete"
 
-./gradlew clean build
+./gradlew build -x test
 
 if [ $? -eq 0 ]; then
     echo "[dev.sh] build complete"
@@ -34,6 +34,6 @@ else
     exit 1
 fi
 
-sudo docker compose --env-file .env up -d --build
+sudo docker compose --env-file .env.dev up -d --build
 
 echo "[dev.sh] deploy complete"

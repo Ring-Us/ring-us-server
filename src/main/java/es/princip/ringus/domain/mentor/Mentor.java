@@ -6,6 +6,8 @@ import es.princip.ringus.domain.mentor.vo.MentoringField;
 import es.princip.ringus.domain.mentor.vo.Organization;
 import es.princip.ringus.domain.mentor.vo.Portfolio;
 import es.princip.ringus.domain.mentor.vo.Timezone;
+import es.princip.ringus.infra.storage.domain.Certificate;
+import es.princip.ringus.infra.storage.domain.ProfileImage;
 import jakarta.persistence.*;
 import lombok.AccessLevel;
 import lombok.Builder;
@@ -66,6 +68,9 @@ public class Mentor {
     @Embedded
     private Portfolio portfolio;
 
+    @Embedded
+    private ProfileImage profileImage;
+
     @Column(name = "member_id")
     private Long memberId;
 
@@ -92,5 +97,12 @@ public class Mentor {
         this.message = message;
         this.portfolio = portfolio;
         this.memberId = memberId;
+    }
+
+    /**
+     * 프로필 이미지 업데이트
+     */
+    public void updateProfileImage(ProfileImage profileImage) {
+        this.profileImage = profileImage;
     }
 }
