@@ -10,11 +10,6 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 public abstract class File {
 
-    @Id
-    @Column(name = "file_id")
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;
-
     @Column(nullable = false)
     private String fileName; // 파일 이름 (S3 키)
 

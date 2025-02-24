@@ -1,58 +1,55 @@
 package es.princip.ringus.domain.mentee;
 
-import es.princip.ringus.domain.member.Member;
-import es.princip.ringus.domain.mentor.Mentor;
-import es.princip.ringus.domain.user.User;
-import es.princip.ringus.domain.user.UserType;
+import es.princip.ringus.domain.common.Education;
 import es.princip.ringus.infra.storage.domain.Certificate;
 import es.princip.ringus.infra.storage.domain.ProfileImage;
 import jakarta.persistence.*;
+import lombok.AccessLevel;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 
-import java.util.ArrayList;
-import java.util.List;
-
-@Entity
-@NoArgsConstructor
 @Getter
-public class Mentee extends User {
+@Entity
+@Table(name = "mentee")
+@NoArgsConstructor(access = AccessLevel.PROTECTED)
+public class Mentee {
 
-    private String major;
+    @Id
+    @Column(name = "mentee_id")
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Long id;
 
-    @Enumerated(EnumType.STRING)
-    private EducationLevelType levelType;
+    // 닉네임
+    @Column(name = "nickname", unique = true)
+    private String nickname;
 
-    @OneToOne(cascade = CascadeType.ALL, fetch = FetchType.LAZY)
-    @JoinColumn(name = "certificate_id")
-    private Certificate certificate;
+    // 학력
+    @Embedded
+    private Education education;
 
-    @OneToOne(cascade = CascadeType.ALL, fetch = FetchType.LAZY)
-    @JoinColumn(name = "profile_image_id")
+    // 자기소개
+    @Column(name = "introduction", length = 500)
+    private String introduction;
+
+    @Embedded
     private ProfileImage profileImage;
 
+    @Column(name = "member_id")
+    private Long memberId;
+
     @Builder
-    public Mentee(Member member, String nickname, String introduction, String major, EducationLevelType levelType) {
-        super(nickname, introduction, UserType.MENTEE, member);
-        this.major = major;
-        this.levelType = levelType;
+    public Mentee(
+        final String nickname,
+        final Education education,
+        final String introduction,
+        final Long memberId
+    ) {
+        this.nickname = nickname;
+        this.education = education;
+        this.introduction = introduction;
+        this.memberId = memberId;
     }
-
-    public static Mentee of(Member member, String nickname, String introduction, String major, EducationLevelType levelType) {
-        return Mentee.builder()
-                .member(member)
-                .nickname(nickname)
-                .introduction(introduction)
-                .major(major)
-                .levelType(levelType)
-                .build();
-    }
-
-    public void updateCertificate(Certificate certificate) {
-        this.certificate = certificate;
-    }
-
 
     /**
      * 프로필 이미지 업데이트

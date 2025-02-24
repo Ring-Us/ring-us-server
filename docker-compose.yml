@@ -14,7 +14,7 @@ services:
     restart: always
 
   database:
-    image: mysql:9.0.0
+    image: mysql:8.4.4
     container_name: ring-us-database
     environment:
       MYSQL_ROOT_PASSWORD: ${DB_PASSWORD}
@@ -34,16 +34,14 @@ services:
   redis:
     image: redis:7.0
     container_name: ring-us-redis
-    environment:
-      REDIS_PASSWORD : ${REDIS_PASSWORD}
-    command: redis-server --requirepass ${REDIS_PASSWORD}
+    command: --port ${REDIS_PORT} --requirepass ${REDIS_PASSWORD}
     expose:
       - ${REDIS_PORT}
     ports:
       - ${REDIS_PORT}:${REDIS_PORT}
     restart: always
     volumes:
-      - ring-us-redis:/var/lib/redis
+      - ring-us-redis:/data
 volumes:
   ring-us-database:
   ring-us-redis:

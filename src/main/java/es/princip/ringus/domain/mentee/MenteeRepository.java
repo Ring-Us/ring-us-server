@@ -6,5 +6,4 @@ import org.springframework.stereotype.Repository;
 
 @Repository
 public interface MenteeRepository extends JpaRepository<Mentee, Long> {
-    boolean existsByMember(Member member);
 }

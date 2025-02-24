@@ -5,6 +5,7 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import org.springframework.data.annotation.Id;
 import org.springframework.data.redis.core.RedisHash;
+
 import java.io.Serializable;
 import java.util.Random;
 
@@ -26,6 +27,8 @@ public class EmailVerification implements Serializable {
 
     private int failedAttempts;
 
+    private static int maxFailedAttempts;
+
     public static EmailVerification of(String email) {
         return new EmailVerification(email, generateVerificationCode());
     }
@@ -45,10 +48,14 @@ public class EmailVerification implements Serializable {
     }
 
     public boolean hasVerificationAttemptsLeft() {
-        return failedAttempts < 5;
+        return failedAttempts < maxFailedAttempts;
     }
 
     public boolean isValid(String inputCode) {
         return this.verificationCode.equals(inputCode);
+    }
+
+    public static void setMaxFailedAttempts(int maxFailedAttempts) {
+        EmailVerification.maxFailedAttempts = maxFailedAttempts;
     }
 }
