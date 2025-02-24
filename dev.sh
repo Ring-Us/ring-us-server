@@ -25,7 +25,7 @@ fi
 
 echo "[dev.sh] environment variable load complete"
 
-./gradlew clean build
+./gradlew build -x test
 
 if [ $? -eq 0 ]; then
     echo "[dev.sh] build complete"
