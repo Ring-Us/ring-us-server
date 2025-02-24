@@ -1,7 +1,6 @@
 package es.princip.ringus.domain.mentee;
 
 import es.princip.ringus.domain.common.Education;
-import es.princip.ringus.infra.storage.domain.Certificate;
 import es.princip.ringus.infra.storage.domain.ProfileImage;
 import jakarta.persistence.*;
 import lombok.AccessLevel;
@@ -43,18 +42,13 @@ public class Mentee {
         final String nickname,
         final Education education,
         final String introduction,
+        final ProfileImage profileImage,
         final Long memberId
     ) {
         this.nickname = nickname;
         this.education = education;
         this.introduction = introduction;
-        this.memberId = memberId;
-    }
-
-    /**
-     * 프로필 이미지 업데이트
-     */
-    public void updateProfileImage(ProfileImage profileImage) {
         this.profileImage = profileImage;
+        this.memberId = memberId;
     }
 }
