@@ -1,6 +1,8 @@
 package es.princip.ringus.domain.mentee;
 
 import es.princip.ringus.domain.common.Education;
+import es.princip.ringus.infra.storage.domain.Certificate;
+import es.princip.ringus.infra.storage.domain.ProfileImage;
 import jakarta.persistence.*;
 import lombok.AccessLevel;
 import lombok.Builder;
@@ -30,6 +32,9 @@ public class Mentee {
     @Column(name = "introduction", length = 500)
     private String introduction;
 
+    @Embedded
+    private ProfileImage profileImage;
+
     @Column(name = "member_id")
     private Long memberId;
 
@@ -44,5 +49,12 @@ public class Mentee {
         this.education = education;
         this.introduction = introduction;
         this.memberId = memberId;
+    }
+
+    /**
+     * 프로필 이미지 업데이트
+     */
+    public void updateProfileImage(ProfileImage profileImage) {
+        this.profileImage = profileImage;
     }
 }

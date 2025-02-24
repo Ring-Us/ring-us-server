@@ -4,7 +4,7 @@ server:
     context-path: ${BASE_PATH}
     session:
       cookie:
-        same-site : none
+        same-site: none
         secure: false
   error:
     include-stacktrace: never
@@ -18,7 +18,7 @@ spring:
   jpa:
     show-sql: true
     hibernate:
-      ddl-auto: update
+      ddl-auto: create
     properties:
       hibernate:
         dialect: org.hibernate.dialect.MySQLDialect
@@ -36,6 +36,15 @@ spring:
       auth: true
       starttls:
         enable: true
+
 verification:
   max_failed_attempts: ${MAX_FAILED_ATTEMPTS}
   default_expiry: ${DEFAULT_EXPIRY}
+
+aws:
+  s3:
+    access-key: ${AWS_ACCESS_KEY_ID}
+    secret-key: ${AWS_SECRET_ACCESS_KEY}
+    region: ${AWS_REGION}
+    bucket-name: ${AWS_BUCKET_NAME}
+
