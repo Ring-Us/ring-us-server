@@ -47,4 +47,7 @@ aws:
     secret-key: ${AWS_SECRET_ACCESS_KEY}
     region: ${AWS_REGION}
     bucket-name: ${AWS_BUCKET_NAME}
+springdoc:
+  swagger-ui:
+    path: /swagger
 
