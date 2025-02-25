@@ -28,13 +28,13 @@ public record MentorRequest(
         return Mentor.builder()
                 .nickname(nickname)
                 .education(new Education(education().schoolName(), education().major()))
-                .organization(new Organization(organization().name(), organization().role(), organization().experience()))
+                .organization(organization.toEntity())
                 .introduction(introduction)
-                .timezone(new Timezone(timezone().startTime(), timezone().endTime()))
+                .timezone(timezone.toEntity())
                 .mentoringField(mentoringField.stream().map(MentoringField::valueOf).collect(Collectors.toSet()))
                 .hashtags(hashtags.stream().map(Hashtag::new).toList())
                 .message(message)
-                .portfolio(new Portfolio(portfolio.url(), portfolio.description()))
+                .portfolio(portfolio.toEntity())
                 .memberId(memberId)
                 .build();
     }

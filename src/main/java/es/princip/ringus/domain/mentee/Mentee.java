@@ -2,6 +2,7 @@ package es.princip.ringus.domain.mentee;
 
 import es.princip.ringus.domain.common.Education;
 import es.princip.ringus.infra.storage.domain.ProfileImage;
+import es.princip.ringus.presentation.mentee.dto.EditMenteeRequest;
 import jakarta.persistence.*;
 import lombok.AccessLevel;
 import lombok.Builder;
@@ -50,5 +51,12 @@ public class Mentee {
         this.introduction = introduction;
         this.profileImage = profileImage;
         this.memberId = memberId;
+    }
+
+    public void edit(final EditMenteeRequest request) {
+        this.nickname = request.nickname();
+        this.education = request.education().toEntity();
+        this.introduction = request.introduction();
+        this.profileImage = request.image().toEntity();
     }
 }
