@@ -1,13 +1,9 @@
 package es.princip.ringus.domain.mentor;
 
 import es.princip.ringus.domain.common.Education;
-import es.princip.ringus.domain.mentor.vo.Hashtag;
-import es.princip.ringus.domain.mentor.vo.MentoringField;
-import es.princip.ringus.domain.mentor.vo.Organization;
-import es.princip.ringus.domain.mentor.vo.Portfolio;
-import es.princip.ringus.domain.mentor.vo.Timezone;
-import es.princip.ringus.infra.storage.domain.Certificate;
+import es.princip.ringus.domain.mentor.vo.*;
 import es.princip.ringus.infra.storage.domain.ProfileImage;
+import es.princip.ringus.presentation.mentor.dto.EditMentorRequest;
 import jakarta.persistence.*;
 import lombok.AccessLevel;
 import lombok.Builder;
@@ -16,6 +12,7 @@ import lombok.NoArgsConstructor;
 
 import java.util.List;
 import java.util.Set;
+import java.util.stream.Collectors;
 
 @Getter
 @Entity
@@ -99,10 +96,15 @@ public class Mentor {
         this.memberId = memberId;
     }
 
-    /**
-     * 프로필 이미지 업데이트
-     */
-    public void updateProfileImage(ProfileImage profileImage) {
-        this.profileImage = profileImage;
+    public void edit(final EditMentorRequest request) {
+        this.nickname = request.nickname();
+        this.education = request.education().toEntity();
+        this.organization = request.organization().toEntity();
+        this.introduction = request.introduction();
+        this.timezone = request.timezone().toEntity();
+        this.mentoringField = request.mentoringField().stream().map(MentoringField::valueOf).collect(Collectors.toSet());
+        this.hashtags = request.hashtags().stream().map(Hashtag::new).toList();
+        this.message = request.message();
+        this.portfolio = request.portfolio().toEntity();
     }
 }
