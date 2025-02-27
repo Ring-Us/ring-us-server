@@ -1,5 +1,6 @@
 package es.princip.ringus.domain.mentee;
 
+import es.princip.ringus.domain.bookmark.Bookmark;
 import es.princip.ringus.domain.common.Education;
 import es.princip.ringus.infra.storage.domain.ProfileImage;
 import es.princip.ringus.presentation.mentee.dto.EditMenteeRequest;
@@ -8,6 +9,9 @@ import lombok.AccessLevel;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
+
+import java.util.ArrayList;
+import java.util.List;
 
 @Getter
 @Entity
@@ -38,6 +42,10 @@ public class Mentee {
     @Column(name = "member_id")
     private Long memberId;
 
+    //북마크
+    @OneToMany(mappedBy = "mentee", cascade = CascadeType.ALL ,orphanRemoval = true, fetch = FetchType.LAZY)
+    private List<Bookmark> bookmarks = new ArrayList<>();
+
     @Builder
     public Mentee(
         final String nickname,
@@ -58,5 +66,13 @@ public class Mentee {
         this.education = request.education().toEntity();
         this.introduction = request.introduction();
         this.profileImage = request.image().toEntity();
+    }
+
+    public void addBookmark(Bookmark bookmark){
+        bookmarks.add(bookmark);
+    }
+
+    public void deleteBookmark(Bookmark bookmark){
+        bookmarks.remove(bookmark);
     }
 }
