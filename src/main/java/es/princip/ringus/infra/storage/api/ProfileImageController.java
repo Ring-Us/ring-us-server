@@ -36,16 +36,4 @@ public class ProfileImageController {
         return ResponseEntity.ok(ApiResponseWrapper.success(HttpStatus.OK, filePath));
     }
 
-
-    /**
-     * 프로필 이미지 조회
-     */
-    public ResponseEntity<ApiResponseWrapper<Void>> getProfileImage(
-            @RequestParam Long userId,
-            HttpSession session
-    ) {
-        String filePath = storageProfileService.getProfileImage(userId, (Boolean) session.getAttribute("isMentor"));
-        return ResponseEntity.ok(ApiResponseWrapper.success(HttpStatus.OK, filePath));
-    }
-
 }

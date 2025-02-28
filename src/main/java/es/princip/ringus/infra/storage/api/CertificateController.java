@@ -52,14 +52,4 @@ public class CertificateController {
         return ResponseEntity.ok(ApiResponseWrapper.success(HttpStatus.OK, filePath));
     }
 
-    /**
-     * 증명서 조회(관리자)
-     */
-    @GetMapping("/{memberId}")
-    public ResponseEntity<ApiResponseWrapper<Void>> getCertificate(
-            @PathVariable Long memberId
-    ) {
-
-        return ResponseEntity.ok(ApiResponseWrapper.success(HttpStatus.OK, null));
-    }
 }
