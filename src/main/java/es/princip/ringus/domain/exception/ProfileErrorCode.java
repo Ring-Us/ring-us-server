@@ -3,11 +3,10 @@ package es.princip.ringus.domain.exception;
 import es.princip.ringus.global.exception.ErrorCode;
 import org.springframework.http.HttpStatus;
 
-public enum MenteeErrorCode implements ErrorCode {
-    MENTEE_PROFILE_NOT_FOUND(HttpStatus.NOT_FOUND, "멘티 프로필을 등록한 적이 없음"),
-    MENTEE_NOT_FOUND(HttpStatus.NOT_FOUND, "멘티 정보를 찾을 수 없음");
+public enum ProfileErrorCode implements ErrorCode {
+    PROFILE_NOT_FOUND(HttpStatus.NOT_FOUND,"프로필을 찾을 수 없음");
 
-    MenteeErrorCode(HttpStatus status, String message) {
+    ProfileErrorCode(HttpStatus status,String message) {
         this.status = status;
         this.message = message;
     }

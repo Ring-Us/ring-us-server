@@ -9,10 +9,7 @@ import jakarta.servlet.http.HttpSession;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.ModelAttribute;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 @RestController
 @RequestMapping("/storage/certificate")
@@ -53,5 +50,16 @@ public class CertificateController {
 
         String filePath = storageCertificateService.uploadMentorCertificate(certificateUploadRequest, memberId);
         return ResponseEntity.ok(ApiResponseWrapper.success(HttpStatus.OK, filePath));
+    }
+
+    /**
+     * 증명서 조회(관리자)
+     */
+    @GetMapping("/{memberId}")
+    public ResponseEntity<ApiResponseWrapper<Void>> getCertificate(
+            @PathVariable Long memberId
+    ) {
+
+        return ResponseEntity.ok(ApiResponseWrapper.success(HttpStatus.OK, null));
     }
 }
