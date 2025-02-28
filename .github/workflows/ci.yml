@@ -1,16 +1,11 @@
 name: CI Workflow
 
 on:
-  push:
-    branches:
-      - main         # main 브랜치
-      - develop      # develop 브랜치
-      - feature/*    # 모든 feature/* 브랜치
   pull_request:
     branches:
-      - main         # main 브랜치로의 PR
-      - develop      # develop 브랜치로의 PR
-      - feature/*    # feature/* 브랜치로의 PR
+      - main
+      - develop
+      - feature/*
 
 jobs:
   build-and-test:
@@ -39,14 +34,33 @@ jobs:
           restore-keys: |
             ${{ runner.os }}-gradle-
 
-      # 4. dev.sh 실행 (환경 변수 로드 및 빌드 준비)
-      - name: Run dev.sh
+      # 4. 환경 변수 설정
+      - name: Set up environment variables
         run: |
-          chmod +x ./dev.sh    # dev.sh에 실행 권한 부여
-          ./dev.sh             # dev.sh 실행
+          echo "SPRING_PORT=${{ secrets.SPRING_PORT }}" >> $GITHUB_ENV
+          echo "BASE_PATH=${{ secrets.BASE_PATH }}" >> $GITHUB_ENV
+          echo "ENV_FILE=${{ secrets.ENV_FILE }}" >> $GITHUB_ENV
+          echo "DB_PORT=${{ secrets.DB_PORT }}" >> $GITHUB_ENV
+          echo "DB_HOST=${{ secrets.DB_HOST }}" >> $GITHUB_ENV
+          echo "DB_DATABASE=${{ secrets.DB_DATABASE }}" >> $GITHUB_ENV
+          echo "DB_USERNAME=${{ secrets.DB_USERNAME }}" >> $GITHUB_ENV
+          echo "DB_PASSWORD=${{ secrets.DB_PASSWORD }}" >> $GITHUB_ENV
+          echo "DB_URL=${{ secrets.DB_URL }}" >> $GITHUB_ENV
+          echo "REDIS_HOST=${{ secrets.REDIS_HOST }}" >> $GITHUB_ENV
+          echo "REDIS_PORT=${{ secrets.REDIS_PORT }}" >> $GITHUB_ENV
+          echo "REDIS_DATABASE=${{ secrets.REDIS_DATABASE }}" >> $GITHUB_ENV
+          echo "REDIS_PASSWORD=${{ secrets.REDIS_PASSWORD }}" >> $GITHUB_ENV
+          echo "SMTP_HOST=${{ secrets.SMTP_HOST }}" >> $GITHUB_ENV
+          echo "SMTP_PORT=${{ secrets.SMTP_PORT }}" >> $GITHUB_ENV
+          echo "SMTP_USERNAME=${{ secrets.SMTP_USERNAME }}" >> $GITHUB_ENV
+          echo "SMTP_PASSWORD=${{ secrets.SMTP_PASSWORD }}" >> $GITHUB_ENV
+          echo "AWS_REGION=${{ secrets.AWS_REGION }}" >> $GITHUB_ENV
+          echo "AWS_ACCESS_KEY_ID=${{ secrets.AWS_ACCESS_KEY_ID }}" >> $GITHUB_ENV
+          echo "AWS_SECRET_ACCESS_KEY=${{ secrets.AWS_SECRET_ACCESS_KEY }}" >> $GITHUB_ENV
+          echo "AWS_BUCKET_NAME=${{ secrets.AWS_BUCKET_NAME }}" >> $GITHUB_ENV
+          echo "MAX_FAILED_ATTEMPTS=${{ secrets.MAX_FAILED_ATTEMPTS }}" >> $GITHUB_ENV
+          echo "DEFAULT_EXPIRY=${{ secrets.DEFAULT_EXPIRY }}" >> $GITHUB_ENV
 
       # 5. Gradle 빌드 및 테스트 실행
-      - name: Build and Test (Gradle)
-        run: |
-          ./gradlew clean build -x test
-          ./gradlew test
+      - name: Build and test with Gradle
+        run: ./gradlew clean build --no-daemon
