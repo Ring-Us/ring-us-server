@@ -14,7 +14,7 @@ import org.springframework.web.bind.annotation.*;
 @RestController
 @RequestMapping("/storage/profile")
 @RequiredArgsConstructor
-public class ProfileImageController {
+public class ProfileImageController implements ProfileImageControllerDocs {
 
     private final StorageProfileImageService storageProfileService;
 

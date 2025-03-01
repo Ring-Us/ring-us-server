@@ -14,7 +14,7 @@ import org.springframework.web.bind.annotation.*;
 @RestController
 @RequestMapping("/storage/certificate")
 @RequiredArgsConstructor
-public class CertificateController {
+public class CertificateController implements CertificateControllerDocs{
 
     private final StorageCertificateService storageCertificateService;
     /**
