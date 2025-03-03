@@ -1,13 +1,16 @@
 package es.princip.ringus.presentation.common.dto;
 
+import es.princip.ringus.domain.mentor.vo.DetailedJob;
+import es.princip.ringus.domain.mentor.vo.JobCategory;
 import es.princip.ringus.domain.mentor.vo.Organization;
 
 public record OrganizationRequest(
-       String name,
-       String role,
-       int experience
+        String name,
+        JobCategory jobCategory,
+        DetailedJob detailedJob,
+        int experience
 ) {
     public Organization toEntity() {
-        return new Organization(name, role, experience);
+        return new Organization(name, jobCategory, detailedJob, experience);
     }
 }

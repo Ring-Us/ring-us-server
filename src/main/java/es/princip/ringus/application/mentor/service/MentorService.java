@@ -22,10 +22,8 @@ public class MentorService {
     private final MentorRepository mentorRepository;
 
     @Transactional
-    public Long register(MentorRequest request) {
-        Member member = memberRepository.findByEmail(request.email())
-                .orElseThrow(() -> new CustomRuntimeException(SignUpErrorCode.DUPLICATE_EMAIL));
-        Mentor mentor = request.toEntity(member.getId());
+    public Long register(Long memberId, MentorRequest request) {
+        Mentor mentor = request.toEntity(memberId);
         return  mentorRepository.save(mentor).getId();
     }
 

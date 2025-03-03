@@ -1,5 +1,6 @@
 package es.princip.ringus.presentation.mentor;
 
+import es.princip.ringus.global.annotation.SessionMemberId;
 import es.princip.ringus.global.util.ApiResponseWrapper;
 import es.princip.ringus.presentation.mentor.dto.EditMentorRequest;
 import es.princip.ringus.presentation.mentor.dto.EditMentorResponse;
@@ -24,7 +25,7 @@ public interface MentorControllerDocs {
             @ApiResponse(responseCode = "409", description = "이미 가입된 이메일")
     })
     @PostMapping
-    ResponseEntity<ApiResponseWrapper<MentorResponse>> create(@Valid @RequestBody @Parameter(description = "멘토 등록 요청") MentorRequest request);
+    ResponseEntity<ApiResponseWrapper<MentorResponse>> create(@SessionMemberId Long memberId, @Valid @RequestBody @Parameter(description = "멘토 등록 요청") MentorRequest request);
 
     @Operation(summary = "멘토 수정", description = "기존 멘토 정보를 수정합니다.")
     @ApiResponses(value = {
