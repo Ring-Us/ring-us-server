@@ -38,8 +38,8 @@ public class Mentor {
     private Organization organization;
 
     // 자기소개
-    @Column(name = "introduction", length = 500)
-    private String introduction;
+    @Embedded
+    private Introduction introduction;
 
     // 선호 시간대
     @Embedded
@@ -76,12 +76,13 @@ public class Mentor {
         final String nickname,
         final Education education,
         final Organization organization,
-        final String introduction,
+        final Introduction introduction,
         final Timezone timezone,
         final Set<MentoringField> mentoringField,
         final List<Hashtag> hashtags,
         final String message,
         final Portfolio portfolio,
+        final ProfileImage profileImage,
         final Long memberId
     ) {
         this.nickname = nickname;
@@ -93,6 +94,7 @@ public class Mentor {
         this.hashtags = hashtags;
         this.message = message;
         this.portfolio = portfolio;
+        this.profileImage = profileImage;
         this.memberId = memberId;
     }
 
@@ -100,7 +102,7 @@ public class Mentor {
         this.nickname = request.nickname();
         this.education = request.education().toEntity();
         this.organization = request.organization().toEntity();
-        this.introduction = request.introduction();
+        this.introduction = request.introduction().toEntity();
         this.timezone = request.timezone().toEntity();
         this.mentoringField = request.mentoringField().stream().map(MentoringField::valueOf).collect(Collectors.toSet());
         this.hashtags = request.hashtags().stream().map(Hashtag::new).toList();
