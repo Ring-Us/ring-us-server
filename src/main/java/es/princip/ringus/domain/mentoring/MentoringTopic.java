@@ -1,9 +1,9 @@
-package es.princip.ringus.domain.apply;
+package es.princip.ringus.domain.mentoring;
 
 import lombok.Getter;
 
 @Getter
-public enum ApplyTopic {
+public enum MentoringTopic {
     STUDY("학업 관련"),
     INDUSTRY_TRENDS("업계 동향"),
     INTERVIEW("면접 대비"),
@@ -11,7 +11,7 @@ public enum ApplyTopic {
 
     private final String description;
 
-    ApplyTopic(String description) {
+    MentoringTopic(String description) {
         this.description = description;
     }
 
