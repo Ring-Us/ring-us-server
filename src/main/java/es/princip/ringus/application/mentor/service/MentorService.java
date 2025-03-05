@@ -1,8 +1,6 @@
 package es.princip.ringus.application.mentor.service;
 
 import es.princip.ringus.domain.exception.MentorErrorCode;
-import es.princip.ringus.domain.exception.SignUpErrorCode;
-import es.princip.ringus.domain.member.Member;
 import es.princip.ringus.domain.member.MemberRepository;
 import es.princip.ringus.domain.mentor.Mentor;
 import es.princip.ringus.domain.mentor.MentorRepository;
@@ -18,6 +16,7 @@ import org.springframework.transaction.annotation.Transactional;
 @Transactional(readOnly = true)
 public class MentorService {
 
+//    private final SerializeMentorCursor serializeMentorCursor;
     private final MemberRepository memberRepository;
     private final MentorRepository mentorRepository;
 

@@ -3,10 +3,7 @@ package es.princip.ringus.presentation.mentor;
 import es.princip.ringus.application.mentor.service.MentorService;
 import es.princip.ringus.global.annotation.SessionMemberId;
 import es.princip.ringus.global.util.ApiResponseWrapper;
-import es.princip.ringus.presentation.mentor.dto.EditMentorRequest;
-import es.princip.ringus.presentation.mentor.dto.EditMentorResponse;
-import es.princip.ringus.presentation.mentor.dto.MentorRequest;
-import es.princip.ringus.presentation.mentor.dto.MentorResponse;
+import es.princip.ringus.presentation.mentor.dto.*;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
@@ -30,5 +27,10 @@ public class MentorController implements MentorControllerDocs{
     public ResponseEntity<ApiResponseWrapper<EditMentorResponse>> update(@Valid @RequestBody EditMentorRequest request) {
         EditMentorResponse response = EditMentorResponse.from(mentorService.edit(request));
         return ResponseEntity.ok(ApiResponseWrapper.success(HttpStatus.OK, "성공", response));
+    }
+
+    @Override
+    public ResponseEntity<ApiResponseWrapper<MentorCardResponse>> getMyMentor() {
+        return null;
     }
 }

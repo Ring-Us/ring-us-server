@@ -8,7 +8,8 @@ public record MemberResponse(
         String email,
         boolean isFileVerified,
         boolean isProfileRegisterd,
-        boolean isUniversityVerified
+        boolean isUniversityVerified,
+        String imgUrl
 ) {
     public static MemberResponse from(Member member) {
         return new MemberResponse(
@@ -16,7 +17,8 @@ public record MemberResponse(
                 member.getEmail(),
                 member.isProfileRegistered(),
                 member.isProfileRegistered(),
-                member.isUniversityVerified()
+                member.isUniversityVerified(),
+                ""
         );
     }
 }

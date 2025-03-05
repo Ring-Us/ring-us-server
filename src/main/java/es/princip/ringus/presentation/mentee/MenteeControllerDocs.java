@@ -2,10 +2,7 @@ package es.princip.ringus.presentation.mentee;
 
 
 import es.princip.ringus.global.util.ApiResponseWrapper;
-import es.princip.ringus.presentation.mentee.dto.EditMenteeRequest;
-import es.princip.ringus.presentation.mentee.dto.EditMenteeResponse;
-import es.princip.ringus.presentation.mentee.dto.MenteeRequest;
-import es.princip.ringus.presentation.mentee.dto.MenteeResponse;
+import es.princip.ringus.presentation.mentee.dto.*;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.Parameter;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
@@ -13,10 +10,7 @@ import io.swagger.v3.oas.annotations.responses.ApiResponses;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import jakarta.validation.Valid;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.PutMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.*;
 
 @Tag(name = "Mentee API", description = "멘티 관련 API")
 @RequestMapping("/mentee")
@@ -37,4 +31,12 @@ public interface MenteeControllerDocs {
     })
     @PutMapping
     ResponseEntity<ApiResponseWrapper<EditMenteeResponse>> update(@Valid @RequestBody @Parameter(description = "멘티 수정 요청") EditMenteeRequest request);
+
+    @Operation(summary = "멘티 상세 조회", description = "멘티 상세 조회를 합니다.")
+    @ApiResponses(value = {
+            @ApiResponse(responseCode = "200", description = "멘티 상세 조회 성공"),
+            @ApiResponse(responseCode = "404", description = "해당 id의 멘티가 존재하지 않음")
+    })
+    @GetMapping
+    ResponseEntity<ApiResponseWrapper<MyMenteeResponse>> getMyMentee(Long menteeId);
 }
