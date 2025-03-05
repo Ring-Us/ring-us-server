@@ -1,6 +1,7 @@
 package es.princip.ringus.infra.storage.api;
 
 import es.princip.ringus.domain.exception.MemberErrorCode;
+import es.princip.ringus.global.annotation.SessionMemberId;
 import es.princip.ringus.global.exception.CustomRuntimeException;
 import es.princip.ringus.global.util.ApiResponseWrapper;
 import es.princip.ringus.infra.storage.application.StorageProfileImageService;
@@ -23,15 +24,8 @@ public class ProfileImageController implements ProfileImageControllerDocs {
      */
     @PostMapping("/image")
     public ResponseEntity<ApiResponseWrapper<Void>> uploadProfileImage(
-            @ModelAttribute ProfileUploadRequest request,
-            HttpSession session
+            @ModelAttribute ProfileUploadRequest request
     ) {
-
-        Long memberId = (Long)session.getAttribute("memberId");
-        if(memberId == null){
-            throw new CustomRuntimeException(MemberErrorCode.SESSION_EXPIRED);
-        }
-
         String filePath = storageProfileService.uploadProfileImage(request);
         return ResponseEntity.ok(ApiResponseWrapper.success(HttpStatus.OK, filePath));
     }
