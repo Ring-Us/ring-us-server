@@ -4,16 +4,10 @@ import es.princip.ringus.domain.exception.MentorErrorCode;
 import es.princip.ringus.domain.member.MemberRepository;
 import es.princip.ringus.domain.mentor.Mentor;
 import es.princip.ringus.domain.mentor.MentorRepository;
-import es.princip.ringus.domain.support.Cursor;
-import es.princip.ringus.domain.support.CursorPageable;
-import es.princip.ringus.domain.support.CursorResponse;
 import es.princip.ringus.global.exception.CustomRuntimeException;
-import es.princip.ringus.presentation.mentor.MentorSearchFilter;
 import es.princip.ringus.presentation.mentor.dto.EditMentorRequest;
-import es.princip.ringus.presentation.mentor.dto.MentorCardResponse;
 import es.princip.ringus.presentation.mentor.dto.MentorRequest;
 import lombok.RequiredArgsConstructor;
-import org.springframework.data.domain.Slice;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -38,11 +32,5 @@ public class MentorService {
                 .orElseThrow(() -> new CustomRuntimeException(MentorErrorCode.MENTOR_PROFILE_NOT_FOUND));
         mentor.edit(request);
         return mentor.getId();
-    }
-
-    public CursorResponse<MentorCardResponse> getMentorBy(MentorSearchFilter filter, CursorPageable<Cursor> pageable) {
-        final Slice<MentorCardResponse> response = mentorRepository.findMentorBy(filter, pageable);
-        //final String cursor = serializeMentorCursor.serializeCursor(response);
-        return CursorResponse.of(response, null);
     }
 }

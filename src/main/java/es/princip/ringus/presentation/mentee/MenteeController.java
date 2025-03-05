@@ -2,10 +2,7 @@ package es.princip.ringus.presentation.mentee;
 
 import es.princip.ringus.application.mentee.service.MenteeService;
 import es.princip.ringus.global.util.ApiResponseWrapper;
-import es.princip.ringus.presentation.mentee.dto.EditMenteeRequest;
-import es.princip.ringus.presentation.mentee.dto.EditMenteeResponse;
-import es.princip.ringus.presentation.mentee.dto.MenteeRequest;
-import es.princip.ringus.presentation.mentee.dto.MenteeResponse;
+import es.princip.ringus.presentation.mentee.dto.*;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
@@ -28,5 +25,10 @@ public class MenteeController implements MenteeControllerDocs{
     public ResponseEntity<ApiResponseWrapper<EditMenteeResponse>> update(@Valid @RequestBody EditMenteeRequest request) {
         EditMenteeResponse response = EditMenteeResponse.from(menteeService.edit(request));
         return ResponseEntity.ok(ApiResponseWrapper.success(HttpStatus.OK, "성공", response));
+    }
+
+    @Override
+    public ResponseEntity<ApiResponseWrapper<MyMenteeResponse>> getMyMentee(Long menteeId) {
+        return null;
     }
 }
