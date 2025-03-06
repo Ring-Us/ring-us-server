@@ -20,7 +20,7 @@ public class MemberController {
     @GetMapping("/me")
     public ResponseEntity<ApiResponseWrapper<MemberResponse>> getMember(@SessionMemberId Long memberId){
 
-        MemberResponse response = memberService.getMemberById(memberId);
+        MemberResponse response = memberService.getMember(memberId);
 
         return ResponseEntity.ok(ApiResponseWrapper.success(HttpStatus.OK, "성공", response));
     }

@@ -18,10 +18,10 @@ public record MentorDetailResponse(
         String message,
         PortfolioResponse portfolio
 ) {
-    public static MentorDetailResponse of(final Mentor mentor) {
+    public static MentorDetailResponse from(final Mentor mentor) {
         return new MentorDetailResponse(
                 mentor.getNickname(),
-                EducationResponse.of(mentor.getEducation()),
+                EducationResponse.from(mentor.getEducation()),
                 OrganizationResponse.of(mentor.getOrganization()),
                 IntroductionResponse.of(mentor.getIntroduction()),
                 TimezoneResponse.of(mentor.getTimezone()),

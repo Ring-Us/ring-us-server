@@ -10,7 +10,6 @@ import java.util.List;
 import java.util.Set;
 
 public record EditMentorRequest(
-        @NotBlank Long mentorId,
         @NotBlank String nickname,
         IntroductionRequest introduction,
         Set<String> mentoringField,

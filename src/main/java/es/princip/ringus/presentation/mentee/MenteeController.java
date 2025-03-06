@@ -1,6 +1,7 @@
 package es.princip.ringus.presentation.mentee;
 
 import es.princip.ringus.application.mentee.service.MenteeService;
+import es.princip.ringus.global.annotation.SessionMemberId;
 import es.princip.ringus.global.util.ApiResponseWrapper;
 import es.princip.ringus.presentation.mentee.dto.*;
 import jakarta.validation.Valid;
@@ -16,14 +17,20 @@ public class MenteeController implements MenteeControllerDocs{
     private final MenteeService menteeService;
 
     @PostMapping
-    public ResponseEntity<ApiResponseWrapper<MenteeResponse>> create(@Valid @RequestBody MenteeRequest request) {
-        MenteeResponse response = MenteeResponse.from(menteeService.register(request));
+    public ResponseEntity<ApiResponseWrapper<MenteeResponse>> create(
+            @SessionMemberId Long memberId,
+            @Valid @RequestBody MenteeRequest request
+    ) {
+        MenteeResponse response = MenteeResponse.from(menteeService.register(memberId, request));
         return ResponseEntity.ok(ApiResponseWrapper.success(HttpStatus.OK, "성공", response));
     }
 
     @PutMapping
-    public ResponseEntity<ApiResponseWrapper<EditMenteeResponse>> update(@Valid @RequestBody EditMenteeRequest request) {
-        EditMenteeResponse response = EditMenteeResponse.from(menteeService.edit(request));
+    public ResponseEntity<ApiResponseWrapper<EditMenteeResponse>> update(
+            @SessionMemberId Long memberId,
+            @Valid @RequestBody EditMenteeRequest request
+    ) {
+        EditMenteeResponse response = EditMenteeResponse.from(menteeService.edit(memberId, request));
         return ResponseEntity.ok(ApiResponseWrapper.success(HttpStatus.OK, "성공", response));
     }
 

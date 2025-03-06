@@ -18,14 +18,19 @@ public class MentorController implements MentorControllerDocs{
     private final MentorService mentorService;
 
     @PostMapping
-    public ResponseEntity<ApiResponseWrapper<MentorResponse>> create(@SessionMemberId Long memberId, @Valid @RequestBody MentorRequest request) {
+    public ResponseEntity<ApiResponseWrapper<MentorResponse>> create(
+            @SessionMemberId Long memberId,
+            @Valid @RequestBody MentorRequest request) {
         MentorResponse response = MentorResponse.from(mentorService.register(memberId, request));
         return ResponseEntity.ok(ApiResponseWrapper.success(HttpStatus.OK, "성공", response));
     }
 
     @PutMapping
-    public ResponseEntity<ApiResponseWrapper<EditMentorResponse>> update(@Valid @RequestBody EditMentorRequest request) {
-        EditMentorResponse response = EditMentorResponse.from(mentorService.edit(request));
+    public ResponseEntity<ApiResponseWrapper<EditMentorResponse>> update(
+            @SessionMemberId Long memberId,
+            @Valid @RequestBody EditMentorRequest request
+    ) {
+        EditMentorResponse response = EditMentorResponse.from(mentorService.edit(memberId, request));
         return ResponseEntity.ok(ApiResponseWrapper.success(HttpStatus.OK, "성공", response));
     }
 
