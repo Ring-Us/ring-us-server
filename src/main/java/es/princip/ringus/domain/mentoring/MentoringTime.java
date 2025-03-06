@@ -1,5 +1,8 @@
 package es.princip.ringus.domain.mentoring;
 
+import com.fasterxml.jackson.annotation.JsonCreator;
+import com.fasterxml.jackson.annotation.JsonInclude;
+import com.fasterxml.jackson.annotation.JsonProperty;
 import jakarta.persistence.Embeddable;
 import lombok.AccessLevel;
 import lombok.Getter;
@@ -7,15 +10,17 @@ import lombok.NoArgsConstructor;
 
 import java.time.LocalDateTime;
 
-@Embeddable
 @Getter
+@JsonInclude(JsonInclude.Include.NON_NULL)
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 public class MentoringTime {
 
     private LocalDateTime startTime;
     private LocalDateTime endTime;
 
-    public MentoringTime(LocalDateTime startTime, LocalDateTime endTime) {
+    @JsonCreator
+    public MentoringTime(@JsonProperty("startTime")final LocalDateTime startTime,
+                         @JsonProperty("endTime")final LocalDateTime endTime) {
         if (startTime == null || endTime == null) {
             throw new IllegalArgumentException("시작 시간과 종료 시간은 필수입니다.");
         }

@@ -69,4 +69,22 @@ public class Mentoring extends BaseTimeEntity {
         this.mentor = mentor;
         this.mentee = mentee;
     }
+
+    public static Mentoring of(
+        final MentoringStatus status,
+        final MentoringTopic topic,
+        final List<MentoringTime> applyTimes,
+        final String mentoringMessage,
+        final Mentor mentor,
+        final Mentee mentee
+    ) {
+        return new Mentoring(
+            status,
+            topic,
+            applyTimes,
+            mentoringMessage,
+            mentor,
+            mentee
+        );
+    }
 }
