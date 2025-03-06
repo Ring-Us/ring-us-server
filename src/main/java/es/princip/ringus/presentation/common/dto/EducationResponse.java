@@ -6,7 +6,7 @@ public record EducationResponse(
         String schoolName,
         String major
 ) {
-    public static EducationResponse of(final Education education) {
+    public static EducationResponse from(final Education education) {
         return new EducationResponse(
                 education.getSchoolName(),
                 education.getMajor()
