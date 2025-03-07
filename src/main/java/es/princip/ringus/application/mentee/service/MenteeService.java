@@ -22,18 +22,29 @@ public class MenteeService {
     private final MenteeRepository menteeRepository;
 
     @Transactional
-    public Long register(MenteeRequest request) {
-        //TODO: 확인 쿼리로 최적화
-        Member member = memberRepository.findByEmail(request.email())
-                .orElseThrow(() -> new CustomRuntimeException(SignUpErrorCode.WRONG_EMAIL));
+    public Long register(Long memberId, MenteeRequest request) {
+        Member member = memberRepository.findById(memberId)
+                .orElseThrow(() -> new CustomRuntimeException(SignUpErrorCode.NOT_FOUND_MEMBER));
+
+        if (menteeRepository.existsByMemberId(memberId)) {
+            throw new CustomRuntimeException(MenteeErrorCode.ALREADY_REGISTERED_MENTEE);
+        }
+
+        if (member.isNotMentee()) {
+            throw new CustomRuntimeException(MenteeErrorCode.MEMBER_TYPE_NOT_MENTEE);
+        }
+
+        member.registerProfile();
+
         Mentee mentee = request.toEntity(member.getId());
         return  menteeRepository.save(mentee).getId();
     }
 
     @Transactional
-    public Long edit(EditMenteeRequest request) {
-        Mentee mentee = menteeRepository.findById(request.menteeId())
+    public Long edit(Long memberId, EditMenteeRequest request) {
+        Mentee mentee = menteeRepository.findById(memberId)
                 .orElseThrow(() -> new CustomRuntimeException(MenteeErrorCode.MENTEE_PROFILE_NOT_FOUND));
+
         mentee.edit(request);
         return mentee.getId();
     }

@@ -6,7 +6,6 @@ import es.princip.ringus.presentation.common.dto.ProfileImageRequest;
 import jakarta.validation.constraints.NotBlank;
 
 public record MenteeRequest(
-        @NotBlank String email,
         @NotBlank String nickname,
         EducationRequest education,
         ProfileImageRequest image,

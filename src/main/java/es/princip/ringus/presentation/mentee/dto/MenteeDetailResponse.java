@@ -8,10 +8,10 @@ public record MenteeDetailResponse(
         EducationResponse education,
         String introduction
 ) {
-    public static MenteeDetailResponse of(final Mentee mentee) {
+    public static MenteeDetailResponse from(final Mentee mentee) {
         return new MenteeDetailResponse(
                 mentee.getNickname(),
-                EducationResponse.of(mentee.getEducation()),
+                EducationResponse.from(mentee.getEducation()),
                 mentee.getIntroduction()
         );
     }
