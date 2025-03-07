@@ -17,7 +17,7 @@ import org.springframework.web.bind.annotation.RestController;
 @RestController
 @RequestMapping("/mentoring")
 @RequiredArgsConstructor
-public class MentoringController {
+public class MentoringController implements MentoringControllerDocs {
 
     private final MentoringService mentoringService;
 
