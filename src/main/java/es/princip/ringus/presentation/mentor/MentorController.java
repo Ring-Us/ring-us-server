@@ -1,6 +1,7 @@
 package es.princip.ringus.presentation.mentor;
 
 import es.princip.ringus.application.mentor.service.MentorService;
+import es.princip.ringus.global.annotation.SessionCheck;
 import es.princip.ringus.global.annotation.SessionMemberId;
 import es.princip.ringus.global.util.ApiResponseWrapper;
 import es.princip.ringus.presentation.mentor.dto.*;
@@ -17,6 +18,7 @@ public class MentorController implements MentorControllerDocs{
 
     private final MentorService mentorService;
 
+    @SessionCheck
     @PostMapping
     public ResponseEntity<ApiResponseWrapper<MentorResponse>> create(
             @SessionMemberId Long memberId,
@@ -25,6 +27,7 @@ public class MentorController implements MentorControllerDocs{
         return ResponseEntity.ok(ApiResponseWrapper.success(HttpStatus.OK, "성공", response));
     }
 
+    @SessionCheck
     @PutMapping
     public ResponseEntity<ApiResponseWrapper<EditMentorResponse>> update(
             @SessionMemberId Long memberId,

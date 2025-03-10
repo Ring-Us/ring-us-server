@@ -1,6 +1,7 @@
 package es.princip.ringus.presentation.mentee;
 
 import es.princip.ringus.application.mentee.service.MenteeService;
+import es.princip.ringus.global.annotation.SessionCheck;
 import es.princip.ringus.global.annotation.SessionMemberId;
 import es.princip.ringus.global.util.ApiResponseWrapper;
 import es.princip.ringus.presentation.mentee.dto.*;
@@ -16,6 +17,7 @@ import org.springframework.web.bind.annotation.*;
 public class MenteeController implements MenteeControllerDocs{
     private final MenteeService menteeService;
 
+    @SessionCheck
     @PostMapping
     public ResponseEntity<ApiResponseWrapper<MenteeResponse>> create(
             @SessionMemberId Long memberId,
@@ -25,6 +27,7 @@ public class MenteeController implements MenteeControllerDocs{
         return ResponseEntity.ok(ApiResponseWrapper.success(HttpStatus.OK, "성공", response));
     }
 
+    @SessionCheck
     @PutMapping
     public ResponseEntity<ApiResponseWrapper<EditMenteeResponse>> update(
             @SessionMemberId Long memberId,

@@ -24,13 +24,7 @@ public class WebConfig implements WebMvcConfigurer {
 
     @Override
     public void addInterceptors(InterceptorRegistry registry) {
-        registry.addInterceptor(sessionInterceptor)
-                .excludePathPatterns("/auth/**")
-                .excludePathPatterns("/service-terms")
-                .excludePathPatterns("/swagger-ui/**")
-                .excludePathPatterns("/v3/api-docs/**")
-                .excludePathPatterns("/swagger-resources/**")
-                .excludePathPatterns("/webjars/**");
+        registry.addInterceptor(sessionInterceptor);
     }
 
     @Override
