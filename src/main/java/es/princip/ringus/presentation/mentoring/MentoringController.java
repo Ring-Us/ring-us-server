@@ -1,6 +1,7 @@
 package es.princip.ringus.presentation.mentoring;
 
 import es.princip.ringus.application.mentoring.MentoringService;
+import es.princip.ringus.global.annotation.SessionCheck;
 import es.princip.ringus.global.annotation.SessionMemberId;
 import es.princip.ringus.global.util.ApiResponseWrapper;
 import es.princip.ringus.presentation.mentoring.dto.CreateMentoringRequest;
@@ -21,6 +22,7 @@ public class MentoringController implements MentoringControllerDocs {
 
     private final MentoringService mentoringService;
 
+    @SessionCheck
     @PostMapping
     public ResponseEntity<ApiResponseWrapper<MentoringResponse>> suggest(
             @SessionMemberId Long memberId,
