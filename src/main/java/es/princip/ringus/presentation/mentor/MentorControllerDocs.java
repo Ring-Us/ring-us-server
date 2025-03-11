@@ -1,17 +1,16 @@
 package es.princip.ringus.presentation.mentor;
 
+import es.princip.ringus.domain.support.CursorResponse;
 import es.princip.ringus.global.annotation.SessionMemberId;
 import es.princip.ringus.global.util.ApiResponseWrapper;
-import es.princip.ringus.presentation.mentor.dto.EditMentorRequest;
-import es.princip.ringus.presentation.mentor.dto.EditMentorResponse;
-import es.princip.ringus.presentation.mentor.dto.MentorRequest;
-import es.princip.ringus.presentation.mentor.dto.MentorResponse;
+import es.princip.ringus.presentation.mentor.dto.*;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.Parameter;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import io.swagger.v3.oas.annotations.responses.ApiResponses;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import jakarta.validation.Valid;
+import org.springframework.data.domain.Pageable;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -25,7 +24,10 @@ public interface MentorControllerDocs {
             @ApiResponse(responseCode = "409", description = "이미 가입된 이메일")
     })
     @PostMapping
-    ResponseEntity<ApiResponseWrapper<MentorResponse>> create(@SessionMemberId Long memberId, @Valid @RequestBody @Parameter(description = "멘토 등록 요청") MentorRequest request);
+    ResponseEntity<ApiResponseWrapper<MentorResponse>> create(
+            @SessionMemberId Long memberId,
+            @Valid @RequestBody @Parameter(description = "멘토 등록 요청") MentorRequest request
+    );
 
     @Operation(summary = "멘토 수정", description = "기존 멘토 정보를 수정합니다.")
     @ApiResponses(value = {
@@ -33,5 +35,14 @@ public interface MentorControllerDocs {
             @ApiResponse(responseCode = "404", description = "멘토 프로필을 등록한 적이 없음")
     })
     @PutMapping
-    ResponseEntity<ApiResponseWrapper<EditMentorResponse>> update(@Valid @RequestBody @Parameter(description = "멘토 수정 요청") EditMentorRequest request);
+    ResponseEntity<ApiResponseWrapper<EditMentorResponse>> update(
+            @SessionMemberId Long memberId,
+            @Valid @RequestBody @Parameter(description = "멘토 수정 요청") EditMentorRequest request
+    );
+
+    ResponseEntity<ApiResponseWrapper<CursorResponse<MentorCardResponse>>> getMentors(
+            MentorSearchFilter filter,
+            Long cursor,
+            Pageable pageable
+    );
 }

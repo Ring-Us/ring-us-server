@@ -64,7 +64,7 @@ public abstract class QueryDslSupport {
     }
 
     protected <T> Slice<T> paginate(
-            final CursorPageable<? extends Cursor> pageable,
+            final Pageable pageable,
             final List<T> content
     ) {
         final List<T> mutable = new ArrayList<>(content);

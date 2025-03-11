@@ -2,12 +2,11 @@ package es.princip.ringus.domain.mentor;
 
 import com.querydsl.core.Tuple;
 import com.querydsl.core.types.OrderSpecifier;
-import es.princip.ringus.domain.support.Cursor;
-import es.princip.ringus.domain.support.CursorPageable;
 import es.princip.ringus.domain.support.QueryDslSupport;
 import es.princip.ringus.presentation.mentor.MentorSearchFilter;
 import es.princip.ringus.presentation.mentor.dto.MentorCardResponse;
 import lombok.RequiredArgsConstructor;
+import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Slice;
 import org.springframework.stereotype.Repository;
 
@@ -21,7 +20,8 @@ import static es.princip.ringus.domain.mentor.QMentor.mentor;
 public class MentorQueryDslRepositoryImpl extends QueryDslSupport implements MentorQueryDslRepository{
 
     private List<Tuple> fetchMentor(
-            final CursorPageable<? extends Cursor> pageable
+            final Pageable pageable,
+            final Long cursor
     ) {
         return queryFactory.select(
                     mentor.id,
@@ -32,15 +32,17 @@ public class MentorQueryDslRepositoryImpl extends QueryDslSupport implements Men
                     mentor.message
                 )
                 .from(mentor)
+                .where(cursor != null ? mentor.id.lt(cursor) : null)
                 .orderBy(new OrderSpecifier<>(DESC, mentor.id))
                 .limit(pageable.getPageSize() + 1)
                 .fetch();
     }
 
     private List<MentorCardResponse> fetchContent(
-            final CursorPageable<? extends Cursor> pageable
+            final Pageable pageable,
+            final  Long cursor
     ) {
-        return fetchMentor(pageable).stream()
+        return fetchMentor(pageable, cursor).stream()
                 .map(tuple -> MentorCardResponse.of(
                         tuple.get(mentor.id),
                         tuple.get(mentor.nickname),
@@ -54,8 +56,8 @@ public class MentorQueryDslRepositoryImpl extends QueryDslSupport implements Men
     }
 
     @Override
-    public Slice<MentorCardResponse> findMentorBy(MentorSearchFilter filter, CursorPageable<? extends Cursor> pageable) {
-        final List<MentorCardResponse> content = fetchContent(pageable);
+    public Slice<MentorCardResponse> findMentorBy(MentorSearchFilter filter, Long cursor, Pageable pageable) {
+        final List<MentorCardResponse> content = fetchContent(pageable, cursor);
         return paginate(pageable, content);
     }
 }

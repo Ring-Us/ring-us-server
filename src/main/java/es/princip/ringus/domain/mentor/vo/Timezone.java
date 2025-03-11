@@ -2,12 +2,14 @@ package es.princip.ringus.domain.mentor.vo;
 
 import jakarta.persistence.Embeddable;
 import lombok.AccessLevel;
+import lombok.Getter;
 import lombok.NoArgsConstructor;
 
 import java.time.LocalTime;
 import java.util.Set;
 import java.util.stream.Collectors;
 
+@Getter
 @Embeddable
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 public class Timezone {
@@ -38,9 +40,9 @@ public class Timezone {
         this.endTime = endTime;
     }
 
-    public Set<Days> getDays() {
+    public Set<String> getDays() {
         return Set.of(days.split(", ")).stream()
-            .map(Days::valueOf)
+            .map(String::valueOf)
             .collect(Collectors.toSet());
     }
 }
