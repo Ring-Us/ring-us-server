@@ -1,6 +1,7 @@
 package es.princip.ringus.presentation.member;
 
 import es.princip.ringus.application.member.service.MemberService;
+import es.princip.ringus.global.annotation.SessionCheck;
 import es.princip.ringus.global.annotation.SessionMemberId;
 import es.princip.ringus.global.util.ApiResponseWrapper;
 import es.princip.ringus.presentation.member.dto.MemberResponse;
@@ -17,6 +18,7 @@ import org.springframework.web.bind.annotation.RestController;
 public class MemberController {
     private final MemberService memberService;
 
+    @SessionCheck
     @GetMapping("/me")
     public ResponseEntity<ApiResponseWrapper<MemberResponse>> getMember(@SessionMemberId Long memberId){
 
@@ -25,6 +27,7 @@ public class MemberController {
         return ResponseEntity.ok(ApiResponseWrapper.success(HttpStatus.OK, "성공", response));
     }
 
+    @SessionCheck
     @GetMapping("/check-session")
     public ResponseEntity<ApiResponseWrapper<Void>> checkSession(){
 
