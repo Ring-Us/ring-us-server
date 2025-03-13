@@ -26,10 +26,12 @@ public class Mentoring extends BaseTimeEntity {
     private Long id;
 
     @Enumerated(EnumType.STRING)
-    private MentoringStatus status;
+    @Column(name = "mentoring_status")
+    private MentoringStatus mentoringStatus;
 
     @Enumerated(EnumType.STRING)
-    private MentoringTopic topic;
+    @Column(name = "mentoring_topic")
+    private MentoringTopic mentoringTopic;
 
     @Convert(converter = MentoringTimeConverter.class)
     @Column(length = 500, nullable = false) // 500자 이내
@@ -62,8 +64,8 @@ public class Mentoring extends BaseTimeEntity {
         if (applyTimes.size() > 5) {
             throw new CustomRuntimeException(MentoringErrorCode.MENTORING_TIME_ERROR);
         }
-        this.status = status;
-        this.topic = topic;
+        this.mentoringStatus = status;
+        this.mentoringTopic = topic;
         this.applyTimes = applyTimes;
         this.mentoringMessage = mentoringMessage;
         this.mentor = mentor;
