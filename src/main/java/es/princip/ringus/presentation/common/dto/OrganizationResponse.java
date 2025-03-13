@@ -8,7 +8,7 @@ public record OrganizationResponse(
         String detailedJob,
         int experience
 ) {
-    public static OrganizationResponse of(final Organization organization) {
+    public static OrganizationResponse from(final Organization organization) {
         return new OrganizationResponse(
                 organization.getName(),
                 organization.getJobCategory().name(),

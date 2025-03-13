@@ -1,11 +1,14 @@
 package es.princip.ringus.domain.support;
 
+import com.fasterxml.jackson.annotation.JsonInclude;
 import lombok.Builder;
 import lombok.Getter;
 import org.springframework.data.domain.Slice;
 import org.springframework.data.domain.Sort;
 
 import java.util.List;
+
+import static com.fasterxml.jackson.annotation.JsonInclude.Include.NON_NULL;
 
 @Getter
 public class CursorResponse<T> {
@@ -18,14 +21,12 @@ public class CursorResponse<T> {
         this.sliceInfo = sliceInfo;
     }
 
-    public static <T> CursorResponse<T> of(final Slice<T> slice, final String cursor) {
+    public static <T> CursorResponse<T> of(final Slice<T> slice, final Long cursor) {
         SliceInfo pageInfo = SliceInfo.builder()
                 .size(slice.getSize())
                 .numberOfElements(slice.getNumberOfElements())
-                .first(slice.isFirst())
                 .last(slice.isLast())
                 .empty(slice.isEmpty())
-                .sort(slice.getSort())
                 .cursor(cursor)
                 .build();
         return new CursorResponse<>(slice.getContent(), pageInfo);
@@ -34,11 +35,9 @@ public class CursorResponse<T> {
     record SliceInfo(
             int size,
             int numberOfElements,
-            boolean first,
             boolean last,
             boolean empty,
-            String cursor,
-            Sort sort
+            @JsonInclude(NON_NULL) Long cursor
     ) {
         @Builder
         public SliceInfo {

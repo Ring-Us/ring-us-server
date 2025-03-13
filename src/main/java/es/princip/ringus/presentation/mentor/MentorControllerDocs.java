@@ -40,9 +40,22 @@ public interface MentorControllerDocs {
             @Valid @RequestBody @Parameter(description = "멘토 수정 요청") EditMentorRequest request
     );
 
+    @Operation(summary = "멘토 목록 조회", description = "멘토 목록을 조회합니다.")
+    @ApiResponses(value = {
+            @ApiResponse(responseCode = "200", description = "멘토 목록 조회 성공")
+    })
+    @GetMapping
     ResponseEntity<ApiResponseWrapper<CursorResponse<MentorCardResponse>>> getMentors(
-            MentorSearchFilter filter,
-            Long cursor,
+            CursorRequest request,
             Pageable pageable
+    );
+
+    @Operation(summary = "멘토 상세 조회", description = "멘토 상세 정보를 조회합니다.")
+    @ApiResponses(value = {
+            @ApiResponse(responseCode = "200", description = "멘토 상세 정보 조회 성공")
+    })
+    @GetMapping("/{mentorId}")
+    ResponseEntity<ApiResponseWrapper<MentorDetailResponse>> getMentorByMentorId(
+            final Long mentorId
     );
 }
