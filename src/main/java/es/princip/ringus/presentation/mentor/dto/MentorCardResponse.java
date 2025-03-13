@@ -28,8 +28,8 @@ public record MentorCardResponse(
                 mentorId,
                 nickname,
                 profileImage.getFilePath(),
-                IntroductionResponse.of(introduction),
-                OrganizationResponse.of(organization),
+                IntroductionResponse.from(introduction),
+                OrganizationResponse.from(organization),
                 message,
                 mentoringCount
         );

@@ -2,6 +2,7 @@ package es.princip.ringus.presentation.mentor;
 
 import es.princip.ringus.global.annotation.SessionMemberId;
 import es.princip.ringus.global.util.ApiResponseWrapper;
+import es.princip.ringus.presentation.mentor.dto.MentorCardResponse;
 import es.princip.ringus.presentation.mentor.dto.MyMentorResponse;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
@@ -21,5 +22,5 @@ public interface MyMentorControllerDocs {
             @ApiResponse(responseCode = "404", description = "멘토 프로필을 등록한 적이 없음")
     })
     @GetMapping
-    ResponseEntity<ApiResponseWrapper<MyMentorResponse>> getMentor(@SessionMemberId Long memberId);
+    ResponseEntity<ApiResponseWrapper<MyMentorResponse>> getMyMentor(@SessionMemberId Long memberId);
 }

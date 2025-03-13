@@ -22,13 +22,13 @@ public record MyMentorResponse(
         return new MyMentorResponse(
                 mentor.getNickname(),
                 EducationResponse.from(mentor.getEducation()),
-                OrganizationResponse.of(mentor.getOrganization()),
-                IntroductionResponse.of(mentor.getIntroduction()),
-                TimezoneResponse.of(mentor.getTimezone()),
+                OrganizationResponse.from(mentor.getOrganization()),
+                IntroductionResponse.from(mentor.getIntroduction()),
+                TimezoneResponse.from(mentor.getTimezone()),
                 mentor.getMentoringField().stream().map(String::valueOf).collect(Collectors.toSet()),
                 mentor.getHashtags().stream().map(String::valueOf).toList(),
                 mentor.getMessage(),
-                PortfolioResponse.of(mentor.getPortfolio())
+                PortfolioResponse.from(mentor.getPortfolio())
         );
     }
 }

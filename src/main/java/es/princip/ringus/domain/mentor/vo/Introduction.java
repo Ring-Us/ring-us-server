@@ -14,9 +14,9 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 public class Introduction {
     // 제목
-    @Column(name="introduction_title", length = 15)
+    @Column(name="introduction_title", length = 30)
     private String title;
     // 내용
-    @Column(name="introduction_content", length = 300)
+    @Column(name="introduction_content", length = 500)
     private String content;
 }

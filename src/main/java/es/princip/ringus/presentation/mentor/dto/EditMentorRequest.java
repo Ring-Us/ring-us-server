@@ -1,9 +1,6 @@
 package es.princip.ringus.presentation.mentor.dto;
 
-import es.princip.ringus.presentation.common.dto.EducationRequest;
-import es.princip.ringus.presentation.common.dto.IntroductionRequest;
-import es.princip.ringus.presentation.common.dto.OrganizationRequest;
-import es.princip.ringus.presentation.common.dto.PortfolioRequest;
+import es.princip.ringus.presentation.common.dto.*;
 import jakarta.validation.constraints.NotBlank;
 
 import java.util.List;
@@ -18,6 +15,7 @@ public record EditMentorRequest(
         TimezoneRequest timezone,
         List<String> hashtags,
         String message,
-        PortfolioRequest portfolio
+        PortfolioRequest portfolio,
+        ProfileImageRequest image
 ) {
 }

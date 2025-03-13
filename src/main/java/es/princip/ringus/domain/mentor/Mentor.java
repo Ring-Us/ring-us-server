@@ -63,7 +63,7 @@ public class Mentor {
     private List<Mentoring> mentorings = new ArrayList<>();
 
     // 멘티에게 전하는 말
-    @Column(name = "message", length = 50)
+    @Column(name = "message", length = 100)
     private String message;
 
     // 포트폴리오
@@ -113,6 +113,7 @@ public class Mentor {
         this.hashtags = request.hashtags().stream().map(Hashtag::new).toList();
         this.message = request.message();
         this.portfolio = request.portfolio().toEntity();
+        this.profileImage = request.image().toEntity();
     }
 
     public void addMentoring(Mentoring mentoring){

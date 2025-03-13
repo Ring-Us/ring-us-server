@@ -30,6 +30,4 @@ public class MentoringController implements MentoringControllerDocs {
         MentoringResponse response = mentoringService.createMentoring(request, memberId);
         return ResponseEntity.ok(ApiResponseWrapper.success(HttpStatus.OK, "성공", response));
     }
-
-
 }
