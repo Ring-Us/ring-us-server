@@ -34,7 +34,17 @@ public class MentoringService {
                 .orElseThrow(() -> new CustomRuntimeException(MentorErrorCode.MENTOR_NOT_FOUND));
         Mentee mentee = menteeRepository.findByMemberId(memberId)
                 .orElseThrow(() -> new CustomRuntimeException(MenteeErrorCode.MENTEE_NOT_FOUND));
-        final Mentoring mentoring = Mentoring.of(MentoringStatus.WAITING, request.topic(), request.applyTimes(), request.mentoringMessage(), mentor, mentee);
+        final Mentoring mentoring = Mentoring.of(
+                MentoringStatus.WAITING,
+                request.topic(),
+                request.applyTimes(),
+                request.mentoringMessage(),
+                mentor,
+                mentee);
+
+        mentee.addMentoring(mentoring);
+        mentor.addMentoring(mentoring);
+
         return MentoringResponse.from(mentoringRepository.save(mentoring));
 
     }

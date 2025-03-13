@@ -21,8 +21,8 @@ public record MentoringResponse(
     ) {
         return new MentoringResponse(
                 mentoring.getId(),
-                mentoring.getStatus(),
-                mentoring.getTopic(),
+                mentoring.getMentoringStatus(),
+                mentoring.getMentoringTopic(),
                 mentoring.getApplyTimes(),
                 mentoring.getMentoringMessage(),
                 mentoring.getMentor().getNickname(),
