@@ -16,7 +16,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
-@Slf4j
+
 @RestController
 @RequiredArgsConstructor
 @RequestMapping("/mentor")
@@ -49,8 +49,6 @@ public class MentorController implements MentorControllerDocs{
             @ModelAttribute final CursorRequest request,
             @PageableDefault(sort = "mentorId", direction = Sort.Direction.DESC) final Pageable pageable
     ) {
-        log.info(request.toString());
-        log.info(pageable.toString());
         CursorResponse<MentorCardResponse> response = mentorService.getMentorBy(request, pageable);
         return ResponseEntity.ok(ApiResponseWrapper.success(HttpStatus.OK, "성공", response));
     }

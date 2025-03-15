@@ -12,5 +12,11 @@ public interface MentorRepository extends JpaRepository<Mentor, Long> {
     @Query("SELECT m.profileImage FROM Mentor m WHERE m.memberId = :memberId")
     ProfileImage findProfileByMemberId(Long memberId);
 
+    @Query("SELECT m.organization FROM Mentor m WHERE m.memberId = :memberId")
+    Organization findOrganizationByMemberId(Long memberId);
+
+    @Query("SELECT m FROM Mentor m WHERE m.memberId = :memberId")
+    Optional<Mentor> findByMemberId(Long memberId);
+  
     boolean existsByNickname(String nickname);
 }
