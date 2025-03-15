@@ -11,4 +11,6 @@ public interface MentorRepository extends JpaRepository<Mentor, Long> {
 
     @Query("SELECT m.profileImage FROM Mentor m WHERE m.memberId = :memberId")
     ProfileImage findProfileByMemberId(Long memberId);
+
+    boolean existsByNickname(String nickname);
 }

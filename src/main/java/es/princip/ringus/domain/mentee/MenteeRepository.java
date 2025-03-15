@@ -14,4 +14,6 @@ public interface MenteeRepository extends JpaRepository<Mentee, Long> {
 
     @Query("SELECT m.profileImage FROM Mentee m WHERE m.memberId = :memberId")
     ProfileImage findProfileByMemberId(Long memberId);
+
+    boolean existsByNickname(String nickname);
 }
