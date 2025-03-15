@@ -24,7 +24,6 @@ import org.springframework.web.bind.annotation.RequestMapping;
 public interface AuthControllerDocs {
 
     @Operation(summary = "회원가입", description = "회원가입을 처리합니다.")
-
     @ApiResponses(value = {
             @ApiResponse(responseCode = "201", description = "회원가입 성공"),
             @ApiResponse(responseCode = "409", description = "이미 가입된 이메일"),

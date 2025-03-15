@@ -85,4 +85,12 @@ public class Member extends BaseTimeEntity {
     public void confirmUniversity() {
         this.isUniversityVerified = true;
     }
+
+    public boolean isNotMentor() {
+        return this.memberType != MemberType.ROLE_MENTOR;
+    }
+
+    public boolean isNotMentee() {
+        return this.memberType != MemberType.ROLE_MENTEE;
+    }
 }
