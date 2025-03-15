@@ -1,6 +1,5 @@
 package es.princip.ringus.domain.mentee;
 
-import es.princip.ringus.domain.common.Education;
 import es.princip.ringus.infra.storage.domain.ProfileImage;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
@@ -16,6 +15,5 @@ public interface MenteeRepository extends JpaRepository<Mentee, Long> {
     @Query("SELECT m.profileImage FROM Mentee m WHERE m.memberId = :memberId")
     ProfileImage findProfileByMemberId(Long memberId);
 
-    @Query("SELECT m.education FROM Mentee m WHERE m.memberId = :memberId")
-    Education findEducationByMemberId(Long memberId);
+    boolean existsByNickname(String nickname);
 }
