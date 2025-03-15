@@ -8,9 +8,7 @@ import es.princip.ringus.presentation.member.dto.MemberResponse;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 @RestController
 @RequiredArgsConstructor
@@ -33,4 +31,12 @@ public class MemberController {
 
         return ResponseEntity.ok(ApiResponseWrapper.success(HttpStatus.OK, "성공"));
     }
+
+    @SessionCheck
+    @GetMapping("/check-nickname")
+    public ResponseEntity<ApiResponseWrapper<Boolean>> isUniqueNickname(@RequestBody String ninkname){
+        boolean response = memberService.isUniqueNickname(ninkname);
+        return ResponseEntity.ok(ApiResponseWrapper.success(HttpStatus.OK, "성공", response));
+    }
+
 }

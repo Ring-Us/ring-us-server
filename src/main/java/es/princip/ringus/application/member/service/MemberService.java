@@ -69,4 +69,8 @@ public class MemberService {
         }
         return MemberResponse.of(member);
     }
+
+    public boolean isUniqueNickname(String nickname) {
+        return !mentorRepository.existsByNickname(nickname) && !menteeRepository.existsByNickname(nickname);
+    }
 }
