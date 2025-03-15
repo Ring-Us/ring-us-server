@@ -38,7 +38,7 @@ public class MenteeController implements MenteeControllerDocs{
     }
 
     @Override
-    public ResponseEntity<ApiResponseWrapper<MyMenteeResponse>> getMyMentee(Long menteeId) {
+    public ResponseEntity<ApiResponseWrapper<MenteeDetailResponse>> getMyMentee(Long menteeId) {
         return null;
     }
 }

@@ -6,13 +6,15 @@ import es.princip.ringus.presentation.common.dto.EducationResponse;
 public record MyMenteeResponse(
         String nickname,
         EducationResponse education,
-        String introduction
+        String introduction,
+        String imgUrl
 ) {
     public static MyMenteeResponse from(final Mentee mentee) {
         return new MyMenteeResponse(
                 mentee.getNickname(),
                 EducationResponse.from(mentee.getEducation()),
-                mentee.getIntroduction()
+                mentee.getIntroduction(),
+                mentee.getProfileImage().getFilePath()
         );
     }
 }

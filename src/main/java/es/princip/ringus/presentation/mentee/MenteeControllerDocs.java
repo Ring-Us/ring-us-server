@@ -45,5 +45,5 @@ public interface MenteeControllerDocs {
             @ApiResponse(responseCode = "404", description = "해당 id의 멘티가 존재하지 않음")
     })
     @GetMapping
-    ResponseEntity<ApiResponseWrapper<MyMenteeResponse>> getMyMentee(Long menteeId);
+    ResponseEntity<ApiResponseWrapper<MenteeDetailResponse>> getMyMentee(Long menteeId);
 }

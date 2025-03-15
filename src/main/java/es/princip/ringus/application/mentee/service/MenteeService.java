@@ -42,7 +42,7 @@ public class MenteeService {
 
     @Transactional
     public Long edit(Long memberId, EditMenteeRequest request) {
-        Mentee mentee = menteeRepository.findById(memberId)
+        Mentee mentee = menteeRepository.findByMemberId(memberId)
                 .orElseThrow(() -> new CustomRuntimeException(MenteeErrorCode.MENTEE_PROFILE_NOT_FOUND));
 
         mentee.edit(request);
