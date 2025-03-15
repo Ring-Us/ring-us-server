@@ -10,7 +10,7 @@ public record TimezoneResponse(
         LocalTime startTime,
         LocalTime endTime
 ) {
-    public static TimezoneResponse of(final Timezone timezone) {
+    public static TimezoneResponse from(final Timezone timezone) {
         return new TimezoneResponse(
                 timezone.getDays(),
                 timezone.getStartTime(),

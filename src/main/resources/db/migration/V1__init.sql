@@ -26,7 +26,7 @@ CREATE TABLE member (
     updated_at DATETIME(6),
     email VARCHAR(255) NOT NULL,
     password VARCHAR(255) NOT NULL,
-    member_type ENUM ('ADMIN', 'MENTEE', 'MENTOR'),
+    member_type ENUM ('ROLE_ADMIN', 'ROLE_MENTEE', 'ROLE_MENTOR'),
     PRIMARY KEY (member_id)
 );
 
@@ -48,9 +48,9 @@ CREATE TABLE mentor (
     start_time TIME(6),
     member_id BIGINT,
     mentor_id BIGINT NOT NULL AUTO_INCREMENT,
-    introduction_title VARCHAR(15),
-    message VARCHAR(50),
-    introduction_content VARCHAR(300),
+    introduction_title VARCHAR(30),
+    message VARCHAR(100),
+    introduction_content VARCHAR(500),
     description VARCHAR(255),
     file_name VARCHAR(255) NOT NULL,
     file_path VARCHAR(255) NOT NULL,

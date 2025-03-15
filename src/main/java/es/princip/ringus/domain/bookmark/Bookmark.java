@@ -35,5 +35,4 @@ public class Bookmark extends BaseTimeEntity {
         this.mentor = mentor;
         this.mentee = mentee;
     }
-
 }

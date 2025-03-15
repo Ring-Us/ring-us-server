@@ -6,7 +6,7 @@ public record IntroductionResponse(
         String title,
         String content
 ) {
-    public static IntroductionResponse of(final Introduction introduction) {
+    public static IntroductionResponse from(final Introduction introduction) {
         return new IntroductionResponse(introduction.getTitle(), introduction.getContent());
     }
 }

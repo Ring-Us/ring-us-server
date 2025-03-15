@@ -2,6 +2,7 @@ package es.princip.ringus.domain.mentor;
 
 import es.princip.ringus.domain.common.Education;
 import es.princip.ringus.domain.mentor.vo.*;
+import es.princip.ringus.domain.mentoring.Mentoring;
 import es.princip.ringus.infra.storage.domain.ProfileImage;
 import es.princip.ringus.presentation.mentor.dto.EditMentorRequest;
 import jakarta.persistence.*;
@@ -10,6 +11,7 @@ import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Set;
 import java.util.stream.Collectors;
@@ -57,8 +59,11 @@ public class Mentor {
     @CollectionTable(name = "mentor_hashtags", joinColumns = @JoinColumn(name = "mentor_id"))
     private List<Hashtag> hashtags;
 
+    @OneToMany(mappedBy = "mentor", cascade = CascadeType.ALL, orphanRemoval = true, fetch = FetchType.LAZY)
+    private List<Mentoring> mentorings = new ArrayList<>();
+
     // 멘티에게 전하는 말
-    @Column(name = "message", length = 50)
+    @Column(name = "message", length = 100)
     private String message;
 
     // 포트폴리오
@@ -108,5 +113,14 @@ public class Mentor {
         this.hashtags = request.hashtags().stream().map(Hashtag::new).toList();
         this.message = request.message();
         this.portfolio = request.portfolio().toEntity();
+        this.profileImage = request.image().toEntity();
+    }
+
+    public void addMentoring(Mentoring mentoring){
+        mentorings.add(mentoring);
+    }
+
+    public void deleteMentoring(Mentoring mentoring){
+        mentorings.remove(mentoring);
     }
 }

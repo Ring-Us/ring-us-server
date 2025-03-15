@@ -1,24 +1,28 @@
 package es.princip.ringus.application.mentor.service;
 
+import es.princip.ringus.application.support.CursorParser;
 import es.princip.ringus.domain.exception.MentorErrorCode;
 import es.princip.ringus.domain.exception.SignUpErrorCode;
 import es.princip.ringus.domain.member.Member;
 import es.princip.ringus.domain.member.MemberRepository;
 import es.princip.ringus.domain.mentor.Mentor;
 import es.princip.ringus.domain.mentor.MentorRepository;
+import es.princip.ringus.domain.support.CursorResponse;
 import es.princip.ringus.global.exception.CustomRuntimeException;
-import es.princip.ringus.presentation.mentor.dto.EditMentorRequest;
-import es.princip.ringus.presentation.mentor.dto.MentorRequest;
+import es.princip.ringus.presentation.mentor.dto.*;
 import lombok.RequiredArgsConstructor;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Slice;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+
+import static es.princip.ringus.application.support.CursorParser.parse;
 
 @Service
 @RequiredArgsConstructor
 @Transactional(readOnly = true)
 public class MentorService {
 
-//    private final SerializeMentorCursor serializeMentorCursor;
     private final MemberRepository memberRepository;
     private final MentorRepository mentorRepository;
 
@@ -47,5 +51,17 @@ public class MentorService {
                 .orElseThrow(() -> new CustomRuntimeException(MentorErrorCode.MENTOR_PROFILE_NOT_FOUND));
         mentor.edit(request);
         return mentor.getId();
+    }
+
+    public CursorResponse<MentorCardResponse> getMentorBy(CursorRequest request, Pageable pageable) {
+        final Slice<MentorCardResponse> response = mentorRepository.findMentorBy(request, pageable);
+        final  Long cursor = parse(request.cursor(), response);
+        return CursorResponse.of(response, cursor);
+    }
+
+    public MentorDetailResponse getDetailBy(Long mentorId) {
+        Mentor mentor = mentorRepository.findById(mentorId)
+                .orElseThrow(() -> new CustomRuntimeException(MentorErrorCode.MENTOR_PROFILE_NOT_FOUND));
+        return MentorDetailResponse.from(mentor);
     }
 }

@@ -1,5 +1,6 @@
 package es.princip.ringus.presentation.mentor;
 
+import es.princip.ringus.domain.support.CursorResponse;
 import es.princip.ringus.global.annotation.SessionMemberId;
 import es.princip.ringus.global.util.ApiResponseWrapper;
 import es.princip.ringus.presentation.mentor.dto.*;
@@ -9,6 +10,7 @@ import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import io.swagger.v3.oas.annotations.responses.ApiResponses;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import jakarta.validation.Valid;
+import org.springframework.data.domain.Pageable;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -38,10 +40,22 @@ public interface MentorControllerDocs {
             @Valid @RequestBody @Parameter(description = "멘토 수정 요청") EditMentorRequest request
     );
 
-    @Operation(summary = "멘토 목록 조회(구현 중)", description = "멘토 목록을 조회합니다.")
+    @Operation(summary = "멘토 목록 조회", description = "멘토 목록을 조회합니다.")
     @ApiResponses(value = {
-            @ApiResponse(responseCode = "200", description = "나의 멘토 조회 성공")
+            @ApiResponse(responseCode = "200", description = "멘토 목록 조회 성공")
     })
     @GetMapping
-    ResponseEntity<ApiResponseWrapper<MentorCardResponse>> getMyMentor();
+    ResponseEntity<ApiResponseWrapper<CursorResponse<MentorCardResponse>>> getMentors(
+            CursorRequest request,
+            Pageable pageable
+    );
+
+    @Operation(summary = "멘토 상세 조회", description = "멘토 상세 정보를 조회합니다.")
+    @ApiResponses(value = {
+            @ApiResponse(responseCode = "200", description = "멘토 상세 정보 조회 성공")
+    })
+    @GetMapping("/{mentorId}")
+    ResponseEntity<ApiResponseWrapper<MentorDetailResponse>> getMentorByMentorId(
+            final Long mentorId
+    );
 }

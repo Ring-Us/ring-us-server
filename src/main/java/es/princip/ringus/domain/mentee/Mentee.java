@@ -2,6 +2,7 @@ package es.princip.ringus.domain.mentee;
 
 import es.princip.ringus.domain.bookmark.Bookmark;
 import es.princip.ringus.domain.common.Education;
+import es.princip.ringus.domain.mentoring.Mentoring;
 import es.princip.ringus.infra.storage.domain.ProfileImage;
 import es.princip.ringus.presentation.mentee.dto.EditMenteeRequest;
 import jakarta.persistence.*;
@@ -46,6 +47,9 @@ public class Mentee {
     @OneToMany(mappedBy = "mentee", cascade = CascadeType.ALL ,orphanRemoval = true, fetch = FetchType.LAZY)
     private List<Bookmark> bookmarks = new ArrayList<>();
 
+    @OneToMany(mappedBy = "mentee", cascade = CascadeType.ALL, orphanRemoval = true, fetch = FetchType.LAZY)
+    private List<Mentoring> mentorings = new ArrayList<>();
+
     @Builder
     public Mentee(
         final String nickname,
@@ -75,4 +79,13 @@ public class Mentee {
     public void deleteBookmark(Bookmark bookmark){
         bookmarks.remove(bookmark);
     }
+
+    public void addMentoring(Mentoring mentoring){
+        mentorings.add(mentoring);
+    }
+
+    public void deleteMentoring(Mentoring mentoring){
+        mentorings.remove(mentoring);
+    }
+
 }
