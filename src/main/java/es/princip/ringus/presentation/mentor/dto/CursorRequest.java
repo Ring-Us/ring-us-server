@@ -5,4 +5,7 @@ public record CursorRequest(
         boolean commissioned,
         Long cursor
 ) {
+    public boolean isBookmarked(){
+        return bookmarked();
+    }
 }

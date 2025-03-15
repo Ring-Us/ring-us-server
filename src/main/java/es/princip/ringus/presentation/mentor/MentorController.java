@@ -4,8 +4,11 @@ import es.princip.ringus.application.mentor.service.MentorService;
 import es.princip.ringus.domain.support.CursorResponse;
 import es.princip.ringus.global.annotation.SessionCheck;
 import es.princip.ringus.global.annotation.SessionMemberId;
+import es.princip.ringus.global.aop.SessionToMemberId;
 import es.princip.ringus.global.util.ApiResponseWrapper;
 import es.princip.ringus.presentation.mentor.dto.*;
+import jakarta.servlet.http.HttpServletRequest;
+import jakarta.servlet.http.HttpServletResponse;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -16,7 +19,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
-
+@Slf4j
 @RestController
 @RequiredArgsConstructor
 @RequestMapping("/mentor")
@@ -47,9 +50,19 @@ public class MentorController implements MentorControllerDocs{
     @GetMapping
     public ResponseEntity<ApiResponseWrapper<CursorResponse<MentorCardResponse>>> getMentors(
             @ModelAttribute final CursorRequest request,
-            @PageableDefault(sort = "mentorId", direction = Sort.Direction.DESC) final Pageable pageable
+            @PageableDefault(sort = "mentorId", direction = Sort.Direction.DESC) final Pageable pageable,
+            HttpServletRequest httpServletRequest,
+            HttpServletResponse httpServletResponse
     ) {
-        CursorResponse<MentorCardResponse> response = mentorService.getMentorBy(request, pageable);
+        Long memberId = null;
+
+        if (request.isBookmarked()){
+            memberId = SessionToMemberId.getSessionMemberId(httpServletRequest,httpServletResponse);
+        }
+
+        log.info(request.toString());
+        log.info(pageable.toString());
+        CursorResponse<MentorCardResponse> response = mentorService.getMentorBy(request, pageable, memberId);
         return ResponseEntity.ok(ApiResponseWrapper.success(HttpStatus.OK, "성공", response));
     }
 
