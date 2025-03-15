@@ -9,6 +9,8 @@ import io.swagger.v3.oas.annotations.Parameter;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import io.swagger.v3.oas.annotations.responses.ApiResponses;
 import io.swagger.v3.oas.annotations.tags.Tag;
+import jakarta.servlet.http.HttpServletRequest;
+import jakarta.servlet.http.HttpServletResponse;
 import jakarta.validation.Valid;
 import org.springframework.data.domain.Pageable;
 import org.springframework.http.ResponseEntity;
@@ -47,7 +49,9 @@ public interface MentorControllerDocs {
     @GetMapping
     ResponseEntity<ApiResponseWrapper<CursorResponse<MentorCardResponse>>> getMentors(
             CursorRequest request,
-            Pageable pageable
+            Pageable pageable,
+            HttpServletRequest httpServletRequest,
+            HttpServletResponse httpServletResponse
     );
 
     @Operation(summary = "멘토 상세 조회", description = "멘토 상세 정보를 조회합니다.")

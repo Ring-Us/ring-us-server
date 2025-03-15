@@ -1,10 +1,11 @@
 package es.princip.ringus.application.mentor.service;
 
-import es.princip.ringus.application.support.CursorParser;
+import es.princip.ringus.domain.exception.MemberErrorCode;
 import es.princip.ringus.domain.exception.MentorErrorCode;
 import es.princip.ringus.domain.exception.SignUpErrorCode;
 import es.princip.ringus.domain.member.Member;
 import es.princip.ringus.domain.member.MemberRepository;
+import es.princip.ringus.domain.member.MemberType;
 import es.princip.ringus.domain.mentor.Mentor;
 import es.princip.ringus.domain.mentor.MentorRepository;
 import es.princip.ringus.domain.support.CursorResponse;
@@ -53,8 +54,15 @@ public class MentorService {
         return mentor.getId();
     }
 
-    public CursorResponse<MentorCardResponse> getMentorBy(CursorRequest request, Pageable pageable) {
-        final Slice<MentorCardResponse> response = mentorRepository.findMentorBy(request, pageable);
+    public CursorResponse<MentorCardResponse> getMentorBy(CursorRequest request, Pageable pageable, Long memberId) {
+        Member member = memberRepository.findById(memberId)
+                .orElseThrow(() -> new CustomRuntimeException(MemberErrorCode.MEMBER_NOT_FOUND));
+
+        if (member.getMemberType().equals(MemberType.ROLE_MENTEE)) {
+            throw new CustomRuntimeException(MemberErrorCode.MEMBER_TYPE_DIFFERENT);
+        }
+
+        final Slice<MentorCardResponse> response = mentorRepository.findMentorBy(request, pageable, memberId);
         final  Long cursor = parse(request.cursor(), response);
         return CursorResponse.of(response, cursor);
     }
