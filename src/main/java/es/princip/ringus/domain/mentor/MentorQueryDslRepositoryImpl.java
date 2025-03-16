@@ -57,7 +57,7 @@ public class MentorQueryDslRepositoryImpl extends QueryDslSupport implements Men
 
     private List<MentorCardResponse> fetchContent(
             final Pageable pageable,
-            final  Long cursor,
+            final Long cursor,
             final Boolean bookmared,
             final Long memberId
     ) {
