@@ -93,4 +93,12 @@ public class Member extends BaseTimeEntity {
     public boolean isNotMentee() {
         return this.memberType != MemberType.ROLE_MENTEE;
     }
+
+    public boolean isMentor() {
+        return this.memberType == MemberType.ROLE_MENTOR;
+    }
+
+    public boolean isMentee() {
+        return this.memberType == MemberType.ROLE_MENTEE;
+    }
 }
