@@ -16,44 +16,40 @@ public record MemberResponse(
         boolean isFileVerified,
         boolean isProfileRegisterd,
         boolean isUniversityVerified,
-        @JsonInclude(NON_NULL) String imgUrl,
-        @JsonInclude(NON_NULL) EducationResponse education,
-        @JsonInclude(NON_NULL) OrganizationResponse organization
+        @JsonInclude(NON_NULL) MenteeProfileResponse menteeProfile,
+        @JsonInclude(NON_NULL) MentorProfileResponse mentorProfile
 ) {
-    public static MemberResponse of(Member member) {
+    public static MemberResponse of(final Member member) {
         return new MemberResponse(
                 member.getId(),
                 member.getMemberType(),
                 member.isProfileRegistered(),
                 member.isProfileRegistered(),
                 member.isUniversityVerified(),
-                null,
                 null,
                 null
         );
     }
-    public static MemberResponse of(Member member, String imgUrl, Education education) {
+    public static MemberResponse of(final Member member, final MenteeProfileResponse profile) {
         return new MemberResponse(
                 member.getId(),
                 member.getMemberType(),
                 member.isProfileRegistered(),
                 member.isProfileRegistered(),
                 member.isUniversityVerified(),
-                imgUrl,
-                EducationResponse.from(education),
+                profile,
                 null
         );
     }
-    public static MemberResponse of(Member member, String imgUrl, Organization organization) {
+    public static MemberResponse of(final Member member, final MentorProfileResponse profile) {
         return new MemberResponse(
                 member.getId(),
                 member.getMemberType(),
                 member.isProfileRegistered(),
                 member.isProfileRegistered(),
                 member.isUniversityVerified(),
-                imgUrl,
                 null,
-                OrganizationResponse.from(organization)
+                profile
         );
     }
 }
