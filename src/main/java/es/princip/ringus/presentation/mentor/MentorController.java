@@ -10,6 +10,7 @@ import es.princip.ringus.presentation.mentor.dto.*;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import jakarta.validation.Valid;
+import java.util.Optional;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.data.domain.Pageable;
@@ -54,11 +55,11 @@ public class MentorController implements MentorControllerDocs{
             HttpServletRequest httpServletRequest,
             HttpServletResponse httpServletResponse
     ) {
-        Long memberId = null;
 
-        if (request.isBookmarked()){
-            memberId = SessionToMemberId.getSessionMemberId(httpServletRequest,httpServletResponse);
-        }
+        Long memberId = Optional.ofNullable(request)
+            .filter(CursorRequest::isBookmarked)
+            .map(req -> SessionToMemberId.getSessionMemberId(httpServletRequest, httpServletResponse))
+            .orElse(null);
 
         log.info(request.toString());
         log.info(pageable.toString());

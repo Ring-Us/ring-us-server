@@ -55,11 +55,13 @@ public class MentorService {
     }
 
     public CursorResponse<MentorCardResponse> getMentorBy(CursorRequest request, Pageable pageable, Long memberId) {
-        Member member = memberRepository.findById(memberId)
+        if(request.isBookmarked()) {
+            Member member = memberRepository.findById(memberId)
                 .orElseThrow(() -> new CustomRuntimeException(MemberErrorCode.MEMBER_NOT_FOUND));
 
-        if (member.getMemberType().equals(MemberType.ROLE_MENTEE)) {
-            throw new CustomRuntimeException(MemberErrorCode.MEMBER_TYPE_DIFFERENT);
+            if (member.isNotMentee()) {
+                throw new CustomRuntimeException(MemberErrorCode.MEMBER_TYPE_DIFFERENT);
+            }
         }
 
         final Slice<MentorCardResponse> response = mentorRepository.findMentorBy(request, pageable, memberId);
