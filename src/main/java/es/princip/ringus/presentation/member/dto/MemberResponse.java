@@ -1,14 +1,10 @@
 package es.princip.ringus.presentation.member.dto;
 
+import static com.fasterxml.jackson.annotation.JsonInclude.Include.NON_NULL;
+
 import com.fasterxml.jackson.annotation.JsonInclude;
-import es.princip.ringus.domain.common.Education;
 import es.princip.ringus.domain.member.Member;
 import es.princip.ringus.domain.member.MemberType;
-import es.princip.ringus.domain.mentor.vo.Organization;
-import es.princip.ringus.presentation.common.dto.EducationResponse;
-import es.princip.ringus.presentation.common.dto.OrganizationResponse;
-
-import static com.fasterxml.jackson.annotation.JsonInclude.Include.NON_NULL;
 
 public record MemberResponse(
         Long memberId,
