@@ -5,7 +5,6 @@ import es.princip.ringus.domain.exception.MentorErrorCode;
 import es.princip.ringus.domain.exception.SignUpErrorCode;
 import es.princip.ringus.domain.member.Member;
 import es.princip.ringus.domain.member.MemberRepository;
-import es.princip.ringus.domain.member.MemberType;
 import es.princip.ringus.domain.mentor.Mentor;
 import es.princip.ringus.domain.mentor.MentorRepository;
 import es.princip.ringus.domain.support.CursorResponse;
@@ -17,7 +16,7 @@ import org.springframework.data.domain.Slice;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import static es.princip.ringus.application.support.CursorParser.parse;
+import static es.princip.ringus.application.support.MentorCursorParser.parse;
 
 @Service
 @RequiredArgsConstructor

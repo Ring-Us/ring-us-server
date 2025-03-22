@@ -9,7 +9,7 @@ import org.springframework.stereotype.Repository;
 import java.util.Optional;
 
 @Repository
-public interface MenteeRepository extends JpaRepository<Mentee, Long> {
+public interface MenteeRepository extends JpaRepository<Mentee, Long>, MenteeQueryDslRepository {
     Optional<Mentee> findByMemberId(Long memberId);
     boolean existsByMemberId(Long memberId);
 
