@@ -35,7 +35,6 @@ public class MemberController {
     @SessionCheck
     @GetMapping("/check-nickname")
     public ResponseEntity<ApiResponseWrapper<Boolean>> isUniqueNickname(@RequestParam String nickname){
-        System.out.println(nickname);
         boolean response = memberService.isUniqueNickname(nickname);
         return ResponseEntity.ok(ApiResponseWrapper.success(HttpStatus.OK, response));
     }
