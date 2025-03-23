@@ -33,10 +33,10 @@ public class MemberController {
     }
 
     @SessionCheck
-    @PostMapping("/check-nickname")
-    public ResponseEntity<ApiResponseWrapper<Boolean>> isUniqueNickname(@RequestBody String ninkname){
-        boolean response = memberService.isUniqueNickname(ninkname);
-        return ResponseEntity.ok(ApiResponseWrapper.success(HttpStatus.OK, "성공", response));
+    @GetMapping("/check-nickname")
+    public ResponseEntity<ApiResponseWrapper<Boolean>> isUniqueNickname(@RequestParam String nickname){
+        boolean response = memberService.isUniqueNickname(nickname);
+        return ResponseEntity.ok(ApiResponseWrapper.success(HttpStatus.OK, response));
     }
 
 }
