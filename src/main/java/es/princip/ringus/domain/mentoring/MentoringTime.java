@@ -3,7 +3,6 @@ package es.princip.ringus.domain.mentoring;
 import com.fasterxml.jackson.annotation.JsonCreator;
 import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.annotation.JsonProperty;
-import jakarta.persistence.Embeddable;
 import lombok.AccessLevel;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -32,5 +31,17 @@ public class MentoringTime {
         }
         this.startTime = startTime;
         this.endTime = endTime;
+    }
+
+    public static boolean equals(MentoringTime expected, MentoringTime actual) {
+        if (expected == null || actual == null) {
+            return false;
+        }
+        return expected.getStartTime().equals(actual.getStartTime()) && expected.getEndTime().equals(actual.getEndTime());
+    }
+
+    @Override
+    public String toString() {
+        return "MentoringTime(startTime=" + this.getStartTime() + ", endTime=" + this.getEndTime() + ")";
     }
 }

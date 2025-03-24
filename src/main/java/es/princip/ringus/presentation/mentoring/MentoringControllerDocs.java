@@ -26,5 +26,6 @@ public interface MentoringControllerDocs {
     @PostMapping
     ResponseEntity<ApiResponseWrapper<MentoringResponse>> suggest(
             @SessionMemberId Long memberId,
-            @Valid @RequestBody @Parameter CreateMentoringRequest request);
+            @Valid @RequestBody @Parameter CreateMentoringRequest request
+    );
 }
