@@ -1,6 +1,7 @@
 package es.princip.ringus.infra.storage.dto;
 
 import es.princip.ringus.domain.member.MemberType;
+import es.princip.ringus.infra.storage.domain.FileMember;
 import es.princip.ringus.infra.storage.domain.ProfileImage;
 import io.swagger.v3.oas.annotations.media.Schema;
 import org.springframework.web.multipart.MultipartFile;
@@ -24,6 +25,13 @@ public record ProfileUploadRequest(
     public static ProfileImage toEntity(ProfileUploadRequest request, String filePath) {
         return ProfileImage.builder()
                 .fileName(request.file.getOriginalFilename())
+                .filePath(filePath)
+                .build();
+    }
+
+    public FileMember toFileMemberEntity(String filePath, Long memberId) {
+        return FileMember.builder()
+                .memberId(memberId)
                 .filePath(filePath)
                 .build();
     }
