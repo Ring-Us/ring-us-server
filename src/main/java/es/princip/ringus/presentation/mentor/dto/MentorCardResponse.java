@@ -6,13 +6,14 @@ import es.princip.ringus.domain.mentor.vo.Organization;
 import es.princip.ringus.infra.storage.domain.ProfileImage;
 import es.princip.ringus.presentation.common.dto.IntroductionResponse;
 import es.princip.ringus.presentation.common.dto.OrganizationResponse;
+import es.princip.ringus.presentation.common.dto.ProfileImageResponse;
 
 import static com.fasterxml.jackson.annotation.JsonInclude.Include.*;
 
 public record MentorCardResponse(
         Long mentorId,
         String nickname,
-        String imgUrl,
+        ProfileImageResponse image,
         IntroductionResponse introduction,
         OrganizationResponse organization,
         String message,
@@ -30,7 +31,7 @@ public record MentorCardResponse(
         return new MentorCardResponse(
                 mentorId,
                 nickname,
-                profileImage.getFilePath(),
+                ProfileImageResponse.from(profileImage),
                 IntroductionResponse.from(introduction),
                 OrganizationResponse.from(organization),
                 null,
@@ -51,7 +52,7 @@ public record MentorCardResponse(
         return new MentorCardResponse(
                 mentorId,
                 nickname,
-                profileImage.getFilePath(),
+                ProfileImageResponse.from(profileImage),
                 IntroductionResponse.from(introduction),
                 OrganizationResponse.from(organization),
                 message,

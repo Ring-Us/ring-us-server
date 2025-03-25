@@ -17,7 +17,8 @@ public record MyMentorResponse(
     Set<String> mentoringField,
     List<String> hashtags,
     String message,
-    PortfolioResponse portfolio
+    PortfolioResponse portfolio,
+    int mentoringCount
 ) {
     public static MyMentorResponse from(final Mentor mentor) {
         return new MyMentorResponse(
@@ -29,7 +30,8 @@ public record MyMentorResponse(
                 mentor.getMentoringField().stream().map(String::valueOf).collect(Collectors.toSet()),
                 mentor.getHashtags().stream().map(Hashtag::getValue).toList(),
                 mentor.getMessage(),
-                PortfolioResponse.from(mentor.getPortfolio())
+                PortfolioResponse.from(mentor.getPortfolio()),
+                0
         );
     }
 }
