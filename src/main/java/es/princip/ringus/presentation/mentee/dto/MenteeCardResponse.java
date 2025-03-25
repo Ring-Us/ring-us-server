@@ -4,11 +4,12 @@ import static com.fasterxml.jackson.annotation.JsonInclude.Include.NON_NULL;
 
 import com.fasterxml.jackson.annotation.JsonInclude;
 import es.princip.ringus.infra.storage.domain.ProfileImage;
+import es.princip.ringus.presentation.common.dto.ProfileImageResponse;
 
 public record MenteeCardResponse(
     Long menteeId,
     String nickname,
-    String imgUrl,
+    ProfileImageResponse image,
     @JsonInclude(NON_NULL) String status
 ) {
     public static MenteeCardResponse of(
@@ -20,7 +21,7 @@ public record MenteeCardResponse(
         return new MenteeCardResponse(
             menteeId,
             nickname,
-            profileImage.getFilePath(),
+            ProfileImageResponse.from(profileImage),
             status
         );
     }
@@ -34,7 +35,7 @@ public record MenteeCardResponse(
         return new MenteeCardResponse(
             menteeId,
             nickname,
-            profileImage.getFilePath(),
+            ProfileImageResponse.from(profileImage),
             null
         );
     }
