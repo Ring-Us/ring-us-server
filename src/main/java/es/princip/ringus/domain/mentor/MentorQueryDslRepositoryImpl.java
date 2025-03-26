@@ -4,7 +4,7 @@ import com.querydsl.core.Tuple;
 import com.querydsl.core.types.OrderSpecifier;
 import com.querydsl.jpa.impl.JPAQuery;
 import es.princip.ringus.domain.bookmark.BookmarkRepository;
-import es.princip.ringus.domain.mentoring.MentoringQueryDslRepository;
+import es.princip.ringus.domain.mentoring.MentoringRepository;
 import es.princip.ringus.domain.support.QueryDslSupport;
 import es.princip.ringus.presentation.mentor.dto.CursorRequest;
 import es.princip.ringus.presentation.mentor.dto.MentorCardResponse;
@@ -25,7 +25,7 @@ import static es.princip.ringus.domain.mentoring.QMentoring.mentoring;
 @RequiredArgsConstructor
 public class MentorQueryDslRepositoryImpl extends QueryDslSupport implements MentorQueryDslRepository{
 
-    private final MentoringQueryDslRepository mentoringQueryDslRepository;
+    private final MentoringRepository mentoringRepository;
     private final BookmarkRepository bookmarkRepository;
 
     private List<Tuple> fetchMentor(
@@ -83,7 +83,7 @@ public class MentorQueryDslRepositoryImpl extends QueryDslSupport implements Men
                         tuple.get(mentor.organization),
                         tuple.get(mentor.message),
                         tuple.get(mentoring.mentoringStatus.stringValue()),
-                        mentoringQueryDslRepository.findMentoringCountBy(tuple.get(mentor.id))
+                        mentoringRepository.findMentoringCountBy(tuple.get(mentor.id))
                     );
                 } else {
                     return MentorCardResponse.of(
@@ -93,7 +93,7 @@ public class MentorQueryDslRepositoryImpl extends QueryDslSupport implements Men
                         tuple.get(mentor.introduction),
                         tuple.get(mentor.organization),
                         tuple.get(mentor.message),
-                        mentoringQueryDslRepository.findMentoringCountBy(tuple.get(mentor.id)),
+                        mentoringRepository.findMentoringCountBy(tuple.get(mentor.id)),
                         bookmarkRepository.isBookmarked(memberId, tuple.get(mentor.id))
                     );
                 }
