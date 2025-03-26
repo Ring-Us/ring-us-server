@@ -39,7 +39,7 @@ jobs:
             
             cd /home/ubuntu/ring-us-server
 
-            echo "${{ secrets.ENV_FILE }}" > .env.dev
+            echo "${{ secrets.ENV }}" > .env.dev
 
             # 🛠 Gradle 빌드 권한 설정
             echo "[GitHub Actions] 🔧 Fixing Gradle permissions"
