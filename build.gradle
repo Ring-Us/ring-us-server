@@ -45,7 +45,6 @@ dependencies {
     //aws
     implementation platform('software.amazon.awssdk:bom:2.20.0') // AWS SDK 버전 관리
     implementation 'software.amazon.awssdk:s3'
-    implementation 'software.amazon.awssdk:s3-presigner'
     implementation 'software.amazon.awssdk:sts'
     implementation 'software.amazon.awssdk:core:2.30.20'
     implementation 'software.amazon.awssdk:ec2'
