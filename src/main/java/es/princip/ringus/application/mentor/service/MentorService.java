@@ -49,7 +49,7 @@ public class MentorService {
 
     @Transactional
     public Long edit(Long memberId, EditMentorRequest request) {
-        Mentor mentor = mentorRepository.findById(memberId)
+        Mentor mentor = mentorRepository.findByMemberId(memberId)
                 .orElseThrow(() -> new CustomRuntimeException(MentorErrorCode.MENTOR_PROFILE_NOT_FOUND));
         mentor.edit(request);
         return mentor.getId();

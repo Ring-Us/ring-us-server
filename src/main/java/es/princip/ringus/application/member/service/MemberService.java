@@ -8,6 +8,7 @@ import es.princip.ringus.domain.mentee.Mentee;
 import es.princip.ringus.domain.mentee.MenteeRepository;
 import es.princip.ringus.domain.mentor.Mentor;
 import es.princip.ringus.domain.mentor.MentorRepository;
+import es.princip.ringus.domain.mentoring.MentoringRepository;
 import es.princip.ringus.domain.serviceTerm.ServiceTermAgreement;
 import es.princip.ringus.global.exception.CustomRuntimeException;
 import es.princip.ringus.global.util.UniversityDomainUtil;
@@ -32,6 +33,7 @@ public class MemberService {
     private final MentorRepository mentorRepository;
     private  final MenteeRepository menteeRepository;
     private final PasswordEncoder passwordEncoder;
+    private final MentoringRepository mentoringRepository;
 
     /**
      * 회원 저장 (이메일 인증 후 회원가입 진행)
@@ -68,7 +70,7 @@ public class MemberService {
                 Mentor mentor = mentorRepository.findByMemberId(memberId)
                         .orElseThrow(() -> new CustomRuntimeException(MemberErrorCode.MEMBER_NOT_FOUND));
 
-                MentorProfileResponse profile = MentorProfileResponse.from(mentor);
+                MentorProfileResponse profile = MentorProfileResponse.from(mentor, mentoringRepository.findMentoringCountBy(mentor.getId()));
                 return MemberResponse.of(member, profile);
             }
         }
