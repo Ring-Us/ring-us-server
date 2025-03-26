@@ -46,6 +46,11 @@ jobs:
             sudo chown -R $USER:$USER ~/.gradle
             sudo chmod -R 777 ~/.gradle
 
+            # 🛠 Gradle 빌드 권한 설정
+            echo "[GitHub Actions] 🔧 Fixing Gradle permissions"
+            sudo chown -R $USER:$USER ~/.gradle
+            sudo chmod -R 777 ~/.gradle
+
             # 권한 설정 (dev.sh 실행 가능하도록, 추후에 deploy.sh와 분리)
             sudo chmod +x dev.sh
 
