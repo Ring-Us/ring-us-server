@@ -36,6 +36,10 @@ jobs:
               git clone git@github.com:Ring-Us/ring-us-server.git /home/ubuntu/ring-us-server
               cd /home/ubuntu/ring-us-server
             fi
+            
+            cd /home/ubuntu/ring-us-server
+
+            echo "${{ secrets.ENV_FILE }}" > .env.dev
 
             # 🛠 Gradle 빌드 권한 설정
             echo "[GitHub Actions] 🔧 Fixing Gradle permissions"
