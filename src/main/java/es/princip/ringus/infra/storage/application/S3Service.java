@@ -25,7 +25,7 @@ public class S3Service {
     /**
      * S3에 파일 업로드
      * @param file       업로드할 파일
-     * @param folderPath S3에 저장할 폴더 경로 (예: "profile-images/mentor", "certificates/mentee/ENROLLMENT" 등)
+     * @param folderPath S3에 저장할 폴더 경로 (예: "images/profile/mentor", "certificates/mentee/ENROLLMENT" 등)
      * @return 업로드된 파일의 S3 URL
      */
     public String uploadFile(MultipartFile file, String folderPath) {
@@ -53,7 +53,7 @@ public class S3Service {
     /**
      * S3에 저장된 파일의 URL 반환
      */
-    private String getFileUrl(String s3Key) {
+    protected String getFileUrl(String s3Key) {
         return "https://" + bucketName + ".s3.amazonaws.com/" + s3Key;
     }
 

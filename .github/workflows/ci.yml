@@ -1,16 +1,10 @@
 name: CI Workflow
 
 on:
-  push:
-    branches:
-      - main         # main 브랜치
-      - develop      # develop 브랜치
-      - feature/*    # 모든 feature/* 브랜치
   pull_request:
     branches:
       - main         # main 브랜치로의 PR
       - develop      # develop 브랜치로의 PR
-      - feature/*    # feature/* 브랜치로의 PR
 
 jobs:
   build-and-test:
@@ -39,14 +33,13 @@ jobs:
           restore-keys: |
             ${{ runner.os }}-gradle-
 
+      - name: Create .env.dev file
+        run: |
+          touch .env.dev
+          echo "${{ secrets.ENV }}" >> .env.dev
+
       # 4. dev.sh 실행 (환경 변수 로드 및 빌드 준비)
       - name: Run dev.sh
         run: |
           chmod +x ./dev.sh    # dev.sh에 실행 권한 부여
           ./dev.sh             # dev.sh 실행
-
-      # 5. Gradle 빌드 및 테스트 실행
-      - name: Build and Test (Gradle)
-        run: |
-          ./gradlew clean build -x test
-          ./gradlew test

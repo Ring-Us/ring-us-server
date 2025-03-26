@@ -2,5 +2,5 @@ package es.princip.ringus.domain.member;
 
 
 public enum MemberType {
-    ADMIN, MENTOR, MENTEE
+    ROLE_ADMIN, ROLE_MENTOR, ROLE_MENTEE
 }
