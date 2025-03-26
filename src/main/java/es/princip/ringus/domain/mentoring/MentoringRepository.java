@@ -7,6 +7,6 @@ import org.springframework.stereotype.Repository;
 import java.util.Optional;
 
 @Repository
-public interface MentoringRepository extends JpaRepository<Mentoring, Long> {
+public interface MentoringRepository extends JpaRepository<Mentoring, Long>, MentoringQueryDslRepository {
     Optional<Mentoring> findByMenteeIdAndMentorId(Long menteeId, Long mentorId);
 }
