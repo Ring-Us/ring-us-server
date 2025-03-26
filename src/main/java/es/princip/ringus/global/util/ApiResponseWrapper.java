@@ -19,6 +19,10 @@ public class ApiResponseWrapper<T> {
         return new ApiResponseWrapper<>(status, message, data);
     }
 
+    public static <T> ApiResponseWrapper<T> success(HttpStatus status, T data) {
+        return new ApiResponseWrapper<>(status, null, data);
+    }
+
     public static ApiResponseWrapper<Void> success(HttpStatus status, String message) {
         return new ApiResponseWrapper<>(status, message, null);
     }

@@ -20,6 +20,6 @@ public interface MentorRepository extends JpaRepository<Mentor, Long>, MentorQue
 
     @Query("SELECT m FROM Mentor m WHERE m.memberId = :memberId")
     Optional<Mentor> findByMemberId(Long memberId);
-  
+
     boolean existsByNickname(String nickname);
 }

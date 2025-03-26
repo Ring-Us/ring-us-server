@@ -4,8 +4,8 @@ import es.princip.ringus.infra.storage.domain.ProfileImage;
 import jakarta.validation.constraints.NotBlank;
 
 public record ProfileImageRequest(
-        @NotBlank String fileName,
-        @NotBlank String filePath
+        String fileName,
+        String filePath
 ) {
     public ProfileImage toEntity() {
         return ProfileImage.builder()

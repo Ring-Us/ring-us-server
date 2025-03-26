@@ -8,7 +8,7 @@ import org.springframework.stereotype.Repository;
 import java.util.Optional;
 
 @Repository
-public interface BookmarkRepository extends JpaRepository<Bookmark, Long> {
+public interface BookmarkRepository extends JpaRepository<Bookmark, Long>, BookmarkQueryDslRepository {
     Optional<Bookmark> findByMentorAndMentee(Mentor mentor, Mentee mentee);
 
     Optional<Bookmark> findByMentee(Mentee mentee);

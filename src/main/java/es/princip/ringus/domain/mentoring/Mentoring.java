@@ -1,6 +1,6 @@
 package es.princip.ringus.domain.mentoring;
 
-import es.princip.ringus.domain.mentoring.converter.MentoringTimeConverter;
+import es.princip.ringus.domain.mentoring.converter.MentoringTimeListConverter;
 import es.princip.ringus.domain.base.BaseTimeEntity;
 import es.princip.ringus.domain.exception.MentoringErrorCode;
 import es.princip.ringus.domain.mentee.Mentee;
@@ -33,7 +33,7 @@ public class Mentoring extends BaseTimeEntity {
     @Column(name = "mentoring_topic")
     private MentoringTopic mentoringTopic;
 
-    @Convert(converter = MentoringTimeConverter.class)
+    @Convert(converter = MentoringTimeListConverter.class)
     @Column(length = 500, nullable = false) // 500자 이내
     //@Column(columnDefinition = "TEXT") // 500자 초과 시
     private List<MentoringTime> applyTimes;
@@ -88,5 +88,13 @@ public class Mentoring extends BaseTimeEntity {
             mentor,
             mentee
         );
+    }
+
+    public boolean isNotWaiting() {
+        return mentoringStatus != MentoringStatus.WAITING;
+    }
+
+    public void accept() {
+        this.mentoringStatus = MentoringStatus.ACCEPTED;
     }
 }

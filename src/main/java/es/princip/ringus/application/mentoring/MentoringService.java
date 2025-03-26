@@ -2,7 +2,6 @@ package es.princip.ringus.application.mentoring;
 
 import es.princip.ringus.domain.exception.MenteeErrorCode;
 import es.princip.ringus.domain.exception.MentorErrorCode;
-import es.princip.ringus.domain.member.MemberRepository;
 import es.princip.ringus.domain.mentee.Mentee;
 import es.princip.ringus.domain.mentee.MenteeRepository;
 import es.princip.ringus.domain.mentor.Mentor;
@@ -46,8 +45,5 @@ public class MentoringService {
         mentor.addMentoring(mentoring);
 
         return MentoringResponse.from(mentoringRepository.save(mentoring));
-
     }
-
-
 }
