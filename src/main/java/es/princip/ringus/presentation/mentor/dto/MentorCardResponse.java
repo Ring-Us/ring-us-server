@@ -17,7 +17,8 @@ public record MentorCardResponse(
         IntroductionResponse introduction,
         OrganizationResponse organization,
         String message,
-        int mentoringCount,
+        Long mentoringCount,
+        @JsonInclude(NON_NULL) Boolean bookmarked,
         @JsonInclude(NON_NULL) String status
 ) {
     public static MentorCardResponse of(
@@ -26,7 +27,9 @@ public record MentorCardResponse(
             final ProfileImage profileImage,
             final Introduction introduction,
             final Organization organization,
-            final String status
+            final String message,
+            final String status,
+            final Long mentoringCount
     ) {
         return new MentorCardResponse(
                 mentorId,
@@ -34,8 +37,9 @@ public record MentorCardResponse(
                 ProfileImageResponse.from(profileImage),
                 IntroductionResponse.from(introduction),
                 OrganizationResponse.from(organization),
+                message,
+                mentoringCount,
                 null,
-                0,
                 status
         );
     }
@@ -47,7 +51,8 @@ public record MentorCardResponse(
             final Introduction introduction,
             final Organization organization,
             final String message,
-            final int mentoringCount
+            final Long mentoringCount,
+            final Boolean bookmarked
     ) {
         return new MentorCardResponse(
                 mentorId,
@@ -57,6 +62,7 @@ public record MentorCardResponse(
                 OrganizationResponse.from(organization),
                 message,
                 mentoringCount,
+                bookmarked,
                 null
         );
     }

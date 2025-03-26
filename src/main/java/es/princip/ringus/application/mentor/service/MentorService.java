@@ -7,6 +7,7 @@ import es.princip.ringus.domain.member.Member;
 import es.princip.ringus.domain.member.MemberRepository;
 import es.princip.ringus.domain.mentor.Mentor;
 import es.princip.ringus.domain.mentor.MentorRepository;
+import es.princip.ringus.domain.mentoring.MentoringRepository;
 import es.princip.ringus.domain.support.CursorResponse;
 import es.princip.ringus.global.exception.CustomRuntimeException;
 import es.princip.ringus.presentation.mentor.dto.*;
@@ -25,6 +26,7 @@ public class MentorService {
 
     private final MemberRepository memberRepository;
     private final MentorRepository mentorRepository;
+    private final MentoringRepository mentoringRepository;
 
     @Transactional
     public Long register(Long memberId, MentorRequest request) {
@@ -57,6 +59,7 @@ public class MentorService {
         if(request.isBookmarked()) {
             Member member = memberRepository.findById(memberId)
                 .orElseThrow(() -> new CustomRuntimeException(MemberErrorCode.MEMBER_NOT_FOUND));
+            Long menteeId = member.getId();
 
             if (member.isNotMentee()) {
                 throw new CustomRuntimeException(MemberErrorCode.MEMBER_TYPE_DIFFERENT);
@@ -71,6 +74,9 @@ public class MentorService {
     public MentorDetailResponse getDetailBy(Long mentorId) {
         Mentor mentor = mentorRepository.findById(mentorId)
                 .orElseThrow(() -> new CustomRuntimeException(MentorErrorCode.MENTOR_PROFILE_NOT_FOUND));
-        return MentorDetailResponse.from(mentor);
+        return MentorDetailResponse.from(
+                mentor,
+                mentoringRepository.findMentoringCountBy(mentorId)
+        );
     }
 }
