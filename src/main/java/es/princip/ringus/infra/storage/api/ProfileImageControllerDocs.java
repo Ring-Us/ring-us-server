@@ -1,5 +1,6 @@
 package es.princip.ringus.infra.storage.api;
 
+import es.princip.ringus.global.annotation.SessionMemberId;
 import es.princip.ringus.global.util.ApiResponseWrapper;
 import es.princip.ringus.infra.storage.dto.ProfileUploadRequest;
 import io.swagger.v3.oas.annotations.Operation;
@@ -32,6 +33,9 @@ public interface ProfileImageControllerDocs {
     @PostMapping(value = "/image", consumes = "multipart/form-data")
     ResponseEntity<ApiResponseWrapper<Void>> uploadProfileImage(
             @Parameter(description = "프로필 이미지 업로드 요청 데이터 (폼데이터 형식)", required = true)
-            @ModelAttribute ProfileUploadRequest request
+            @ModelAttribute ProfileUploadRequest request,
+            @Parameter(description = "세션에서 조회한 사용자 ID", hidden = true)
+            @SessionMemberId
+            Long memberId
     );
 }

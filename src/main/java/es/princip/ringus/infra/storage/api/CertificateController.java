@@ -5,11 +5,15 @@ import es.princip.ringus.global.exception.CustomRuntimeException;
 import es.princip.ringus.global.util.ApiResponseWrapper;
 import es.princip.ringus.infra.storage.application.StorageCertificateService;
 import es.princip.ringus.infra.storage.dto.CertificateUploadRequest;
+import es.princip.ringus.infra.storage.dto.FilePreviewResponse;
 import jakarta.servlet.http.HttpSession;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
+
+import java.util.List;
 
 @RestController
 @RequestMapping("/storage/certificate")
@@ -51,5 +55,7 @@ public class CertificateController implements CertificateControllerDocs{
         String filePath = storageCertificateService.uploadMentorCertificate(certificateUploadRequest, memberId);
         return ResponseEntity.ok(ApiResponseWrapper.success(HttpStatus.OK, filePath));
     }
+
+
 
 }
