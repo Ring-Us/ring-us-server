@@ -28,6 +28,28 @@ public record MentorCardResponse(
             final Introduction introduction,
             final Organization organization,
             final String message,
+            final Long mentoringCount
+    ) {
+        return new MentorCardResponse(
+                mentorId,
+                nickname,
+                ProfileImageResponse.from(profileImage),
+                IntroductionResponse.from(introduction),
+                OrganizationResponse.from(organization),
+                message,
+                mentoringCount,
+                null,
+                null
+        );
+    }
+
+    public static MentorCardResponse of(
+            final Long mentorId,
+            final String nickname,
+            final ProfileImage profileImage,
+            final Introduction introduction,
+            final Organization organization,
+            final String message,
             final String status,
             final Long mentoringCount
     ) {

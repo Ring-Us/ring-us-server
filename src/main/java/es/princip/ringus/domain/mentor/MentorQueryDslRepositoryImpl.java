@@ -85,7 +85,7 @@ public class MentorQueryDslRepositoryImpl extends QueryDslSupport implements Men
                         tuple.get(mentoring.mentoringStatus.stringValue()),
                         mentoringRepository.findMentoringCountBy(tuple.get(mentor.id))
                     );
-                } else {
+                } else if (request.isBookmarked() && memberId != null) {
                     return MentorCardResponse.of(
                         tuple.get(mentor.id),
                         tuple.get(mentor.nickname),
@@ -95,6 +95,16 @@ public class MentorQueryDslRepositoryImpl extends QueryDslSupport implements Men
                         tuple.get(mentor.message),
                         mentoringRepository.findMentoringCountBy(tuple.get(mentor.id)),
                         bookmarkRepository.isBookmarked(memberId, tuple.get(mentor.id))
+                    );
+                } else {
+                    return MentorCardResponse.of(
+                        tuple.get(mentor.id),
+                        tuple.get(mentor.nickname),
+                        tuple.get(mentor.profileImage),
+                        tuple.get(mentor.introduction),
+                        tuple.get(mentor.organization),
+                        tuple.get(mentor.message),
+                        mentoringRepository.findMentoringCountBy(tuple.get(mentor.id))
                     );
                 }
             })
