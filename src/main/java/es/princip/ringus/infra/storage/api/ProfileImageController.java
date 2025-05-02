@@ -1,6 +1,7 @@
 package es.princip.ringus.infra.storage.api;
 
 import es.princip.ringus.domain.exception.MemberErrorCode;
+import es.princip.ringus.global.annotation.SessionCheck;
 import es.princip.ringus.global.annotation.SessionMemberId;
 import es.princip.ringus.global.exception.CustomRuntimeException;
 import es.princip.ringus.global.util.ApiResponseWrapper;
@@ -23,10 +24,13 @@ public class ProfileImageController implements ProfileImageControllerDocs {
      * 프로필 이미지 업로드
      */
     @PostMapping("/image")
+    @SessionCheck
     public ResponseEntity<ApiResponseWrapper<Void>> uploadProfileImage(
-            @ModelAttribute ProfileUploadRequest request
+            @ModelAttribute ProfileUploadRequest request,
+            @SessionMemberId Long memberId
     ) {
-        String filePath = storageProfileService.uploadProfileImage(request);
+
+        String filePath = storageProfileService.uploadProfileImage(request, memberId);
         return ResponseEntity.ok(ApiResponseWrapper.success(HttpStatus.OK, filePath));
     }
 
