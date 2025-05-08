@@ -1,7 +1,10 @@
 package es.princip.ringus.domain.mentor.vo;
 
+import lombok.Getter;
+
 import java.util.Arrays;
 
+@Getter
 public enum DetailedJob {
     // Marketing
     BRAND_MARKETING("BRAND_MARKETING", "브랜드 마케팅", JobCategory.MARKETING),
@@ -111,32 +114,20 @@ public enum DetailedJob {
     OTHER_LEGAL("OTHER_LEGAL", "기타", JobCategory.LEGAL);
 
     private final String code;
-    private final String name;
+    private final String kor;
     private final JobCategory category;
 
-    DetailedJob(String code, String name, JobCategory category) {
+    DetailedJob(String code, String kor, JobCategory category) {
         this.code = code;
-        this.name = name;
+        this.kor = kor;
         this.category = category;
     }
 
-    public String getCode() {
-        return code;
-    }
-
-    public String getName() {
-        return name;
-    }
-
-    public JobCategory getCategory() {
-        return category;
-    }
-
-    public static DetailedJob from(String name) {
+    public static DetailedJob from(String kor) {
         return Arrays.stream(values())
-                .filter(e -> e.code.equals(name))
+                .filter(e -> e.kor.equals(kor))
                 .findFirst()
                 .orElseThrow(() ->
-                        new IllegalArgumentException(name + "매핑되는 카테고리가 없습니다: "));
+                        new IllegalArgumentException("매핑되는 DetailedJob가 없습니다: " + kor));
     }
 }

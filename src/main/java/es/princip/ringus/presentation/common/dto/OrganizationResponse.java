@@ -11,8 +11,8 @@ public record OrganizationResponse(
     public static OrganizationResponse from(final Organization organization) {
         return new OrganizationResponse(
                 organization.getName(),
-                organization.getJobCategory().name(),
-                organization.getDetailedJob().name(),
+                organization.getJobCategory().getKor(),
+                organization.getDetailedJob().getKor(),
                 organization.getExperience()
         );
     }
