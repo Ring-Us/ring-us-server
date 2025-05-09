@@ -23,7 +23,8 @@ public enum MentoringField {
         return Arrays.stream(values())
                 .filter(e -> e.kor.equals(kor))
                 .findFirst()
-                .orElseThrow(() ->
-                        new IllegalArgumentException("매핑되는 MentoringField가 없습니다: " + kor));
+                .orElseThrow(
+                        () -> new IllegalArgumentException("매핑되는 MentoringField가 없습니다: " + kor)
+                );
     }
 }

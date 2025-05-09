@@ -23,9 +23,10 @@ public enum MentoringTopic {
 
     public static MentoringTopic from(String kor) {
         return Arrays.stream(values())
-                .filter(e -> e.kor.equals(kor))
-                .findFirst()
-                .orElseThrow(() ->
-                        new IllegalArgumentException("매핑되는 MentoringTopic이 없습니다: " + kor));
+            .filter(e -> e.kor.equals(kor))
+            .findFirst()
+            .orElseThrow(
+                    () -> new IllegalArgumentException("매핑되는 MentoringTopic이 없습니다: " + kor)
+            );
     }
 }

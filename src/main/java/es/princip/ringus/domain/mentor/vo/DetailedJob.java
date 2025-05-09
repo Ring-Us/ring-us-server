@@ -125,9 +125,10 @@ public enum DetailedJob {
 
     public static DetailedJob from(String kor) {
         return Arrays.stream(values())
-                .filter(e -> e.kor.equals(kor))
-                .findFirst()
-                .orElseThrow(() ->
-                        new IllegalArgumentException("매핑되는 DetailedJob가 없습니다: " + kor));
+            .filter(e -> e.kor.equals(kor))
+            .findFirst()
+            .orElseThrow(
+                    () -> new IllegalArgumentException("매핑되는 DetailedJob가 없습니다: " + kor)
+            );
     }
 }
