@@ -2,11 +2,10 @@ package es.princip.ringus.presentation.mentor.dto;
 
 import es.princip.ringus.domain.mentor.Mentor;
 import es.princip.ringus.domain.mentor.vo.Hashtag;
+import es.princip.ringus.domain.mentor.vo.MentoringField;
 import es.princip.ringus.presentation.common.dto.*;
 
 import java.util.List;
-import java.util.Set;
-import java.util.stream.Collectors;
 
 public record MyMentorResponse(
     String nickname,
@@ -14,7 +13,7 @@ public record MyMentorResponse(
     OrganizationResponse organization,
     IntroductionResponse introduction,
     TimezoneResponse timezone,
-    Set<String> mentoringField,
+    List<String> mentoringField,
     List<String> hashtags,
     String message,
     PortfolioResponse portfolio,
@@ -27,7 +26,7 @@ public record MyMentorResponse(
                 OrganizationResponse.from(mentor.getOrganization()),
                 IntroductionResponse.from(mentor.getIntroduction()),
                 TimezoneResponse.from(mentor.getTimezone()),
-                mentor.getMentoringField().stream().map(String::valueOf).collect(Collectors.toSet()),
+                mentor.getMentoringField().stream().map(MentoringField::getKor).toList(),
                 mentor.getHashtags().stream().map(Hashtag::getValue).toList(),
                 mentor.getMessage(),
                 PortfolioResponse.from(mentor.getPortfolio()),
