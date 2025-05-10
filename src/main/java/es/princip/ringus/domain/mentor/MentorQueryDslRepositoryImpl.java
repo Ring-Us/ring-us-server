@@ -85,7 +85,11 @@ public class MentorQueryDslRepositoryImpl extends QueryDslSupport implements Men
                         tuple.get(mentoring.mentoringStatus.stringValue()),
                         mentoringRepository.findMentoringCountBy(tuple.get(mentor.id))
                     );
-                } else if (request.isBookmarked() && memberId != null) {
+                } else if (request.isBookmarked()) {
+                    if (memberId == null) {
+                        throw new IllegalArgumentException("북마크를 조회하기 위해서는 memberId가 필요합니다.");
+                    }
+
                     return MentorCardResponse.of(
                         tuple.get(mentor.id),
                         tuple.get(mentor.nickname),

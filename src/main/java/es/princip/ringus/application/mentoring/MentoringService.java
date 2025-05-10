@@ -9,6 +9,7 @@ import es.princip.ringus.domain.mentor.MentorRepository;
 import es.princip.ringus.domain.mentoring.Mentoring;
 import es.princip.ringus.domain.mentoring.MentoringRepository;
 import es.princip.ringus.domain.mentoring.MentoringStatus;
+import es.princip.ringus.domain.mentoring.MentoringTopic;
 import es.princip.ringus.global.exception.CustomRuntimeException;
 import es.princip.ringus.presentation.mentoring.dto.CreateMentoringRequest;
 import es.princip.ringus.presentation.mentoring.dto.MentoringResponse;
@@ -35,11 +36,12 @@ public class MentoringService {
                 .orElseThrow(() -> new CustomRuntimeException(MenteeErrorCode.MENTEE_NOT_FOUND));
         final Mentoring mentoring = Mentoring.of(
                 MentoringStatus.WAITING,
-                request.topic(),
+                MentoringTopic.from(request.topic()),
                 request.applyTimes(),
                 request.mentoringMessage(),
                 mentor,
-                mentee);
+                mentee
+        );
 
         mentee.addMentoring(mentoring);
         mentor.addMentoring(mentoring);

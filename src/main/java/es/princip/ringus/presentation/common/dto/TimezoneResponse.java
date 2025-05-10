@@ -3,16 +3,16 @@ package es.princip.ringus.presentation.common.dto;
 import es.princip.ringus.domain.mentor.vo.Timezone;
 
 import java.time.LocalTime;
-import java.util.Set;
+import java.util.List;
 
 public record TimezoneResponse(
-        Set<String> days,
+        List<String> days,
         LocalTime startTime,
         LocalTime endTime
 ) {
     public static TimezoneResponse from(final Timezone timezone) {
         return new TimezoneResponse(
-                timezone.getDays(),
+                timezone.getDaysKor(),
                 timezone.getStartTime(),
                 timezone.getEndTime()
         );

@@ -1,13 +1,13 @@
 package es.princip.ringus.presentation.mentor.dto;
 
-import es.princip.ringus.domain.mentor.vo.Days;
 import es.princip.ringus.domain.mentor.vo.Timezone;
+import org.hibernate.validator.constraints.UniqueElements;
 
 import java.time.LocalTime;
-import java.util.Set;
+import java.util.List;
 
 public record TimezoneRequest (
-        Set<Days> days,
+        @UniqueElements List<String> days,
         LocalTime startTime,
         LocalTime endTime
 ) {

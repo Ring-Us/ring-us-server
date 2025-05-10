@@ -1,0 +1,17 @@
+ALTER TABLE mentor_mentoring_fields
+    MODIFY COLUMN mentoring_field
+    ENUM(
+    'JOB_PREPARATION',
+    'INTERVIEW_PREPARATION',
+    'INDUSTRY_TRENDS',
+    'CAREER_PATH'
+) NOT NULL;
+
+ALTER TABLE mentoring
+    MODIFY COLUMN mentoring_topic
+    ENUM(
+    'JOB_PREPARATION',
+    'INTERVIEW_PREPARATION',
+    'INDUSTRY_TRENDS',
+    'CAREER_PATH'
+) NOT NULL;
