@@ -13,9 +13,7 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 
 import java.util.List;
-import lombok.extern.slf4j.Slf4j;
 
-@Slf4j
 @Entity
 @Getter
 @Table(name = "mentoring")
@@ -100,7 +98,17 @@ public class Mentoring extends BaseTimeEntity {
         this.mentoringStatus = MentoringStatus.ACCEPTED;
     }
 
-    public void changeApplyTimes(List<MentoringTime> applyTimes) {
-        this.applyTimes = applyTimes;
+    public void cancel() {
+        if (mentoringStatus == MentoringStatus.WAITING) {
+            this.mentoringStatus = MentoringStatus.CANCELLED_BEFORE_PAYMENT;
+        } else if (mentoringStatus == MentoringStatus.ACCEPTED) {
+            this.mentoringStatus = MentoringStatus.CANCELLED_AFTER_PAYMENT;
+        } else {
+            throw new CustomRuntimeException(MentoringErrorCode.MENTORING_CANCEL_NOT_POSSIBLE);
+        }
+    }
+
+    public void reject() {
+        this.mentoringStatus = MentoringStatus.REJECTED;
     }
 }
