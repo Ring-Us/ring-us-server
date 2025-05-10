@@ -10,17 +10,12 @@ import es.princip.ringus.domain.mentor.MentorRepository;
 import es.princip.ringus.domain.mentoring.Mentoring;
 import es.princip.ringus.domain.mentoring.MentoringRepository;
 import es.princip.ringus.domain.mentoring.MentoringStatus;
-import es.princip.ringus.domain.mentoring.MentoringTopic;
 import es.princip.ringus.global.exception.CustomRuntimeException;
-import es.princip.ringus.presentation.mentoring.dto.CreateMentoringRequest;
-import es.princip.ringus.presentation.mentoring.dto.EditMentoringTimeRequest;
-import es.princip.ringus.presentation.mentoring.dto.MentoringResponse;
+import es.princip.ringus.presentation.mentoring.dto.*;
 import lombok.RequiredArgsConstructor;
-import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-@Slf4j
 @Service
 @RequiredArgsConstructor
 @Transactional(readOnly = true)
@@ -40,12 +35,11 @@ public class MentoringService {
                 .orElseThrow(() -> new CustomRuntimeException(MenteeErrorCode.MENTEE_NOT_FOUND));
         final Mentoring mentoring = Mentoring.of(
                 MentoringStatus.WAITING,
-                MentoringTopic.from(request.topic()),
+                request.topic(),
                 request.applyTimes(),
                 request.mentoringMessage(),
                 mentor,
-                mentee
-        );
+                mentee);
 
         mentee.addMentoring(mentoring);
         mentor.addMentoring(mentoring);
@@ -54,13 +48,35 @@ public class MentoringService {
     }
 
     /**
-     * 멘토링 신청 일정 변경
+     * 멘토링 신청 취소
      */
     @Transactional
-    public void changeMentoringDate(EditMentoringTimeRequest request) {
-        Long mentoringId = request.mentoringId();
-        Mentoring mentoring = mentoringRepository.findById(mentoringId)
+    public MentoringCancelResponse cancelMentoring(CancelMentoringRequest request, Long memberId) {
+        Mentoring mentoring = mentoringRepository.findById(request.mentoringId())
                 .orElseThrow(() -> new CustomRuntimeException(MentoringErrorCode.MENTORING_NOT_FOUND));
-        mentoring.changeApplyTimes(request.applyTimes());
+
+        if (!mentoring.getMentee().getMemberId().equals(memberId)) {
+            throw new CustomRuntimeException(MentoringErrorCode.MENTORING_CANCEL_NOT_POSSIBLE);
+        }
+
+        mentoring.cancel();
+        return MentoringCancelResponse.from(mentoring);
+    }
+
+    /**
+     * 멘토링 신청 거절
+     */
+    @Transactional
+    public MentoringRejectResponse rejectMentoring(RejectMentoringRequest request, Long memberId) {
+        Mentoring mentoring = mentoringRepository.findById(request.mentoringId())
+                .orElseThrow(() -> new CustomRuntimeException(MentoringErrorCode.MENTORING_NOT_FOUND));
+
+        if (!mentoring.getMentor().getMemberId().equals(memberId)) {
+            throw new CustomRuntimeException(MentorErrorCode.MENTOR_NOT_FOUND);
+        }
+
+        mentoring.reject();
+
+        return MentoringRejectResponse.from(mentoring);
     }
 }
