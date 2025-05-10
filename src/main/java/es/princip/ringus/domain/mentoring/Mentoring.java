@@ -13,7 +13,9 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 
 import java.util.List;
+import lombok.extern.slf4j.Slf4j;
 
+@Slf4j
 @Entity
 @Getter
 @Table(name = "mentoring")
@@ -96,5 +98,9 @@ public class Mentoring extends BaseTimeEntity {
 
     public void accept() {
         this.mentoringStatus = MentoringStatus.ACCEPTED;
+    }
+
+    public void changeApplyTimes(List<MentoringTime> applyTimes) {
+        this.applyTimes = applyTimes;
     }
 }
