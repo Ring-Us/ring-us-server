@@ -1,0 +1,9 @@
+ALTER TABLE mentoring
+    MODIFY COLUMN mentoring_status ENUM (
+    'WAITING',
+    'ACCEPTED',
+    'REJECTED',
+    'CANCELLED_BEFORE_PAYMENT',
+    'CANCELLED_AFTER_PAYMENT',
+    'COMPLETED'
+    ) NOT NULL;
