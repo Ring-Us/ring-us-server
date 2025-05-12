@@ -14,7 +14,6 @@ public class SessionUtil {
 
     private final MemberRepository memberRepository;
 
-    // TODO: 로그인된 유저가 멘토인지 확인
     public boolean isLoginMentorUser(
         HttpSession session,
         Long memberId
@@ -29,7 +28,6 @@ public class SessionUtil {
         return member.isMentor();
     }
 
-    // TODO: 로그인된 유저가 멘티인지 확인
     public boolean isLoginMenteeUser(
         HttpSession session,
         Long memberId
@@ -44,7 +42,6 @@ public class SessionUtil {
         return member.isMentee();
     }
 
-    // TODO: 로그인 여부 확인
     public boolean isLoginUser(
         HttpSession session,
         Long memberId
@@ -52,12 +49,10 @@ public class SessionUtil {
         return session != null && session.getAttribute("memberId") != null;
     }
 
-    // TODO: 역할이 멘토인지 확인
     public boolean isMentorRole(String role) {
         return "MENTOR".equals(role);
     }
 
-    // TODO: 역할이 멘티인지 확인
     public boolean isMenteeRole(String role) {
         return "MENTEE".equals(role);
     }
