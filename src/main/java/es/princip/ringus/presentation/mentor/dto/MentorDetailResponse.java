@@ -1,5 +1,6 @@
 package es.princip.ringus.presentation.mentor.dto;
 
+import es.princip.ringus.domain.member.Member;
 import es.princip.ringus.domain.mentor.Mentor;
 import es.princip.ringus.domain.mentor.vo.Hashtag;
 import es.princip.ringus.domain.mentor.vo.MentoringField;
@@ -8,6 +9,7 @@ import es.princip.ringus.presentation.common.dto.*;
 import java.util.List;
 
 public record MentorDetailResponse(
+        String email,
         String nickname,
         EducationResponse education,
         OrganizationResponse organization,
@@ -19,8 +21,13 @@ public record MentorDetailResponse(
         PortfolioResponse portfolio,
         Long mentoringCount
 ) {
-    public static MentorDetailResponse from(final Mentor mentor, Long mentoringCount) {
+    public static MentorDetailResponse from(
+            final Member member,
+            final Mentor mentor,
+            Long mentoringCount
+    ) {
         return new MentorDetailResponse(
+                member.getEmail(),
                 mentor.getNickname(),
                 EducationResponse.from(mentor.getEducation()),
                 OrganizationResponse.from(mentor.getOrganization()),
