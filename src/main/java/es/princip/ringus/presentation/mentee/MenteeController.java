@@ -1,10 +1,13 @@
 package es.princip.ringus.presentation.mentee;
 
 import es.princip.ringus.application.mentee.service.MenteeService;
+import es.princip.ringus.domain.exception.MentorErrorCode;
 import es.princip.ringus.domain.support.CursorResponse;
 import es.princip.ringus.global.annotation.SessionCheck;
 import es.princip.ringus.global.annotation.SessionMemberId;
+import es.princip.ringus.global.exception.CustomRuntimeException;
 import es.princip.ringus.global.util.ApiResponseWrapper;
+import es.princip.ringus.global.util.SessionUtil;
 import es.princip.ringus.presentation.mentee.dto.*;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
@@ -24,6 +27,7 @@ import org.springframework.web.bind.annotation.*;
 @RequestMapping("/mentee")
 public class MenteeController implements MenteeControllerDocs{
     private final MenteeService menteeService;
+    private final SessionUtil sessionUtil;
 
     @SessionCheck
     @PostMapping
@@ -56,8 +60,9 @@ public class MenteeController implements MenteeControllerDocs{
         @SessionMemberId Long memberId
     ) {
 
-        log.info(request.toString());
-        log.info(pageable.toString());
+        if (!sessionUtil.isLoginMentorUser(httpServletRequest.getSession(), memberId)) {
+            throw new CustomRuntimeException(MentorErrorCode.MENTOR_NOT_FOUND);
+        }
 
         CursorResponse<MenteeCardResponse> response = menteeService.getMenteeBy(request, pageable, memberId);
         return ResponseEntity.ok(ApiResponseWrapper.success(HttpStatus.OK, "성공", response));
