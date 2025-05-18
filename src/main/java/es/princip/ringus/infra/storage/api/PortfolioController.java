@@ -1,24 +1,20 @@
 package es.princip.ringus.infra.storage.api;
 
 import es.princip.ringus.domain.exception.MemberErrorCode;
-import es.princip.ringus.global.annotation.SessionCheck;
-import es.princip.ringus.global.annotation.SessionMemberId;
 import es.princip.ringus.global.exception.CustomRuntimeException;
 import es.princip.ringus.global.util.ApiResponseWrapper;
 import es.princip.ringus.infra.storage.application.StoragePortfolioService;
 import es.princip.ringus.infra.storage.dto.PortfolioUploadRequest;
-import es.princip.ringus.presentation.common.dto.PortfolioRequest;
 import jakarta.servlet.http.HttpSession;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
-import org.springframework.web.multipart.MultipartFile;
 
 @RestController
 @RequestMapping("/portfolio")
 @RequiredArgsConstructor
-public class PortfolioController {
+public class PortfolioController implements PortfolioControllerDocs{
 
     private final StoragePortfolioService storagePortfolioService;
 

@@ -66,9 +66,19 @@ public class Mentor {
 
     // 포트폴리오
     @Embedded
+    @AttributeOverrides({
+            @AttributeOverride(name = "fileName", column = @Column(name = "portfolio_file_name")),
+            @AttributeOverride(name = "filePath", column = @Column(name = "portfolio_file_path")),
+            @AttributeOverride(name = "fileSize", column = @Column(name = "portfolio_file_size"))
+    })
     private Portfolio portfolio;
 
     @Embedded
+    @AttributeOverrides({
+            @AttributeOverride(name = "fileName", column = @Column(name = "profile_image_file_name")),
+            @AttributeOverride(name = "filePath", column = @Column(name = "profile_image_file_path")),
+            @AttributeOverride(name = "fileSize", column = @Column(name = "profile_image_file_size"))
+    })
     private ProfileImage profileImage;
 
     @Column(name = "member_id")

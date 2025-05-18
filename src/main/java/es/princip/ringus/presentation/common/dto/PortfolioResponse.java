@@ -4,9 +4,10 @@ import es.princip.ringus.domain.mentor.vo.Portfolio;
 
 public record PortfolioResponse(
         String url,
-        String description
+        String description,
+        Integer fileSize
 ) {
     public static PortfolioResponse from(final Portfolio portfolio) {
-        return new PortfolioResponse(portfolio.getUrl(), portfolio.getDescription());
+        return new PortfolioResponse(portfolio.getFilePath(), portfolio.getFileName(), portfolio.getFileSize());
     }
 }
