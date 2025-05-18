@@ -4,9 +4,10 @@ import es.princip.ringus.domain.mentor.vo.Portfolio;
 
 public record PortfolioRequest(
         String url,
-        String description
+        String description,
+        Integer fileSize
 ) {
     public Portfolio toEntity() {
-        return new Portfolio(url, description);
+        return new Portfolio(url, description, fileSize);
     }
 }
