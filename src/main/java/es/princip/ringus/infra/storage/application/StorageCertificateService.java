@@ -24,7 +24,6 @@ import java.util.stream.Collectors;
 public class StorageCertificateService {
     private final S3Service s3Service;
     private final FileMemberRepository fileMemberRepository;
-    private final MemberRepository memberRepository;
 
     /**
      * 멘티 증명서 업로드
