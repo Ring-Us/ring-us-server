@@ -1,6 +1,9 @@
 package es.princip.ringus.application.mentor.service;
 
+import es.princip.ringus.domain.exception.MemberErrorCode;
 import es.princip.ringus.domain.exception.MentorErrorCode;
+import es.princip.ringus.domain.member.Member;
+import es.princip.ringus.domain.member.MemberRepository;
 import es.princip.ringus.domain.mentor.Mentor;
 import es.princip.ringus.domain.mentor.MentorRepository;
 import es.princip.ringus.domain.mentoring.MentoringRepository;
@@ -15,11 +18,16 @@ import org.springframework.transaction.annotation.Transactional;
 @Transactional(readOnly = true)
 public class MyMentorService {
     private  final MentorRepository mentorRepository;
+    private final MemberRepository memberRepository;
     private  final MentoringRepository mentoringRepository;
 
     public MyMentorResponse getDetailBy(Long memberId) {
         Mentor mentor = mentorRepository.findByMemberId(memberId)
                 .orElseThrow(() -> new CustomRuntimeException(MentorErrorCode.MENTOR_PROFILE_NOT_FOUND));
-        return MyMentorResponse.from(mentor, mentoringRepository.findMentoringCountBy(mentor.getId()));
+
+        Member member = memberRepository.findById(mentor.getMemberId())
+                .orElseThrow(() -> new CustomRuntimeException(MemberErrorCode.MEMBER_NOT_FOUND));
+
+        return MyMentorResponse.from(member, mentor, mentoringRepository.findMentoringCountBy(mentor.getId()));
     }
 }

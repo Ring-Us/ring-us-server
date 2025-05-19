@@ -75,11 +75,7 @@ public class MentorService {
         Mentor mentor = mentorRepository.findById(mentorId)
                 .orElseThrow(() -> new CustomRuntimeException(MentorErrorCode.MENTOR_PROFILE_NOT_FOUND));
 
-        Member member = memberRepository.findById(mentor.getMemberId())
-                .orElseThrow(() -> new CustomRuntimeException(MemberErrorCode.MEMBER_NOT_FOUND));
-
         return MentorDetailResponse.from(
-                member,
                 mentor,
                 mentoringRepository.findMentoringCountBy(mentorId)
         );
