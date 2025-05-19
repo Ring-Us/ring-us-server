@@ -18,8 +18,8 @@ public class Certificate extends File {
     private CertificateType certificateType;
 
     @Builder
-    public Certificate(String fileName, String filePath, CertificateType certificateType) {
-        super(fileName, filePath);
+    public Certificate(String fileName, String filePath, CertificateType certificateType, Integer fileSize) {
+        super(fileName, filePath,fileSize);
         this.certificateType = certificateType;
     }
 }
