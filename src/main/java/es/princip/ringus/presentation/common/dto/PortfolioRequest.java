@@ -8,6 +8,10 @@ public record PortfolioRequest(
         Integer fileSize
 ) {
     public Portfolio toEntity() {
-        return new Portfolio(url, description, fileSize);
+        return Portfolio.builder()
+                .filePath(url)
+                .fileName(description)
+                .fileSize(fileSize)
+                .build();
     }
 }
