@@ -21,7 +21,7 @@ public class StoragePortfolioService {
     @Transactional
     public String uploadMentorPortfolio(PortfolioUploadRequest request, Long memberId) {
         String folderPath = "portfolio/mentor/" + memberId;
-        String filePath = s3Service.uploadFile(request.file(), folderPath, false);
+        String filePath = s3Service.uploadFile(request.file(), folderPath, true);
 
         fileMemberRepository.save(request.toFileMemberEntity(filePath, memberId));
         return filePath;
