@@ -19,7 +19,10 @@ public record MentorDetailResponse(
         PortfolioResponse portfolio,
         Long mentoringCount
 ) {
-    public static MentorDetailResponse from(final Mentor mentor, Long mentoringCount) {
+    public static MentorDetailResponse from(
+            final Mentor mentor,
+            Long mentoringCount
+    ) {
         return new MentorDetailResponse(
                 mentor.getNickname(),
                 EducationResponse.from(mentor.getEducation()),

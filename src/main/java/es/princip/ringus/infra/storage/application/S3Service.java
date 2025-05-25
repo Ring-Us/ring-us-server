@@ -38,18 +38,22 @@ public class S3Service {
      * @return 업로드된 파일의 S3 URL
      */
     public String uploadFile(MultipartFile file, String folderPath, boolean isPublic) {
-        String fileName = UUID.randomUUID() + "_" + sanitizeFileName(file.getOriginalFilename());
+        // 파일명: UUID + 확장자만 추출
+        String extension = getExtension(file.getOriginalFilename());
+        String fileName = UUID.randomUUID() + (extension != null ? "." + extension : "");
         String s3Key = folderPath + "/" + fileName;
+
         try {
+            PutObjectRequest.Builder requestBuilder = PutObjectRequest.builder()
+                    .bucket(bucketName)
+                    .key(s3Key)
+                    .contentType(file.getContentType());
+
             s3Client.putObject(
-                    PutObjectRequest.builder()
-                            .bucket(bucketName)
-                            .key(s3Key)
-                            .acl(isPublic ? "public-read" : "private")
-                            .contentType(file.getContentType())
-                            .build(),
+                    requestBuilder.build(),
                     RequestBody.fromInputStream(file.getInputStream(), file.getSize())
             );
+
         } catch (IOException e) {
             throw new RuntimeException("파일 입력 스트림을 읽지 못했습니다.", e);
         } catch (S3Exception e) {
@@ -97,5 +101,15 @@ public class S3Service {
             PresignedGetObjectRequest presignedRequest = presigner.presignGetObject(presignRequest);
             return presignedRequest.url().toString();
         }
+    }
+
+    /**
+     * 파일 확장자 추출
+     */
+    private String getExtension(String fileName) {
+        if (fileName == null || !fileName.contains(".")) {
+            return null;
+        }
+        return fileName.substring(fileName.lastIndexOf('.') + 1);
     }
 }

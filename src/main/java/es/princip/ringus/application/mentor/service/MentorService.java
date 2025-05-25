@@ -74,6 +74,7 @@ public class MentorService {
     public MentorDetailResponse getDetailBy(Long mentorId) {
         Mentor mentor = mentorRepository.findById(mentorId)
                 .orElseThrow(() -> new CustomRuntimeException(MentorErrorCode.MENTOR_PROFILE_NOT_FOUND));
+
         return MentorDetailResponse.from(
                 mentor,
                 mentoringRepository.findMentoringCountBy(mentorId)

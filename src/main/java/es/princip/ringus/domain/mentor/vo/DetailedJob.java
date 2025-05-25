@@ -6,7 +6,6 @@ import java.util.Arrays;
 
 @Getter
 public enum DetailedJob {
-    // Marketing
     BRAND_MARKETING("BRAND_MARKETING", "브랜드 마케팅", JobCategory.MARKETING),
     PERFORMANCE_MARKETING("PERFORMANCE_MARKETING", "퍼포먼스 마케팅", JobCategory.MARKETING),
     DIGITAL_SOCIAL_MARKETING("DIGITAL_SOCIAL_MARKETING", "디지털/소셜 마케팅", JobCategory.MARKETING),
@@ -20,7 +19,6 @@ public enum DetailedJob {
     BROADCAST_PD("BROADCAST_PD", "방송PD/영상PD", JobCategory.MARKETING),
     OTHER_MARKETING("OTHER_MARKETING", "기타", JobCategory.MARKETING),
 
-    // Service Planning
     SERVICE_PLANNING("SERVICE_PLANNING", "서비스기획", JobCategory.SERVICE_PLANNING),
     PM_PO("PM_PO", "PM/PO", JobCategory.SERVICE_PLANNING),
     STRATEGY_PLANNING("STRATEGY_PLANNING", "전략 기획", JobCategory.SERVICE_PLANNING),
@@ -30,7 +28,6 @@ public enum DetailedJob {
     STARTUP("STARTUP", "창업", JobCategory.SERVICE_PLANNING),
     OTHER_SERVICE_PLANNING("OTHER_SERVICE_PLANNING", "기타", JobCategory.SERVICE_PLANNING),
 
-    // Design
     UX_UI_DESIGN("UX_UI_DESIGN", "UX/UI 디자인", JobCategory.DESIGN),
     GRAPHIC_DESIGN("GRAPHIC_DESIGN", "그래픽 디자인", JobCategory.DESIGN),
     PRODUCT_DESIGN("PRODUCT_DESIGN", "상품 디자인", JobCategory.DESIGN),
@@ -39,7 +36,6 @@ public enum DetailedJob {
     ART_DIRECTOR("ART_DIRECTOR", "아트 디렉터", JobCategory.DESIGN),
     OTHER_DESIGN("OTHER_DESIGN", "기타", JobCategory.DESIGN),
 
-    // Development
     FRONTEND("FRONTEND", "프론트엔드", JobCategory.DEVELOPMENT),
     BACKEND("BACKEND", "백엔드", JobCategory.DEVELOPMENT),
     FULLSTACK("FULLSTACK", "풀스택 개발자", JobCategory.DEVELOPMENT),
@@ -50,12 +46,10 @@ public enum DetailedJob {
     SECURITY("SECURITY", "보안 엔지니어", JobCategory.DEVELOPMENT),
     OTHER_DEVELOPMENT("OTHER_DEVELOPMENT", "기타", JobCategory.DEVELOPMENT),
 
-    // Graduate School
     DOMESTIC_GRADUATE_SCHOOL("DOMESTIC_GRADUATE_SCHOOL", "국내 대학원", JobCategory.GRADUATE_SCHOOL),
     OVERSEAS_GRADUATE_SCHOOL("OVERSEAS_GRADUATE_SCHOOL", "해외 대학원", JobCategory.GRADUATE_SCHOOL),
     OTHER_GRADUATE_SCHOOL("OTHER_GRADUATE_SCHOOL", "기타", JobCategory.GRADUATE_SCHOOL),
 
-    // HR Support
     HR_PLANNING("HR_PLANNING", "인사기획", JobCategory.HR_SUPPORT),
     RECRUITMENT("RECRUITMENT", "채용담당", JobCategory.HR_SUPPORT),
     TALENT_DEVELOPMENT("TALENT_DEVELOPMENT", "인재육성/교육담당", JobCategory.HR_SUPPORT),
@@ -66,7 +60,6 @@ public enum DetailedJob {
     RECRUITER("RECRUITER", "리크루터", JobCategory.HR_SUPPORT),
     OTHER_HR_SUPPORT("OTHER_HR_SUPPORT", "기타", JobCategory.HR_SUPPORT),
 
-    // Sales Customer
     B2B_SALES("B2B_SALES", "기업영업(B2B)", JobCategory.SALES_CUSTOMER),
     B2C_SALES("B2C_SALES", "개인영업(B2C)", JobCategory.SALES_CUSTOMER),
     OVERSEAS_SALES("OVERSEAS_SALES", "해외영업", JobCategory.SALES_CUSTOMER),
@@ -77,15 +70,13 @@ public enum DetailedJob {
     CSM_CX("CSM_CX", "CSM/CX", JobCategory.SALES_CUSTOMER),
     OTHER_SALES_CUSTOMER("OTHER_SALES_CUSTOMER", "기타", JobCategory.SALES_CUSTOMER),
 
-    // Finance Consulting VC
-    CONSULTANT("CONSULTANT", "컨설턴트", JobCategory.FINANCE_CONSULTING_VC),
-    VC_INVESTMENT("VC_INVESTMENT", "VC/투자", JobCategory.FINANCE_CONSULTING_VC),
-    IB_PE_ALTERNATIVE_INVESTMENT("IB_PE_ALTERNATIVE_INVESTMENT", "IB/PE/대체투자", JobCategory.FINANCE_CONSULTING_VC),
-    ANALYST("ANALYST", "애널리스트", JobCategory.FINANCE_CONSULTING_VC),
-    ACCOUNTING_FINANCE("ACCOUNTING_FINANCE", "회계/재무", JobCategory.FINANCE_CONSULTING_VC),
-    OTHER_FINANCE_CONSULTING_VC("OTHER_FINANCE_CONSULTING_VC", "기타", JobCategory.FINANCE_CONSULTING_VC),
+    CONSULTANT("CONSULTANT", "컨설턴트", JobCategory.FINANCE),
+    VC_INVESTMENT("VC_INVESTMENT", "VC/투자", JobCategory.FINANCE),
+    IB_PE_ALTERNATIVE_INVESTMENT("IB_PE_ALTERNATIVE_INVESTMENT", "IB/PE/대체투자", JobCategory.FINANCE),
+    ANALYST("ANALYST", "애널리스트", JobCategory.FINANCE),
+    ACCOUNTING_FINANCE("ACCOUNTING_FINANCE", "회계/재무", JobCategory.FINANCE),
+    OTHER_FINANCE("OTHER_FINANCE", "기타", JobCategory.FINANCE),
 
-    // Data
     DATA_SCIENTIST("DATA_SCIENTIST", "데이터 사이언티스트", JobCategory.DATA),
     DATA_ENGINEER("DATA_ENGINEER", "데이터 엔지니어", JobCategory.DATA),
     DATA_ANALYST("DATA_ANALYST", "데이터 애널리스트", JobCategory.DATA),
@@ -95,7 +86,6 @@ public enum DetailedJob {
     RESEARCH_ANALYST("RESEARCH_ANALYST", "리서치 애널리스트", JobCategory.DATA),
     OTHER_DATA("OTHER_DATA", "기타", JobCategory.DATA),
 
-    // Medical
     CLINICAL_DOCTOR("CLINICAL_DOCTOR", "임상의사", JobCategory.MEDICAL),
     CLINICAL_RESEARCHER("CLINICAL_RESEARCHER", "임상연구원", JobCategory.MEDICAL),
     MEDICAL_DEVICE_RND("MEDICAL_DEVICE_RND", "의료기기 연구개발", JobCategory.MEDICAL),
@@ -103,7 +93,6 @@ public enum DetailedJob {
     BIO_RESEARCHER("BIO_RESEARCHER", "바이오 연구원", JobCategory.MEDICAL),
     OTHER_MEDICAL("OTHER_MEDICAL", "기타", JobCategory.MEDICAL),
 
-    // Legal
     LAWYER("LAWYER", "변호사", JobCategory.LEGAL),
     LEGAL_COUNSEL("LEGAL_COUNSEL", "법무담당", JobCategory.LEGAL),
     PATENT("PATENT", "특허담당", JobCategory.LEGAL),
