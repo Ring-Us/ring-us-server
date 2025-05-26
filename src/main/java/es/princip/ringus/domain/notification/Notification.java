@@ -1,5 +1,6 @@
 package es.princip.ringus.domain.notification;
 
+import es.princip.ringus.domain.base.BaseTimeEntity;
 import jakarta.persistence.*;
 import lombok.AccessLevel;
 import lombok.Builder;
@@ -10,41 +11,45 @@ import lombok.NoArgsConstructor;
 @Entity
 @Table(name = "notification")
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
-public class Notification {
+public class Notification extends BaseTimeEntity {
 
-    @Id @Column(name = "notification_id")
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Id @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name = "notification_id")
     private Long id;
 
-    @Column(nullable = false)
-    private Long title;
+    @Column(name = "title", nullable = false, length = 255)
+    private String title;
 
-    // 알림 내용
-    @Column(nullable = false)
+    @Column(name = "content", nullable = false, length = 500)
     private String content;
 
-    // 알림 유형 (ex: 멘토 신청, 수락, 메시지 등)
     @Enumerated(EnumType.STRING)
-    @Column(nullable = false)
+    @Column(name = "type", nullable = false)
     private NotificationType type;
 
-    // 읽음 여부
-    @Column(nullable = false)
+    @Column(name = "is_read", nullable = false)
     private boolean isRead = false;
 
-    // 수신자 / member 이랑 many to one?
+    @Column(name = "sender_id",   nullable = false)
+    private Long senderId;
+
     @Column(name = "receiver_id", nullable = false)
     private Long receiverId;
 
     @Builder
-    public Notification(String content, NotificationType type, Long receiverId) {
+    private Notification(
+            String title,
+            String content,
+            NotificationType type,
+            Long senderId,
+            Long receiverId
+    ) {
+        this.title = title;
         this.content = content;
         this.type = type;
+        this.senderId = senderId;
         this.receiverId = receiverId;
     }
 
-    public void markAsRead() {
-        this.isRead = true;
-    }
+    public void markAsRead() { this.isRead = true; }
 }
-

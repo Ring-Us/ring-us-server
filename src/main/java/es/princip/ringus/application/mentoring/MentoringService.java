@@ -1,5 +1,6 @@
 package es.princip.ringus.application.mentoring;
 
+import es.princip.ringus.application.notification.service.NotificationService;
 import es.princip.ringus.domain.exception.MenteeErrorCode;
 import es.princip.ringus.domain.exception.MentorErrorCode;
 import es.princip.ringus.domain.exception.MentoringErrorCode;
@@ -11,6 +12,7 @@ import es.princip.ringus.domain.mentoring.Mentoring;
 import es.princip.ringus.domain.mentoring.MentoringRepository;
 import es.princip.ringus.domain.mentoring.MentoringStatus;
 import es.princip.ringus.global.exception.CustomRuntimeException;
+import es.princip.ringus.global.sender.dto.MentoringRequestMessage;
 import es.princip.ringus.presentation.mentoring.dto.*;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
@@ -24,6 +26,7 @@ public class MentoringService {
     private final MentorRepository mentorRepository;
     private final MenteeRepository menteeRepository;
 
+    private final NotificationService notificationService;
     /**
      * 멘토링 신청 생성
      */
@@ -39,11 +42,13 @@ public class MentoringService {
                 request.applyTimes(),
                 request.mentoringMessage(),
                 mentor,
-                mentee);
+                mentee
+        );
 
         mentee.addMentoring(mentoring);
         mentor.addMentoring(mentoring);
 
+        notificationService.notify(MentoringRequestMessage.from(mentee, mentor, mentoring));
         return MentoringResponse.from(mentoringRepository.save(mentoring));
     }
 
