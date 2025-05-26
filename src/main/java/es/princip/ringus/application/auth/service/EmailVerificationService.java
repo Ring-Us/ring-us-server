@@ -8,6 +8,7 @@ import es.princip.ringus.domain.exception.EmailErrorCode;
 import es.princip.ringus.domain.exception.SignUpErrorCode;
 import es.princip.ringus.domain.member.MemberRepository;
 import es.princip.ringus.global.exception.CustomRuntimeException;
+import es.princip.ringus.presentation.auth.dto.request.GenerateCodeRequest;
 import jakarta.annotation.PostConstruct;
 import jakarta.servlet.http.HttpSession;
 import jakarta.transaction.Transactional;
@@ -35,14 +36,21 @@ public class EmailVerificationService {
     }
 
     @Transactional
-    public void generateVerificationCode(String email) {
-        if(memberRepository.existsByEmail(email)){
-            throw new CustomRuntimeException(SignUpErrorCode.DUPLICATE_EMAIL);
+    public void generateVerificationCode(GenerateCodeRequest request) {
+        if(request.isPasswordReset()) {
+            if (!memberRepository.existsByEmail(request.email())) {
+                throw new CustomRuntimeException(SignUpErrorCode.NOT_FOUND_MEMBER);
+            }
+        }
+        else {
+            if(memberRepository.existsByEmail(request.email())) {
+                throw new CustomRuntimeException(SignUpErrorCode.DUPLICATE_EMAIL);
+            }
         }
 
-        EmailVerification verification = EmailVerification.of(email);
+        EmailVerification verification = EmailVerification.of(request.email());
 
-        emailSendService.sendMimeMessage(email, verification.getVerificationCode());
+        emailSendService.sendMimeMessage(request.email(), verification.getVerificationCode());
 
         verificationRepository.save(verification);
     }
@@ -91,6 +99,13 @@ public class EmailVerificationService {
             throw new CustomRuntimeException(EmailErrorCode.SESSION_EMAIL_MISMATCH);
         }
 
-        sessionRepository.delete(emailSession);
+    }
+
+    @Transactional
+    public void deleteSession(String email) {
+        if(!sessionRepository.existsById(email)) {
+            throw new CustomRuntimeException(EmailErrorCode.SESSION_NOT_FOUND);
+        }
+        sessionRepository.deleteById(email);
     }
 }

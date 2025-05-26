@@ -4,7 +4,12 @@ import es.princip.ringus.application.member.service.MemberService;
 import es.princip.ringus.global.annotation.SessionCheck;
 import es.princip.ringus.global.annotation.SessionMemberId;
 import es.princip.ringus.global.util.ApiResponseWrapper;
+import es.princip.ringus.global.util.CookieUtil;
+import es.princip.ringus.global.util.PasswordVaildator;
 import es.princip.ringus.presentation.member.dto.MemberResponse;
+import es.princip.ringus.presentation.member.dto.PasswordUpdateRequest;
+import jakarta.servlet.http.HttpServletResponse;
+import jakarta.servlet.http.HttpSession;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -37,6 +42,24 @@ public class MemberController {
     public ResponseEntity<ApiResponseWrapper<Boolean>> isUniqueNickname(@RequestParam String nickname){
         boolean response = memberService.isUniqueNickname(nickname);
         return ResponseEntity.ok(ApiResponseWrapper.success(HttpStatus.OK, response));
+    }
+
+    @SessionCheck
+    @PatchMapping("/password")
+    public ResponseEntity<ApiResponseWrapper<Void>> updatePassword(
+        @RequestBody PasswordUpdateRequest request,
+        HttpSession session,
+        HttpServletResponse httpResponse
+    ){
+        PasswordVaildator.validate(request.newPassword());
+
+        memberService.updatePassword(request, session);
+
+        CookieUtil.deleteCookie(httpResponse, "JSESSIONID");
+
+        session.invalidate();
+
+        return ResponseEntity.ok(ApiResponseWrapper.success(HttpStatus.OK, "비밀번호가 변경되었습니다."));
     }
 
 }

@@ -95,6 +95,7 @@ public class GlobalExceptionHandler {
         Map<String, Object> response = new LinkedHashMap<>();
         response.put("status", ex.getStatus().value());
         response.put("message", ex.getMessage());
+        response.put("code", ex.getCode());
 
         return ResponseEntity.status(ex.getStatus()).body(response);
     }
