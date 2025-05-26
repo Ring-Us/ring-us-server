@@ -21,7 +21,6 @@ import java.util.Objects;
 @Service
 @RequiredArgsConstructor
 public class EmailVerificationService {
-
     private final EmailVerificationRepository verificationRepository;
     private final EmailSessionRepository sessionRepository;
     private final MemberRepository memberRepository;
