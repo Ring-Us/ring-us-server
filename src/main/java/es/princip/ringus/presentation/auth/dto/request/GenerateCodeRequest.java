@@ -7,6 +7,5 @@ public record GenerateCodeRequest(
         @Email @NotBlank
         String email,
 
-        @NotBlank
         Boolean isPasswordReset
 ) { }
