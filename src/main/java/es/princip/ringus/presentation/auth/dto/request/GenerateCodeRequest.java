@@ -5,5 +5,8 @@ import jakarta.validation.constraints.NotBlank;
 
 public record GenerateCodeRequest(
         @Email @NotBlank
-        String email
+        String email,
+
+        @NotBlank
+        Boolean isPasswordReset
 ) { }

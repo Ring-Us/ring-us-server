@@ -1,5 +1,6 @@
 package es.princip.ringus.application.member.service;
 
+import es.princip.ringus.application.auth.service.EmailVerificationService;
 import es.princip.ringus.domain.exception.MemberErrorCode;
 import es.princip.ringus.domain.exception.SignUpErrorCode;
 import es.princip.ringus.domain.member.Member;
@@ -16,6 +17,8 @@ import es.princip.ringus.presentation.auth.dto.request.SignUpRequest;
 import es.princip.ringus.presentation.member.dto.MemberResponse;
 import es.princip.ringus.presentation.member.dto.MenteeProfileResponse;
 import es.princip.ringus.presentation.member.dto.MentorProfileResponse;
+import es.princip.ringus.presentation.member.dto.PasswordUpdateRequest;
+import jakarta.servlet.http.HttpSession;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.security.crypto.password.PasswordEncoder;
@@ -31,9 +34,10 @@ import java.util.Set;
 public class MemberService {
     private final MemberRepository memberRepository;
     private final MentorRepository mentorRepository;
-    private  final MenteeRepository menteeRepository;
+    private final MenteeRepository menteeRepository;
     private final PasswordEncoder passwordEncoder;
     private final MentoringRepository mentoringRepository;
+    private final EmailVerificationService emailVerificationService;
 
     /**
      * 회원 저장 (이메일 인증 후 회원가입 진행)
@@ -75,6 +79,23 @@ public class MemberService {
             }
         }
         return MemberResponse.of(member);
+    }
+
+    @Transactional
+    public void updatePassword(PasswordUpdateRequest request, HttpSession session) {
+        emailVerificationService.verifySession(request.email(), session);
+
+        Member member = memberRepository.findByEmail(request.email())
+                .orElseThrow(() -> new CustomRuntimeException(SignUpErrorCode.NOT_FOUND_MEMBER));
+
+        if (passwordEncoder.matches(request.newPassword(), member.getPassword())) {
+            throw new CustomRuntimeException(MemberErrorCode.DUPLICATE_EXISTING_PASSWORD);
+        }
+
+        member.updatePassword(request.newPassword(), passwordEncoder);
+
+        emailVerificationService.deleteSession(request.email());
+
     }
 
     public boolean isUniqueNickname(String nickname) {

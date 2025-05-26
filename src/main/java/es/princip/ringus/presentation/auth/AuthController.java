@@ -4,6 +4,7 @@ import es.princip.ringus.application.auth.service.AuthService;
 import es.princip.ringus.application.auth.service.EmailVerificationService;
 import es.princip.ringus.global.util.ApiResponseWrapper;
 import es.princip.ringus.global.util.CookieUtil;
+import es.princip.ringus.global.util.PasswordVaildator;
 import es.princip.ringus.presentation.auth.dto.request.EmailVerifyRequest;
 import es.princip.ringus.presentation.auth.dto.request.GenerateCodeRequest;
 import es.princip.ringus.presentation.auth.dto.request.LoginRequest;
@@ -14,6 +15,7 @@ import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import jakarta.servlet.http.HttpSession;
 import jakarta.validation.Valid;
+import java.net.URI;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpStatus;
@@ -22,8 +24,6 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
-
-import java.net.URI;
 
 @Slf4j
 @RestController
@@ -37,6 +37,8 @@ public class AuthController implements AuthControllerDocs{
 
     @PostMapping("/signup")
     public ResponseEntity<?> signUp(@Valid @RequestBody SignUpRequest request, HttpSession session, HttpServletResponse httpResponse) {
+
+        PasswordVaildator.validate(request.password());
 
         SignUpResponse response = authService.signUp(request, session);
 
@@ -76,7 +78,7 @@ public class AuthController implements AuthControllerDocs{
 
     @PostMapping("/email/code")
     public ResponseEntity<ApiResponseWrapper<Void>> requestCode(@Valid @RequestBody GenerateCodeRequest request) {
-        emailVerificationService.generateVerificationCode(request.email());
+        emailVerificationService.generateVerificationCode(request);
 
         return ResponseEntity.ok(ApiResponseWrapper.success(HttpStatus.OK, "인증번호가 발급되었습니다"));
     }

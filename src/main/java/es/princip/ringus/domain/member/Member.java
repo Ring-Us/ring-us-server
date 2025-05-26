@@ -101,4 +101,8 @@ public class Member extends BaseTimeEntity {
     public boolean isMentee() {
         return this.memberType == MemberType.ROLE_MENTEE;
     }
+
+    public void updatePassword(String newPassword, PasswordEncoder passwordEncoder) {
+        this.password = passwordEncoder.encode(newPassword);
+    }
 }

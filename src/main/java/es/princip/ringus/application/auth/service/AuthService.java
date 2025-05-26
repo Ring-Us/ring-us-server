@@ -37,6 +37,7 @@ public class AuthService {
 
         emailSessionRepository.deleteById(sessionId);
 
+        verificationService.deleteSession(sessionId);
         return new SignUpResponse(member.getId());
     }
 
