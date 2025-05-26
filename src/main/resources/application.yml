@@ -64,3 +64,7 @@ springdoc:
   swagger-ui:
     path: /swagger
 
+app:
+  notification:
+    emitter:
+      timeout: ${NOTIFICATION_EMITTER_TIMEOUT}
