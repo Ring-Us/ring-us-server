@@ -44,7 +44,6 @@ public class MemberController {
         return ResponseEntity.ok(ApiResponseWrapper.success(HttpStatus.OK, response));
     }
 
-    @SessionCheck
     @PatchMapping("/password")
     public ResponseEntity<ApiResponseWrapper<Void>> updatePassword(
         @RequestBody PasswordUpdateRequest request,
