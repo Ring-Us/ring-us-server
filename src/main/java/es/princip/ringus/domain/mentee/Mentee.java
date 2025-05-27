@@ -38,6 +38,11 @@ public class Mentee {
     private String introduction;
 
     @Embedded
+    @AttributeOverrides({
+            @AttributeOverride(name = "fileName", column = @Column(name = "profile_image_file_name")),
+            @AttributeOverride(name = "filePath", column = @Column(name = "profile_image_file_path")),
+            @AttributeOverride(name = "fileSize", column = @Column(name = "profile_image_file_size"))
+    })
     private ProfileImage profileImage;
 
     @Column(name = "member_id")

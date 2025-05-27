@@ -16,7 +16,16 @@ public abstract class File {
     @Column(nullable = false)
     private String filePath; // S3 경로
 
-    protected File(String fileName, String filePath) {
+    @Column
+    private Integer fileSize; // 파일 크기 MB 단위
+
+    protected File(String fileName, String filePath, Integer fileSize) {
+        this.fileName = fileName;
+        this.filePath = filePath;
+        this.fileSize = fileSize;
+    }
+
+    public File(String fileName, String filePath) {
         this.fileName = fileName;
         this.filePath = filePath;
     }

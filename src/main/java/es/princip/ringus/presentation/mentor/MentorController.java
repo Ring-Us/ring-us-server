@@ -20,7 +20,6 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
-@Slf4j
 @RestController
 @RequiredArgsConstructor
 @RequestMapping("/mentor")
@@ -55,14 +54,11 @@ public class MentorController implements MentorControllerDocs{
             HttpServletRequest httpServletRequest,
             HttpServletResponse httpServletResponse
     ) {
-
         Long memberId = Optional.ofNullable(request)
             .filter(CursorRequest::isBookmarked)
             .map(req -> SessionToMemberId.getSessionMemberId(httpServletRequest, httpServletResponse))
             .orElse(null);
 
-        log.info(request.toString());
-        log.info(pageable.toString());
         CursorResponse<MentorCardResponse> response = mentorService.getMentorBy(request, pageable, memberId);
         return ResponseEntity.ok(ApiResponseWrapper.success(HttpStatus.OK, "성공", response));
     }

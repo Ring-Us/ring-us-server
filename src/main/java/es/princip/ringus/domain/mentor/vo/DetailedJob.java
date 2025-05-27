@@ -1,120 +1,123 @@
 package es.princip.ringus.domain.mentor.vo;
 
+import lombok.Getter;
+
+import java.util.Arrays;
+
+@Getter
 public enum DetailedJob {
-    // Marketing
-    BRAND_MARKETING(JobCategory.MARKETING), // 브랜드 마케팅
-    PERFORMANCE_MARKETING(JobCategory.MARKETING), // 퍼포먼스 마케팅
-    DIGITAL_SOCIAL_MARKETING(JobCategory.MARKETING), // 디지털/소셜 마케팅
-    GROWTH_MARKETING(JobCategory.MARKETING), // 그로스 마케팅
-    PR(JobCategory.MARKETING), // PR
-    AE(JobCategory.MARKETING), // AE
-    CONTENT_MARKETING(JobCategory.MARKETING), // 콘텐츠 마케팅
-    CREATIVE_DIRECTING(JobCategory.MARKETING), // 크리에이티브 디렉팅
-    COPYWRITER(JobCategory.MARKETING), // 카피라이터
-    MEDIA_PLANNER(JobCategory.MARKETING), // 미디어 플래너
-    BROADCAST_PD(JobCategory.MARKETING), // 방송PD/영상PD
-    OTHER_MARKETING(JobCategory.MARKETING), // 기타
+    BRAND_MARKETING("BRAND_MARKETING", "브랜드 마케팅", JobCategory.MARKETING),
+    PERFORMANCE_MARKETING("PERFORMANCE_MARKETING", "퍼포먼스 마케팅", JobCategory.MARKETING),
+    DIGITAL_SOCIAL_MARKETING("DIGITAL_SOCIAL_MARKETING", "디지털/소셜 마케팅", JobCategory.MARKETING),
+    GROWTH_MARKETING("GROWTH_MARKETING", "그로스 마케팅", JobCategory.MARKETING),
+    PR("PR", "PR", JobCategory.MARKETING),
+    AE("AE", "AE", JobCategory.MARKETING),
+    CONTENT_MARKETING("CONTENT_MARKETING", "콘텐츠 마케팅", JobCategory.MARKETING),
+    CREATIVE_DIRECTING("CREATIVE_DIRECTING", "크리에이티브 디렉팅", JobCategory.MARKETING),
+    COPYWRITER("COPYWRITER", "카피라이터", JobCategory.MARKETING),
+    MEDIA_PLANNER("MEDIA_PLANNER", "미디어 플래너", JobCategory.MARKETING),
+    BROADCAST_PD("BROADCAST_PD", "방송PD/영상PD", JobCategory.MARKETING),
+    OTHER_MARKETING("OTHER_MARKETING", "기타", JobCategory.MARKETING),
 
-    // Service Planning
-    SERVICE_PLANNING(JobCategory.SERVICE_PLANNING), // 서비스기획
-    PM_PO(JobCategory.SERVICE_PLANNING), // PM/PO
-    STRATEGY_PLANNING(JobCategory.SERVICE_PLANNING), // 전략 기획
-    OPERATION_PLANNING(JobCategory.SERVICE_PLANNING), // 운영/기획
-    BUSINESS_DEVELOPMENT(JobCategory.SERVICE_PLANNING), // 사업 개발
-    CX_MANAGER(JobCategory.SERVICE_PLANNING), // CX 매니저
-    STARTUP(JobCategory.SERVICE_PLANNING), // 창업
-    OTHER_SERVICE_PLANNING(JobCategory.SERVICE_PLANNING), // 기타
+    SERVICE_PLANNING("SERVICE_PLANNING", "서비스기획", JobCategory.SERVICE_PLANNING),
+    PM_PO("PM_PO", "PM/PO", JobCategory.SERVICE_PLANNING),
+    STRATEGY_PLANNING("STRATEGY_PLANNING", "전략 기획", JobCategory.SERVICE_PLANNING),
+    OPERATION_PLANNING("OPERATION_PLANNING", "운영/기획", JobCategory.SERVICE_PLANNING),
+    BUSINESS_DEVELOPMENT("BUSINESS_DEVELOPMENT", "사업 개발", JobCategory.SERVICE_PLANNING),
+    CX_MANAGER("CX_MANAGER", "CX 매니저", JobCategory.SERVICE_PLANNING),
+    STARTUP("STARTUP", "창업", JobCategory.SERVICE_PLANNING),
+    OTHER_SERVICE_PLANNING("OTHER_SERVICE_PLANNING", "기타", JobCategory.SERVICE_PLANNING),
 
-    // Design
-    UX_UI_DESIGN(JobCategory.DESIGN), // UX/UI디자인
-    GRAPHIC_DESIGN(JobCategory.DESIGN), // 그래픽 디자인
-    PRODUCT_DESIGN(JobCategory.DESIGN), // 상품 디자인
-    BRAND_DESIGN(JobCategory.DESIGN), // 브랜드 디자인
-    WEB_DESIGN(JobCategory.DESIGN), // 웹 디자인
-    ART_DIRECTOR(JobCategory.DESIGN), // 아트 디렉터
-    OTHER_DESIGN(JobCategory.DESIGN), // 기타
+    UX_UI_DESIGN("UX_UI_DESIGN", "UX/UI 디자인", JobCategory.DESIGN),
+    GRAPHIC_DESIGN("GRAPHIC_DESIGN", "그래픽 디자인", JobCategory.DESIGN),
+    PRODUCT_DESIGN("PRODUCT_DESIGN", "상품 디자인", JobCategory.DESIGN),
+    BRAND_DESIGN("BRAND_DESIGN", "브랜드 디자인", JobCategory.DESIGN),
+    WEB_DESIGN("WEB_DESIGN", "웹 디자인", JobCategory.DESIGN),
+    ART_DIRECTOR("ART_DIRECTOR", "아트 디렉터", JobCategory.DESIGN),
+    OTHER_DESIGN("OTHER_DESIGN", "기타", JobCategory.DESIGN),
 
-    // Development
-    FRONTEND(JobCategory.DEVELOPMENT), // 프론트엔드
-    BACKEND(JobCategory.DEVELOPMENT), // 백엔드
-    FULLSTACK(JobCategory.DEVELOPMENT), // 풀스택 개발자
-    IOS_ANDROID(JobCategory.DEVELOPMENT), // iOS/Android 개발자
-    DEVOPS(JobCategory.DEVELOPMENT), // DevOps 엔지니어
-    CLOUD(JobCategory.DEVELOPMENT), // 클라우드 엔지니어
-    SYSTEM_NETWORK(JobCategory.DEVELOPMENT), // 시스템/네트워크 엔지니어
-    SECURITY(JobCategory.DEVELOPMENT), // 보안 엔지니어
-    OTHER_DEVELOPMENT(JobCategory.DEVELOPMENT), // 기타
+    FRONTEND("FRONTEND", "프론트엔드", JobCategory.DEVELOPMENT),
+    BACKEND("BACKEND", "백엔드", JobCategory.DEVELOPMENT),
+    FULLSTACK("FULLSTACK", "풀스택 개발자", JobCategory.DEVELOPMENT),
+    IOS_ANDROID("IOS_ANDROID", "iOS/Android 개발자", JobCategory.DEVELOPMENT),
+    DEVOPS("DEVOPS", "DevOps 엔지니어", JobCategory.DEVELOPMENT),
+    CLOUD("CLOUD", "클라우드 엔지니어", JobCategory.DEVELOPMENT),
+    SYSTEM_NETWORK("SYSTEM_NETWORK", "시스템/네트워크 엔지니어", JobCategory.DEVELOPMENT),
+    SECURITY("SECURITY", "보안 엔지니어", JobCategory.DEVELOPMENT),
+    OTHER_DEVELOPMENT("OTHER_DEVELOPMENT", "기타", JobCategory.DEVELOPMENT),
 
-    // Graduate School
-    DOMESTIC_GRADUATE_SCHOOL(JobCategory.GRADUATE_SCHOOL), // 국내 대학원
-    OVERSEAS_GRADUATE_SCHOOL(JobCategory.GRADUATE_SCHOOL), // 해외 대학원
-    OTHER_GRADUATE_SCHOOL(JobCategory.GRADUATE_SCHOOL), // 기타
+    DOMESTIC_GRADUATE_SCHOOL("DOMESTIC_GRADUATE_SCHOOL", "국내 대학원", JobCategory.GRADUATE_SCHOOL),
+    OVERSEAS_GRADUATE_SCHOOL("OVERSEAS_GRADUATE_SCHOOL", "해외 대학원", JobCategory.GRADUATE_SCHOOL),
+    OTHER_GRADUATE_SCHOOL("OTHER_GRADUATE_SCHOOL", "기타", JobCategory.GRADUATE_SCHOOL),
 
-    // HR Support
-    HR_PLANNING(JobCategory.HR_SUPPORT), // 인사기획
-    RECRUITMENT(JobCategory.HR_SUPPORT), // 채용담당
-    TALENT_DEVELOPMENT(JobCategory.HR_SUPPORT), // 인재육성/교육담당
-    ORGANIZATION_CULTURE(JobCategory.HR_SUPPORT), // 조직문화담당
-    LABOR(JobCategory.HR_SUPPORT), // 노무담당
-    GENERAL_AFFAIRS(JobCategory.HR_SUPPORT), // 총무/경영지원
-    HR_OPERATION(JobCategory.HR_SUPPORT), // 인사운영
-    RECRUITER(JobCategory.HR_SUPPORT), // 리크루터
-    OTHER_HR_SUPPOReT(JobCategory.HR_SUPPORT), // 기타
+    HR_PLANNING("HR_PLANNING", "인사기획", JobCategory.HR_SUPPORT),
+    RECRUITMENT("RECRUITMENT", "채용담당", JobCategory.HR_SUPPORT),
+    TALENT_DEVELOPMENT("TALENT_DEVELOPMENT", "인재육성/교육담당", JobCategory.HR_SUPPORT),
+    ORGANIZATION_CULTURE("ORGANIZATION_CULTURE", "조직문화담당", JobCategory.HR_SUPPORT),
+    LABOR("LABOR", "노무담당", JobCategory.HR_SUPPORT),
+    GENERAL_AFFAIRS("GENERAL_AFFAIRS", "총무/경영지원", JobCategory.HR_SUPPORT),
+    HR_OPERATION("HR_OPERATION", "인사운영", JobCategory.HR_SUPPORT),
+    RECRUITER("RECRUITER", "리크루터", JobCategory.HR_SUPPORT),
+    OTHER_HR_SUPPORT("OTHER_HR_SUPPORT", "기타", JobCategory.HR_SUPPORT),
 
-    // Sales Customer
-    B2B_SALES(JobCategory.SALES_CUSTOMER), // 기업영업(B2B)
-    B2C_SALES(JobCategory.SALES_CUSTOMER), // 개인영업(B2C)
-    OVERSEAS_SALES(JobCategory.SALES_CUSTOMER), // 해외영업
-    TECHNICAL_SALES(JobCategory.SALES_CUSTOMER), // 기술영업
-    SOLUTION_CONSULTANT(JobCategory.SALES_CUSTOMER), // 솔루션 컨설턴트
-    KAM(JobCategory.SALES_CUSTOMER), // 주요고객관리(KAM)
-    SALES_SUPPORT(JobCategory.SALES_CUSTOMER), // 영업관리/지원
-    CSM_CX(JobCategory.SALES_CUSTOMER), // CSM/CX
-    OTHER_SALES_CUSTOMER(JobCategory.SALES_CUSTOMER), // 기타
+    B2B_SALES("B2B_SALES", "기업영업(B2B)", JobCategory.SALES_CUSTOMER),
+    B2C_SALES("B2C_SALES", "개인영업(B2C)", JobCategory.SALES_CUSTOMER),
+    OVERSEAS_SALES("OVERSEAS_SALES", "해외영업", JobCategory.SALES_CUSTOMER),
+    TECHNICAL_SALES("TECHNICAL_SALES", "기술영업", JobCategory.SALES_CUSTOMER),
+    SOLUTION_CONSULTANT("SOLUTION_CONSULTANT", "솔루션 컨설턴트", JobCategory.SALES_CUSTOMER),
+    KAM("KAM", "주요고객관리(KAM)", JobCategory.SALES_CUSTOMER),
+    SALES_SUPPORT("SALES_SUPPORT", "영업관리/지원", JobCategory.SALES_CUSTOMER),
+    CSM_CX("CSM_CX", "CSM/CX", JobCategory.SALES_CUSTOMER),
+    OTHER_SALES_CUSTOMER("OTHER_SALES_CUSTOMER", "기타", JobCategory.SALES_CUSTOMER),
 
-    // Finance Consulting VC
-    CONSULTANT(JobCategory.FINANCE_CONSULTING_VC), // 컨설턴트
-    VC_INVESTMENT(JobCategory.FINANCE_CONSULTING_VC), // VC/투자
-    IB_PE_ALTERNATIVE_INVESTMENT(JobCategory.FINANCE_CONSULTING_VC), // IB/PE/대체투자
-    ANALYST(JobCategory.FINANCE_CONSULTING_VC), // 에널리스트
-    ACCOUNTING_FINANCE(JobCategory.FINANCE_CONSULTING_VC), // 회계/재무
-    OTHER_FINANCE_CONSULTING_VC(JobCategory.FINANCE_CONSULTING_VC), // 기타
+    CONSULTANT("CONSULTANT", "컨설턴트", JobCategory.FINANCE),
+    VC_INVESTMENT("VC_INVESTMENT", "VC/투자", JobCategory.FINANCE),
+    IB_PE_ALTERNATIVE_INVESTMENT("IB_PE_ALTERNATIVE_INVESTMENT", "IB/PE/대체투자", JobCategory.FINANCE),
+    ANALYST("ANALYST", "애널리스트", JobCategory.FINANCE),
+    ACCOUNTING_FINANCE("ACCOUNTING_FINANCE", "회계/재무", JobCategory.FINANCE),
+    OTHER_FINANCE("OTHER_FINANCE", "기타", JobCategory.FINANCE),
 
-    // Data
-    DATA_SCIENTIST(JobCategory.DATA), // 데이터 사이언티스트
-    DATA_ENGINEER(JobCategory.DATA), // 데이터 엔지니어
-    DATA_ANALYST(JobCategory.DATA), // 데이터 애널리스트
-    BI_ENGINEER(JobCategory.DATA), // BI 엔지니어
-    MACHINE_LEARNING_ENGINEER(JobCategory.DATA), // 머신러닝 엔지니어
-    DATA_ARCHITECT(JobCategory.DATA), // 데이터 아키텍트
-    RESEARCH_ANALYST(JobCategory.DATA), // 리서치 애널리스트
-    OTHER_DATA(JobCategory.DATA), // 기타
+    DATA_SCIENTIST("DATA_SCIENTIST", "데이터 사이언티스트", JobCategory.DATA),
+    DATA_ENGINEER("DATA_ENGINEER", "데이터 엔지니어", JobCategory.DATA),
+    DATA_ANALYST("DATA_ANALYST", "데이터 애널리스트", JobCategory.DATA),
+    BI_ENGINEER("BI_ENGINEER", "BI 엔지니어", JobCategory.DATA),
+    MACHINE_LEARNING_ENGINEER("MACHINE_LEARNING_ENGINEER", "머신러닝 엔지니어", JobCategory.DATA),
+    DATA_ARCHITECT("DATA_ARCHITECT", "데이터 아키텍트", JobCategory.DATA),
+    RESEARCH_ANALYST("RESEARCH_ANALYST", "리서치 애널리스트", JobCategory.DATA),
+    OTHER_DATA("OTHER_DATA", "기타", JobCategory.DATA),
 
-    // Medical
-    CLINICAL_DOCTOR(JobCategory.MEDICAL), // 임상의사
-    CLINICAL_RESEARCHER(JobCategory.MEDICAL), // 임상연구원
-    MEDICAL_DEVICE_RND(JobCategory.MEDICAL), // 의료기기 연구개발
-    PHARMACEUTICAL_RESEARCHER(JobCategory.MEDICAL), // 제약회사 연구원
-    BIO_RESEARCHER(JobCategory.MEDICAL), // 바이오 연구원
-    OTHER_MEDICAL(JobCategory.MEDICAL), // 기타
+    CLINICAL_DOCTOR("CLINICAL_DOCTOR", "임상의사", JobCategory.MEDICAL),
+    CLINICAL_RESEARCHER("CLINICAL_RESEARCHER", "임상연구원", JobCategory.MEDICAL),
+    MEDICAL_DEVICE_RND("MEDICAL_DEVICE_RND", "의료기기 연구개발", JobCategory.MEDICAL),
+    PHARMACEUTICAL_RESEARCHER("PHARMACEUTICAL_RESEARCHER", "제약회사 연구원", JobCategory.MEDICAL),
+    BIO_RESEARCHER("BIO_RESEARCHER", "바이오 연구원", JobCategory.MEDICAL),
+    OTHER_MEDICAL("OTHER_MEDICAL", "기타", JobCategory.MEDICAL),
 
-    // Legal
-    LAWYER(JobCategory.LEGAL), // 변호사
-    LEGAL_COUNSEL(JobCategory.LEGAL), // 법무담당
-    PATENT(JobCategory.LEGAL), // 특허담당
-    COMPLIANCE(JobCategory.LEGAL), // 준법감시인(컴플라이언스)
-    LAW_FIRM_STAFF(JobCategory.LEGAL), // 법무법인 사무직
-    LEGAL_ADVISOR(JobCategory.LEGAL), // 법률자문
-    PATENT_ENGINEER(JobCategory.LEGAL), // 특허엔지니어
-    OTHER_LEGAL(JobCategory.LEGAL); // 기타
+    LAWYER("LAWYER", "변호사", JobCategory.LEGAL),
+    LEGAL_COUNSEL("LEGAL_COUNSEL", "법무담당", JobCategory.LEGAL),
+    PATENT("PATENT", "특허담당", JobCategory.LEGAL),
+    COMPLIANCE("COMPLIANCE", "준법감시인(컴플라이언스)", JobCategory.LEGAL),
+    LAW_FIRM_STAFF("LAW_FIRM_STAFF", "법무법인 사무직", JobCategory.LEGAL),
+    LEGAL_ADVISOR("LEGAL_ADVISOR", "법률자문", JobCategory.LEGAL),
+    PATENT_ENGINEER("PATENT_ENGINEER", "특허엔지니어", JobCategory.LEGAL),
+    OTHER_LEGAL("OTHER_LEGAL", "기타", JobCategory.LEGAL);
 
+    private final String code;
+    private final String kor;
     private final JobCategory category;
 
-    DetailedJob(JobCategory category) {
+    DetailedJob(String code, String kor, JobCategory category) {
+        this.code = code;
+        this.kor = kor;
         this.category = category;
     }
 
-    public JobCategory getCategory() {
-        return category;
+    public static DetailedJob from(String kor) {
+        return Arrays.stream(values())
+            .filter(e -> e.kor.equals(kor))
+            .findFirst()
+            .orElseThrow(
+                    () -> new IllegalArgumentException("매핑되는 DetailedJob가 없습니다: " + kor)
+            );
     }
 }

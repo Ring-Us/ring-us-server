@@ -4,14 +4,21 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
+import software.amazon.awssdk.auth.credentials.DefaultCredentialsProvider;
 import software.amazon.awssdk.core.sync.RequestBody;
+import software.amazon.awssdk.regions.Region;
 import software.amazon.awssdk.services.s3.S3Client;
+import software.amazon.awssdk.services.s3.model.GetObjectRequest;
 import software.amazon.awssdk.services.s3.model.PutObjectRequest;
 import software.amazon.awssdk.services.s3.model.S3Exception;
+import software.amazon.awssdk.services.s3.presigner.S3Presigner;
+import software.amazon.awssdk.services.s3.presigner.model.GetObjectPresignRequest;
+import software.amazon.awssdk.services.s3.presigner.model.PresignedGetObjectRequest;
 
 import java.io.IOException;
 import java.net.URLEncoder;
 import java.nio.charset.StandardCharsets;
+import java.time.Duration;
 import java.util.UUID;
 
 @Service
@@ -22,25 +29,31 @@ public class S3Service {
     @Value("${aws.s3.bucket-name}")
     private String bucketName;
 
+    @Value("${aws.s3.region}")
+    private String region;
     /**
      * S3에 파일 업로드
      * @param file       업로드할 파일
      * @param folderPath S3에 저장할 폴더 경로 (예: "images/profile/mentor", "certificates/mentee/ENROLLMENT" 등)
      * @return 업로드된 파일의 S3 URL
      */
-    public String uploadFile(MultipartFile file, String folderPath) {
-        String fileName = UUID.randomUUID() + "_" + sanitizeFileName(file.getOriginalFilename());
+    public String uploadFile(MultipartFile file, String folderPath, boolean isPublic) {
+        // 파일명: UUID + 확장자만 추출
+        String extension = getExtension(file.getOriginalFilename());
+        String fileName = UUID.randomUUID() + (extension != null ? "." + extension : "");
         String s3Key = folderPath + "/" + fileName;
 
         try {
+            PutObjectRequest.Builder requestBuilder = PutObjectRequest.builder()
+                    .bucket(bucketName)
+                    .key(s3Key)
+                    .contentType(file.getContentType());
+
             s3Client.putObject(
-                    PutObjectRequest.builder()
-                            .bucket(bucketName)
-                            .key(s3Key)
-                            .contentType(file.getContentType())
-                            .build(),
+                    requestBuilder.build(),
                     RequestBody.fromInputStream(file.getInputStream(), file.getSize())
             );
+
         } catch (IOException e) {
             throw new RuntimeException("파일 입력 스트림을 읽지 못했습니다.", e);
         } catch (S3Exception e) {
@@ -67,5 +80,36 @@ public class S3Service {
         } catch (Exception e) {
             throw new RuntimeException("파일 이름 인코딩에 실패했습니다.", e);
         }
+    }
+
+    public String generatePresignedUrl(String s3Key, Duration duration) {
+        try (S3Presigner presigner = S3Presigner.builder()
+                .region(Region.of(region))
+                .credentialsProvider(DefaultCredentialsProvider.create())
+                .build()) {
+
+            GetObjectRequest getObjectRequest = GetObjectRequest.builder()
+                    .bucket(bucketName)
+                    .key(s3Key)
+                    .build();
+
+            GetObjectPresignRequest presignRequest = GetObjectPresignRequest.builder()
+                    .getObjectRequest(getObjectRequest)
+                    .signatureDuration(duration)
+                    .build();
+
+            PresignedGetObjectRequest presignedRequest = presigner.presignGetObject(presignRequest);
+            return presignedRequest.url().toString();
+        }
+    }
+
+    /**
+     * 파일 확장자 추출
+     */
+    private String getExtension(String fileName) {
+        if (fileName == null || !fileName.contains(".")) {
+            return null;
+        }
+        return fileName.substring(fileName.lastIndexOf('.') + 1);
     }
 }

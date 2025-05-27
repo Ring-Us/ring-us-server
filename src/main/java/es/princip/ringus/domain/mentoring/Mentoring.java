@@ -97,4 +97,18 @@ public class Mentoring extends BaseTimeEntity {
     public void accept() {
         this.mentoringStatus = MentoringStatus.ACCEPTED;
     }
+
+    public void cancel() {
+        if (mentoringStatus == MentoringStatus.WAITING) {
+            this.mentoringStatus = MentoringStatus.CANCELLED_BEFORE_PAYMENT;
+        } else if (mentoringStatus == MentoringStatus.ACCEPTED) {
+            this.mentoringStatus = MentoringStatus.CANCELLED_AFTER_PAYMENT;
+        } else {
+            throw new CustomRuntimeException(MentoringErrorCode.MENTORING_CANCEL_NOT_POSSIBLE);
+        }
+    }
+
+    public void reject() {
+        this.mentoringStatus = MentoringStatus.REJECTED;
+    }
 }

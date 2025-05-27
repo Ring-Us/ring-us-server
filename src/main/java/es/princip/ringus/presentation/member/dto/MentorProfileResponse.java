@@ -8,9 +8,14 @@ public record MentorProfileResponse(
         String nickname,
         ProfileImageResponse image,
         OrganizationResponse organization,
-        int mentoringCount
+        Long mentoringCount
 ) {
-    public static MentorProfileResponse from(final Mentor mentor){
-        return new MentorProfileResponse(mentor.getNickname(), ProfileImageResponse.from(mentor.getProfileImage()), OrganizationResponse.from(mentor.getOrganization()),0);
+    public static MentorProfileResponse from(final Mentor mentor, Long mentoringCount){
+        return new MentorProfileResponse(
+            mentor.getNickname(),
+            ProfileImageResponse.from(mentor.getProfileImage()),
+            OrganizationResponse.from(mentor.getOrganization()),
+            mentoringCount
+        );
     }
 }

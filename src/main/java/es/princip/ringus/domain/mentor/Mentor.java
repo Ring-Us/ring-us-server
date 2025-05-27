@@ -13,8 +13,6 @@ import lombok.NoArgsConstructor;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Set;
-import java.util.stream.Collectors;
 
 @Getter
 @Entity
@@ -52,7 +50,7 @@ public class Mentor {
     @CollectionTable(name = "mentor_mentoring_fields", joinColumns = @JoinColumn(name = "mentor_id"))
     @Enumerated(EnumType.STRING)
     @Column(name = "mentoring_field")
-    private Set<MentoringField> mentoringField;
+    private List<MentoringField> mentoringField;
 
     // 해시태그
     @ElementCollection(fetch = FetchType.EAGER)
@@ -68,9 +66,19 @@ public class Mentor {
 
     // 포트폴리오
     @Embedded
+    @AttributeOverrides({
+            @AttributeOverride(name = "fileName", column = @Column(name = "portfolio_file_name")),
+            @AttributeOverride(name = "filePath", column = @Column(name = "portfolio_file_path")),
+            @AttributeOverride(name = "fileSize", column = @Column(name = "portfolio_file_size"))
+    })
     private Portfolio portfolio;
 
     @Embedded
+    @AttributeOverrides({
+            @AttributeOverride(name = "fileName", column = @Column(name = "profile_image_file_name")),
+            @AttributeOverride(name = "filePath", column = @Column(name = "profile_image_file_path")),
+            @AttributeOverride(name = "fileSize", column = @Column(name = "profile_image_file_size"))
+    })
     private ProfileImage profileImage;
 
     @Column(name = "member_id")
@@ -83,7 +91,7 @@ public class Mentor {
         final Organization organization,
         final Introduction introduction,
         final Timezone timezone,
-        final Set<MentoringField> mentoringField,
+        final List<MentoringField> mentoringField,
         final List<Hashtag> hashtags,
         final String message,
         final Portfolio portfolio,
@@ -109,7 +117,7 @@ public class Mentor {
         this.organization = request.organization().toEntity();
         this.introduction = request.introduction().toEntity();
         this.timezone = request.timezone().toEntity();
-        this.mentoringField = request.mentoringField().stream().map(MentoringField::valueOf).collect(Collectors.toSet());
+        this.mentoringField = request.mentoringField().stream().map(MentoringField::from).toList();
         this.hashtags = request.hashtags().stream().map(Hashtag::new).toList();
         this.message = request.message();
         this.portfolio = request.portfolio().toEntity();

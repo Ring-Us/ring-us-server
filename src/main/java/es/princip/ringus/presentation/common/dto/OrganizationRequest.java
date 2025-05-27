@@ -11,6 +11,19 @@ public record OrganizationRequest(
         int experience
 ) {
     public Organization toEntity() {
-        return new Organization(name, JobCategory.valueOf(jobCategory), DetailedJob.valueOf(detailedJob), experience);
+
+        JobCategory jobCategoryKor   = JobCategory.from(jobCategory);
+        DetailedJob detailedJobKor   = DetailedJob.from(detailedJob);
+
+        if (!detailedJobKor.getCategory().getCode().equals(jobCategoryKor.getCode())) {
+            throw new IllegalArgumentException(
+                    "세부 직무의 직무 카테고리가 직무 카테고리와 일치하지 않습니다.");
+        }
+        return new Organization(
+                name,
+                jobCategoryKor,
+                detailedJobKor,
+                experience
+        );
     }
 }
